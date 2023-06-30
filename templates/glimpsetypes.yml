@@ -1,0 +1,38 @@
+baptism:
+  format: "#child baptised on #date at #location"
+  child:
+     format: "was baptised on #date at #location"
+     cardinality: 1
+  father:
+     format: "baptised child #child on #date at #location"
+     cardinality: 1
+  mother: 1
+  official: 0
+burial:
+   format: "#defunct buried on #date at #location"
+   defunct:
+     format: "was buried on #date at #location"
+     cardinality: 1
+   father: 1
+   husband: 1
+   official: 0
+marriage:
+   format: "wedding between #husband and #bride on #date at #location"
+   bride:
+      format: "wedded to #husband on #date at #location "
+   husband :
+      format: "wedded to  #bride on #date at #location "
+   father_of_bride: 1
+   witness: 2
+   official: 1
+will:
+   format: "last testement of  #testator on #date at #location"
+   defunct:
+      format: "will of #testator "
+      cardinality: 1
+   beneficiary: 10
+   witness: 2
+   official: 1
+note:
+  participant: 2
+  official: 0

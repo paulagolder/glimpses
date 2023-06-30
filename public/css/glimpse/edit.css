@@ -1,0 +1,276 @@
+#glimpse  div.heading 
+{
+    display: flex;
+}
+
+#glimpse   div.glimpse  
+{
+   margin-bottom:30px;
+   background: silver;
+}
+
+
+#glimpse   div.form
+{
+    background-color:silver;;
+}
+
+#glimpse   div.row 
+{
+    display:flex;
+    margin : 1em;
+}
+
+#glimpse   div.row div.label
+{
+   width:10em;
+   color: blue;
+}
+
+#glimpse  div.row  div.inputpair
+{
+    
+    margin-right: 2em;
+   
+}
+
+#glimpse  div.row  div.inputpair div.label
+{
+    color:blue;
+    
+}
+
+#glimpse  div.row  div.inputpair div.field
+{
+    
+}
+
+#glimpse div.inputpair.language div.field input
+{
+    width:2em;
+}
+
+#glimpse div.inputpair.language
+{
+    width:3em;
+}
+
+#glimpse div.inputpair.id div.field input
+{
+    width:2em;
+}
+
+#glimpse div.inputpair.id
+{
+    width:3em;
+}
+
+#glimpse div.inputpair.location div.field input
+{
+    width:20em;
+}
+
+#glimpse div.inputpair.source div.field input
+{
+    width:20em;
+}
+
+#glimpse  div.inputpair.source textarea.title
+{
+    width: 40em;
+    height: 5em;
+}
+
+#glimpse div.inputpair.type div.field input
+{
+    width:10em;
+}
+
+#glimpse div.inputpair.ref 
+{
+    width:2em;
+}
+
+#glimpse div.inputpair.datequalifier 
+{
+    width:2em;
+}
+
+#glimpse div.inputpair.ref div.field input
+{
+    width:2em;
+}
+
+
+#glimpse div.inputpair.text div.field input
+{
+    width:50em;
+}
+
+#glimpse   div.roleTable
+    {
+        display:  table;
+        width:auto;
+        background-color:#eee;
+        border:1px solid  #666666;
+        border-spacing:5px;/*cellspacing:poor IE support for  this*/
+       /* border-collapse:separate;*/
+    }
+    
+    #glimpse   div.roleTable div.body
+    {
+        display:  table-row-group;
+ 
+    }
+    
+#glimpse    div.roleTable div.body div.row 
+{
+    
+       display:table-row;
+       width:auto;
+    
+}
+
+#glimpse    div.roleTable div.body div.row div.cell
+{
+    
+       xfloat:left;/*fix for  buggy browsers*/
+        display:table-cell;
+        width:;
+        background-color:#ccc;
+    
+}
+#glimpse    div.roleTable div.body div.row div.cell   div.col1
+{
+    
+       xfloat:left;/*fix for  buggy browsers*/
+       xdisplay:table-cell;
+       xwidth:;
+       xbackground-color:#ccc;
+       display:flex;
+    
+}
+#glimpse  div.roleTable div.body div.row div.cell.label
+{
+    width:2em;
+    
+}
+
+#glimpse  div.roleTable div.body div.row div.cell.hidden
+{
+    width:1em;
+    
+
+
+#glimpse    div.roleTable div.body div.row div.predcell   
+{
+    
+      column-span: all;
+    
+}
+
+#glimpse    div.roleTable div.row div.cell input.disabled {
+    pointer-events:none;
+    color:#AAA;
+    background:#F5F5F5;
+}
+
+
+    #glimpse    div.roleTable  div.body   div.row div.cell div.predtable 
+{
+    
+        display:  table;
+        width:auto;
+        background-color:#eee;
+        border:1px solid  #666666;
+        border-spacing:5px;/*cellspacing:poor IE support for  this*/
+       /* border-collapse:separate;*/
+    
+}
+    
+    #glimpse    div.roleTable  div.body   div.row div.cell div.predtable div.predbody 
+{
+    
+       display:  table-row-group;
+       width:auto;
+    
+}
+    
+#glimpse    div.roleTable  div.row div.cell div.predtable div.predbody div.predrow 
+{
+    
+       display:table-row;
+       width:auto;
+    
+}
+
+#glimpse    div.roleTable  div.row div.cell div.predtable div.predbody div.predrow div.predcell
+{
+    
+           
+        display:table-cell;
+     
+        background-color:#eee;
+    
+}
+
+
+
+
+.subheading
+{
+    display:flex;
+}
+
+a.button3{
+ display:inline-block;
+padding:0.1em 0.2em;
+margin:0 0.1em 0.1em 0;
+border-radius:1em;
+box-sizing: border-box;
+text-decoration:none;
+font-family:sans-serif;
+font-weight:100;
+font-size:15px;
+color:#FFFFFF;
+background-color:#4eb5f1;
+text-align:center;
+transition: all 0.2s;
+}
+
+a.button3:hover{
+background-color:#4095c6;
+}
+
+@media all and (max-width:30em){
+ a.button3{
+display:block;
+margin:0.2em auto;
+ }
+} 
+
+
+table, {
+  border: 1px solid black;
+  width :100%;
+border-collapse:collapse; 
+table-layout:fixed;
+}
+
+ th, td {
+  border: 1px solid black;
+
+
+}
+
+
+.col1
+{ background :#ddd;
+    max-width :50px;
+    min-width:50px;
+}
+
+div#glimpse  input.id
+{
+    width:4em;
+}

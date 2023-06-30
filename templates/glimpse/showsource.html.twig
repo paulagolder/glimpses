@@ -1,0 +1,62 @@
+{# templates/glimpse/showregion.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link href="{{ asset('css/glimpse/showall.css') }}" rel="stylesheet" />
+
+{% endblock %}
+
+{% block js %}
+{{ parent() }}
+
+{% endblock %}
+
+{% block body %}
+<div id="glimpse" >
+    
+    <div class="heading">
+        
+      <div class="title"> Glimpses of </div>
+         <div class="title"> {{source.title}} </div>
+    </div> 
+    
+     <div class= "glimpselist">
+    {% for pid, glimpse in glimpses %}
+    <div class= "glimpse">
+        <div class="row">
+             <div class="returnbutton " ><a  href = "/glimpse/show/{{glimpse.glimpseid}}" >View </a> </div>
+            <div class= "field cref"> {{glimpse.ref}} </div>
+            <div class= "field ctype"> {{glimpse.type}}</div>
+            <div class= "field cdate"> {{glimpse.date}}</div>
+             {% if glimpse.text %}
+            <div class= "field ctext"> {{glimpse.text}} </div>
+            {% else %}
+            {% dump(glimpse.roles) %}
+              {% set formatedtext = roletemplates.getEventFormat(glimpse, glimpse.roles) %}
+              {% if formatedtext %}
+              <div class= "field ctext"> 
+                {{formatedtext}}
+              </div>
+              {% else %}
+              <div class= "field ctext"> 
+                {% for rid, role in glimpse.roles %}
+               
+                {{role.role}}:{{role.name}} ;
+                {% endfor %}
+              </div>
+              {% endif %}
+              {% endif %}
+        </div>
+        
+    </div>
+    
+    {% endfor %}
+    </div>
+</div>
+
+
+{% endblock %}
+
+

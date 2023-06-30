@@ -1,0 +1,67 @@
+{# templates/source/show.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link href="{{ asset('css/source.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block js %}
+{{ parent() }}
+
+{% endblock %}
+
+{% block body %}
+<div id="source" >
+    
+    
+    <div class ="heading" >
+       <div class="title"> Source </div>
+        <div class="returnbutton button1"> <a class="button" href = "{{returnlink}}" >return </a> </div>
+         <div class="returnbutton "> <a class="button" href = "/source/edit/{{source.sourceid}}" >Edit </a> </div>
+        <div class="returnbutton "> <a class="button" href = "/source/new" >Add New source </a> </div>
+   
+    </div>
+      <div class ="heading" >
+     
+        <div class="returnbutton "> <a  href = "/source/startinput/{{source.sourceid}}" >Data Entry </a> </div>
+        <div class="returnbutton "> <a  href = "/glimpse/showsource/{{source.sourceid}}" >View Data </a> </div>
+    </div>
+    <div class="source form"> 
+            <div class="row">
+                <div class="label">ID </div>
+                <div class= "field"> {{source.sourceid}} </div>
+                   </div>
+                
+                <div class="row">
+                    <div class="label"> language </div>
+                    <div class= "field"> {{source.language}}</div>
+                       </div>
+                
+                <div class="row">
+                    <div class="label"> region </div>
+                    <div class= "field"> {{source.region}}</div>
+                </div>
+                
+                <div class="row">
+                    <div class="label"> title </div>
+                    <div class= "field">{{source.title}} </div>
+                </div>
+                <div class="row">
+                    <div class="label"> period </div>
+                    <div class= "field"> {{source.period}} </div>
+                       </div>
+                
+                <div class="row">
+                      <div class="label"> url </div>
+                    <div class= "field"> <a href="{{source.url}}" target="new" > View Source </a> </div>
+                </div>
+             
+       </form>
+       </div>
+       </div>
+{% endblock %}
+
+
+

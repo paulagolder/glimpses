@@ -1,0 +1,43 @@
+{# templates/source/startinput.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link href="{{ asset('css/glimpse/edit.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block js %}
+{{ parent() }}
+
+{% endblock %}
+
+{% block body %}
+<div id="glimpse" >
+    
+    
+    <div class ="heading" >
+        <div class="title" > Entering Data for </div>
+        <div class="returnbutton  button1"> <a class="button" href = "/source/show/{{source.sourceid}}" >return </a> </div>
+   </div>
+   <div class="form">
+     <div class ="row" >
+        <div class="label"> Source:  </div>
+        <div class="field"> {{source.title}}  </div>
+   </div>
+       <div class ="row" >
+        <div class="label"> Location  </div>
+        <div class="field"> {{source.region}}  </div>
+   </div>
+   </div>
+          {% for type in typelist %}
+          <div class="subheading">
+            <div class="returnbutton "> <a class="button" href = "/glimpse/new/{{type}}" >Add New {{type}} </a> </div>
+          </div>
+          {% endfor %}
+ </div>
+    
+{% endblock %}
+
+
+

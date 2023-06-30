@@ -1,0 +1,122 @@
+#glimpse   div.heading 
+{
+    display:flex;
+    
+}
+
+#glimpse   div.row 
+{
+    display:flex;
+    
+}
+
+
+#glimpse   div.glimpse  
+{
+   margin-bottom:4px;
+}
+
+#glimpse   div.glimpselist
+{
+ overflow-y:scroll; 
+ overflow-x:hidden; 
+ height:400px;
+ width:90%;
+}
+
+#glimpse   div.row  div.label
+{
+    color:blue;
+ 
+}
+
+
+#glimpse   div.row 
+{
+    display:flex;
+    margin : 2px;
+}
+
+
+
+#glimpse  div.row  div.label
+{
+    color:blue;
+    padding:2px;
+}
+
+#glimpse  div.row  div.field
+{
+   padding: 4px;
+      xborder: 1px solid #CC33CC;
+      white-space: nowrap;
+      overflow: hidden;
+      o-text-overflow: ellipsis;
+      text-overflow: ellipsis;
+}
+
+
+#glimpse  div.row  div.button
+{
+  width:5em;
+}
+
+#glimpse  div.row  div.cid
+{
+  width:2em;
+}
+
+#glimpse  div.row  div.cloc
+{
+  width:7em;
+}
+
+#glimpse  div.row  div.cref
+{
+  width:2em;
+}
+
+#glimpse  div.row  div.ctype
+{
+  width:5em;
+}
+
+#glimpse  div.row  div.cdate
+{
+  width:8em;
+}
+
+#glimpse  div.row  div.ctext
+{
+  width:60em;
+}
+
+#glimpse  div.row  div.col7
+{
+  width:20em;
+}
+
+a.button3{
+ display:inline-block;
+padding:0.1em 0.2em;
+margin:0 0.1em 0.1em 0;
+border-radius:1em;
+box-sizing: border-box;
+text-decoration:none;
+font-family:sans-serif;
+font-weight:100;
+font-size:15px;
+color:#FFFFFF;
+background-color:#4eb5f1;
+text-align:center;
+transition: all 0.2s;
+}
+a.button3:hover{
+background-color:#4095c6;
+}
+@media all and (max-width:30em){
+ a.button3{
+display:block;
+margin:0.2em auto;
+ }
+} 

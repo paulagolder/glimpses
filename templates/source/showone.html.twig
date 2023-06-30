@@ -1,0 +1,57 @@
+{# templates/source/show.html.twig #}
+
+
+
+
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link href="{{ asset('css/source/showall.css') }}" rel="stylesheet" />
+
+{% endblock %}
+
+{% block js %}
+{{ parent() }}
+
+{% endblock %}
+
+{% block body %}
+<div id="source_list" >
+    
+    <div class="heading">
+        
+      <div class="title">>All Sources</div>
+       <div class=button">
+                <a  class="button"  href = "/source/new" >New Source</a> 
+       </div>
+    </div> 
+      <div class="subheading">
+                <a  class="button"  href = "/source/new" >New Source</a> 
+            </div>
+    
+    {% for source in sources %}
+    <div class= "source">
+        <div class="row">
+            <div class="subheading">
+                <a  class="deletebutton"  href = "/source/delete/{{source.sourceid}}" >delete </a> 
+                <a class="button" href = "/source/edit/{{source.sourceid}}" >edit </a> 
+                <a class="button" href = "/glimpse/view/all/{{source.region}}" >view data </a> 
+                <a class="button" href = "/source/startinput/{{source.sourceid}}" >input data </a> 
+            </div>
+            <div class= "field">{{source.sourceId}}</div>
+            <div class= "field"> {{source.title}}</div>
+            <div class= "field"> {{source.region}}</div>
+            <div class= "field"> {{source.period}} </div>
+        </div>
+        
+    </div>
+    
+    {% endfor %}
+    
+</div>
+
+
+{% endblock %}
+
+

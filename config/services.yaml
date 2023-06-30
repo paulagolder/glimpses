@@ -3,7 +3,10 @@
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
+
 parameters:
+    locale: en
+    templatedir: '../templates/profiles/'
 
 services:
     # default configuration for services in *this* file
@@ -22,3 +25,14 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+
+
+    App\Service\Templates:
+        arguments:
+           $templatedir : '%templatedir%'
+
+    Service_Templates:
+        alias:  App\Service\Templates
+        public: true
+

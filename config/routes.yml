@@ -8,16 +8,16 @@ controllers:
 
 glimpse_begin:
     path: /
-    controller:  App\Controller\SourceController::showall
+    controller:  App\Controller\SourceController:showall
 
 glimpse_start:
     path: /glimpses
-    controller:  App\Controller\SourceController::showall
+    controller:  App\Controller\SourceController:showall
 
 
 glimpse_new:
     path: /glimpse/new/{type}
-    controller:  App\Controller\GlimpseController::new
+    controller:  App\Controller\GlimpseController:new
 
 
 glimpse_show:
@@ -106,11 +106,11 @@ source_show:
 
 source_startinput:
     path: /source/startinput/{sourceid}
-    controller:  App\Controller\GlimpseController::startinput
+    controller:  App\Controller\GlimpseController:startinput
 
 source_selectinput:
     path: /source/selectinput/{location}
-    controller:  App\Controller\SourceController::selectinput
+    controller:  App\Controller\SourceController:selectinput
 
 
 actor_show_all:

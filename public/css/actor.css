@@ -1,0 +1,118 @@
+
+#actor div.twocols
+{
+     display:flex;
+}
+
+#actor div.twocols div.actor
+{
+     border:2 solid red;
+}
+
+#actor div.twocols div.glimpses
+{
+     border:2 solid green;
+} 
+
+#actor div.row  div.inputpair
+{
+    
+    margin-right: 2em;
+    display:flex;
+   
+}
+
+div#actor input.title
+{ 
+    width:40em;
+      height:4em;
+}
+
+div#actor textarea.title
+{ 
+    width:40em;
+      height:4em;
+}
+
+div#actor input.id
+{ 
+    width:3em;
+}
+
+div#actor input.language
+{ 
+    width:3em;
+}
+
+
+div#actor input.region
+{ 
+    width:10em;
+}
+
+div#actor input.period
+{ 
+    width:10em;
+}
+
+div#actor input.url
+{ 
+    width:40em;
+    height:4em;
+}
+
+div#actor textarea.url
+{ 
+    width:40em;
+    height:4em;
+}
+
+#actor   div.row 
+{
+    display:flex;
+    margin-left: 1em;
+}
+
+#actor   div.row div.label
+{
+   width:4em;
+   color:blue;
+}
+
+#actor   div.row div
+{
+     padding: 5px;
+}
+
+#actor   div.row div.col1
+{
+   width:2em;
+}
+#actor   div.row div.col2
+{
+   width:2em;
+}
+#actor   div.row div.col3
+{
+      width:20em;
+      xborder: 1px solid #CC33CC;
+      white-space: nowrap;
+      overflow: hidden;
+      o-text-overflow: ellipsis;
+      text-overflow: ellipsis;
+}
+#actor   div.row div.col4
+{
+   width:16em;
+}
+#actor   div.row div.col5
+{
+   width:6em;
+}
+
+
+
+#actor   div.form 
+{
+   background-color:silver;
+}

@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+        <meta charset="UTF-8" />
+        <title>{% block title %}Glimpses of past lives{% endblock %}</title>
         {% block stylesheets %}
+        <link href="{{ asset('css/main.css') }}" rel="stylesheet" />
         {% endblock %}
-
-        {% block javascripts %}
-        {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        
     </head>
     <body>
+    <div class="heading"><div class="title">Glimpses of past lives</div></div>
         {% block body %}{% endblock %}
+        {% block javascripts %}{% endblock %}
     </body>
 </html>

@@ -1,0 +1,63 @@
+{# templates/source/showall.html.twig #}
+
+
+
+
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link href="{{ asset('css/source.css') }}" rel="stylesheet" />
+
+{% endblock %}
+
+{% block js %}
+{{ parent() }}
+
+{% endblock %}
+
+{% block body %}
+<div id="source" >
+      <div class="subheading">
+      <div class='returnbutton'>
+                <a  href = "/actor/showall" >Actors</a>
+            </div>
+      <div class='returnbutton'>
+                <a  href = "/glimpse/showall" >Glimpses</a>
+            </div>
+      <div class='returnbutton button1 '>
+                <a  href = "/source/new" >New Source</a>
+            </div>
+            </div>
+    <div class="heading">
+
+      <div class="title"> Sources</div>
+            </div>
+     <div class= "sourcelist">
+    {% for source in sources %}
+    <div class= "source">
+        <div class="row ">
+           {% dump source %}
+             <div class="returnbutton col1">   <a   href = "/source/show/{{source.sourceid}}" >view </a> </div>
+
+
+            <div class= "col2">{{source.sourceId}}</div>
+            <div class= "col3"> {{source.title}}</div>
+            <div class= "col4"> {{source.region}}</div>
+            <div class= "col5"> {{source.period}} </div>
+              <div class= "col5"> {{source.stats[1]}} </div>
+               <div class= "col5"> {{source.stats[2]}} </div>
+                <div class= "col5"> {{source.stats[3]}} </div>
+        </div>
+        </div>
+
+
+    {% endfor %}
+       </div>
+
+</div>
+
+
+{% endblock %}
+
+

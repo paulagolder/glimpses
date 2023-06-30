@@ -1,0 +1,23 @@
+#glimpse   div.heading 
+{
+    display:flex;
+    
+}
+
+#glimpse   div.row 
+{
+    display:flex;
+    
+}
+
+
+#glimpse   div.glimpse  
+{
+   margin-bottom:40px;
+}
+
+#glimpse  div.row  div.label
+{
+    color:blue;
+    width :70px;
+}

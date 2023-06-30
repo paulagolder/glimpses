@@ -1,0 +1,32 @@
+{# templates/glimpse/selecttype.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link href="{{ asset('css/glimpse/edit.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block js %}
+{{ parent() }}
+
+{% endblock %}
+
+{% block body %}
+<div id="glimpse" >
+    
+    
+    <div class ="heading" >
+        <div class="returnbutton "> <a class="button" href = "{{returnlink}}" >return </a> </div>
+   </div>
+          {% for type in typelist %}
+          <div class="subheading">
+            <div class="returnbutton "> <a class="button" href = "/glimpse/new/{{type}}" >Add New {{type}} </a> </div>
+          </div>
+          {% endfor %}
+ </div>
+    
+{% endblock %}
+
+
+

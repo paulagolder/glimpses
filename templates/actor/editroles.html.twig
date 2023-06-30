@@ -1,0 +1,98 @@
+{# templates/actor/editroles.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link href="{{ asset('css/actor.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block js %}
+{{ parent() }}
+
+{% endblock %}
+
+{% block body %}
+<div id="actor" >
+
+
+    <div class ="heading" >
+        <div class="returnbutton button1"> <a href = "/actor/showall" >return </a> </div>
+        <div class="returnbutton">  <a   href = "/actor/delete/{{actor.actorid}}" >delete </a> </div>
+        <div class="returnbutton">  <a   href = "/actor/edit/{{actor.actorid}}" >edit </a> </div>
+
+        <div class="returnbutton"><a  href = "/actor/new" >Add New actor </a> </div>
+    </div>
+    <div class="twocols">
+        <div class="actor">
+            <div class="row">
+                <div class="inputpair" >
+                    <div class="label">ID </div>
+                    <div class= "field"> {{actor.actorid}}</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="inputpair" >
+                    <div class="label">name</div>
+                    <div class= "field"> {{actor.name}} </div>
+                </div>
+                <div class="inputpair" >
+                    <div class="label"> specifier </div>
+                    <div class= "field"> {{actor.specifier}} </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="inputpair" >
+                    <div class="label"> text </div>
+                    <div class= "field"> {{actor.text}} </div>
+                </div>
+            </div>
+            <div class="subheading" >
+                <div class="title"> roles </div>
+            </div>
+                <div class="roleTable" >
+        <div class="body">
+            {% for pid, grole in groles %}
+            <div class="row">
+                <div class="returnbutton">  <a   href = "/actor/deleterole/{{actor.actorid}}/{{grole.roleref}}" >delete </a> </div>
+                <div class="cell">
+                    <div class="subheading">
+                    </div>
+                </div>
+                <div class="cell" > {{grole.roleref}} </div>
+                <div class="cell" > {{grole.role.role}} </div>
+                <div class="cell" > {{grole.role.name}} </div>
+                <div class="cell" > {{grole.glimpse.location}} </div>
+                <div class="cell" > {{grole.glimpse.type}} </div>
+                <div class="cell" > {{grole.glimpse.date}} </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+        </div>
+        <div class= "glimpses">
+            {% for pid, glimpse in glimpses %}
+            <div class= "glimpse row">
+                <div class="returnbutton" >  <a  href = "/glimpse/show/{{glimpse.glimpseid}}" >View </a> </div>
+                <div class= "field cloc"> {{glimpse.location}}</div>
+                <div class= "field ctype"> {{glimpse.type}}</div>
+                <div class= "field cdate"> {{glimpse.date}}</div>
+                {% for rid,role in glimpse.roles %}
+                <div class="returnbutton"> <a href="/actor/addrole/{{actor.actorid}}/{{role.roleid}}">
+                        {{role.role}}:{{role.name}}</a>
+                </div>
+                {% endfor %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+</div>
+</div>
+</div>
+{% endblock %}
+
+
+
+

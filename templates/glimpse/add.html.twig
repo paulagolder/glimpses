@@ -1,0 +1,49 @@
+{# templates/text/update.html.twig #}
+
+
+
+
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+      {{ parent() }}
+   <link href="{{ asset('css/content/edit.css') }}" rel="stylesheet" />
+   <link href="{{ asset('css/form.css') }}" rel="stylesheet" />
+
+        <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-lite.css" rel="stylesheet"/>
+{% endblock %}
+
+{% block js %}
+ {{ parent() }}
+ <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-lite.js"></script>
+{% endblock %}
+
+{% block body %}
+<div id="contentedit" >
+
+<div class="heading">
+
+  <div class="returnbutton button1"> <a href = {{returnlink}} >{% trans %} annuler {% endtrans%} </a> </div>
+</div>
+<div class="form">
+{{ form_start(form) }}
+{{ form_widget(form) }}
+ <button type="submit">{% trans %} enregistrer {% endtrans%} </button>
+{{ form_end(form) }}
+</div>
+
+
+</div>
+ <div id="summernotex"></div>
+
+<script>
+    $(document).ready(function() { $('#summernotex').summernote(); });
+</script>
+{% endblock %}
+
+
+{% block right %}
+   {{ render(controller('App\\Controller\\BookmarkController::setfield'))}}
+{% endblock%}

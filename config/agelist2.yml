@@ -1,0 +1,91 @@
+-
+   levent: birth
+   etype: baptism
+   arole: child 
+   age: 1
+   limit: LT
+   prob: 80
+-
+   levent: birth
+   etype: baptism
+   arole: child 
+   age: 0
+   limit: GT
+   prob: 100
+-
+   levent: birth
+   etype: baptism
+   arole: father 
+   age: 20
+   limit: AL
+   prob: 80
+-
+   levent: birth
+   etype: baptism
+   arole: father 
+   age: 60
+   limit: AM
+   prob: 80
+-
+   levent: death
+   etype: baptism
+   arole: father 
+   age: 0
+   limit: AM
+   prob: 80
+-
+   levent: death
+   etype: baptism
+   arole: father 
+   age: 20
+   limit: LE
+   prob: 80
+-
+   levent: death
+   etype: xbaptism
+   arole: child
+   age: 0y
+   limit: GT
+   prob: 100 
+-
+   levent: death
+   etype: xbaptism
+   arole: child
+   age: 60y
+   limit: LT
+   prob: 50 
+-
+   levent: birth
+   etype: marriage
+   arole: bride 
+   age: 20
+   limit: AL
+   prob: 80
+-
+   levent: birth
+   etype: marriage
+   arole: bride 
+   age: 30
+   limit: AM
+   prob: 80
+-
+   levent: death
+   etype: marriage
+   arole: bride 
+   age: 0
+   limit: AM
+   prob: 80
+-
+   levent: death
+   etype: marriage
+   arole: bride 
+   age: 20
+   limit: LE
+   prob: 80
+-
+   levent: birth
+   etype: xbaptism
+   arole: child 
+   age: 100
+   limit: LT
+   prob: 100

@@ -1,0 +1,101 @@
+
+
+div#source input.title
+{ 
+    width:40em;
+      height:4em;
+}
+
+div#source textarea.title
+{ 
+    width:40em;
+      height:4em;
+}
+
+div#source input.id
+{ 
+    width:3em;
+}
+
+div#source input.language
+{ 
+    width:3em;
+}
+
+
+div#source input.region
+{ 
+    width:10em;
+}
+
+div#source input.period
+{ 
+    width:10em;
+}
+
+div#source input.url
+{ 
+    width:40em;
+    height:4em;
+}
+
+div#source textarea.url
+{ 
+    width:40em;
+    height:4em;
+}
+
+#source   div.row 
+{
+    display:flex;
+    margin-left : 1em;
+}
+
+#source   div.row div.label
+{
+   width:6em;
+   color:blue;
+}
+
+#source   div.row div
+{
+     padding: 5px;
+}
+
+#source   div.row div.col1
+{
+   width:2em;
+}
+#source   div.row div.col2
+{
+   width:2em;
+}
+#source   div.row div.col3
+{
+      width:30em;
+      xborder: 1px solid #CC33CC;
+      white-space: nowrap;
+      overflow: hidden;
+      o-text-overflow: ellipsis;
+      text-overflow: ellipsis;
+}
+#source   div.row div.col4
+{
+   width:12em;
+      xborder: 1px solid #CC33CC;
+      white-space: nowrap;
+      overflow: hidden;
+      o-text-overflow: ellipsis;
+      text-overflow: ellipsis;
+}
+#source   div.row div.col5
+{
+   width:6em;
+}
+
+
+
+#source   div.form 
+{
+   background-color:silver;
+}

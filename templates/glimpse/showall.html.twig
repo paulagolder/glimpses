@@ -1,0 +1,68 @@
+{# templates/glimpse/showall.html.twig #}
+
+
+
+
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link href="{{ asset('css/glimpse/showall.css') }}" rel="stylesheet" />
+
+{% endblock %}
+
+{% block js %}
+{{ parent() }}
+
+{% endblock %}
+
+{% block body %}
+<div id="glimpse" >
+
+   <div class="subheading">
+      <div class="returnbutton " >  <a  href = "/glimpses" >View Sources </a> </div>
+       <div class="returnbutton " >  <a  href = "/actor/showall" >View Actors </a> </div>
+    </div> 
+    <div class="heading">
+      <div class="title"> Glimpses of </div>
+    </div> 
+    <form  action="/glimpse/filter">
+  <div class="row">
+   <div class="label"> Filter</div>
+   <input type="text" name="filter" value="{{filter}}" >
+   <input type="submit" value="action" >
+   </div>
+   </form>
+     <div class= "glimpselist">
+    {% for pid, glimpse in glimpses %}
+    <div class= "glimpse row">
+         
+            <div class="returnbutton" >  <a  href = "/glimpse/show/{{glimpse.glimpseid}}" >View </a> </div>
+                        
+            <div class= "field cloc"> {{glimpse.location}}</div>
+         
+            <div class= "field ctype"> {{glimpse.type}}</div>
+         
+            <div class= "field cdate"> {{glimpse.date}}</div>
+            {% if glimpse.text %}
+            <div class= "field ctext"> {{glimpse.text}} </div>
+            {% else %}
+              <div class= "field ctext"> 
+                {% for rid, role in glimpse.roles %}
+                {{role.role}}:{{role.name}} 
+                {% endfor %}
+              </div>
+              {% endif %}
+                 
+            
+            
+    </div>
+    
+    {% endfor %}
+    </div>
+</div>
+
+
+{% endblock %}
+
+

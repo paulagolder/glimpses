@@ -1,0 +1,57 @@
+{# templates/source/edit.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link href="{{ asset('css/source.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block js %}
+{{ parent() }}
+
+{% endblock %}
+
+{% block body %}
+<div id="source" >
+    
+    
+    <div class ="heading" >
+       <div class="title"> Create new Source </div>
+        <div class="returnbutton button1"> <a class="button" href = "{{returnlink}}" >return </a> </div>
+        <div class="returnbutton "> <a class="button" href = "/source/new" >Add New source </a> </div>
+    </div>
+    <div class="source inputform"> 
+        <form action="/source/process_edit/{{source.sourceid}}" method="post" id="sourceform"  >
+            <div class="row">
+                <div class="label">ID </div>
+                <div class= "field"> <input class="id" type="text" name="_sourceid" value="{{source.sourceid}}" > </div>
+                
+                    <div class="label"> language </div>
+                    <div class= "field"> <input class="language" type="text" name="_language" value="{{source.language}}" /> </div>
+                </div>
+                <div class="row">
+                    <div class="label"> title </div>
+                    <textarea class= "title" name='_title'   form="sourceform">{{source.title}}</textarea>
+                </div>
+                   <div class="row">
+                    <div class="label"> region </div>
+                    <div class= "field"> <input class="region" type="text" name="_region" value="{{source.region}}" /> </div>
+                </div>
+                <div class="row">
+                    <div class="label"> period </div>
+                    <div class= "field"> <input class="period" type="text" name="_period" value="{{source.period}}" /> </div>
+                          </div>
+                
+                <div class="row">
+                      <div class="label"> url </div>
+                    <textarea class= "url" name='_url'   form="sourceform">{{source.url}}</textarea>
+                </div>
+              <button type="submit" id="submitbutton"   > enregistrer</button> 
+       </form>
+       </div>
+       </div>
+{% endblock %}
+
+
+

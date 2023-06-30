@@ -1,0 +1,17 @@
+
+birth:
+  baptism:
+        child: 
+         - { age: 1 ,  limit: LT ,   prob: 80  , rational : at baptism a child is usually ls than a year old }
+         - { age: 0 ,  limit: GT ,   prob: 100 , rational : at baptism a child cannot be born before it is baptised }
+        father:
+         - { age: 20,  limit: AL ,   prob: 80 , rational : at baptism a baby's father will usually be over 20 years old }
+         - { age: 60,  limit: AM  ,   prob: 80  , rational : at baptism a baby's father will usually be under 60 years old }
+death:
+  burial:
+       defunct:
+         - { age: 0,  limit: AM ,   prob: 100 , rational : at burial the defunct is no longer alive }
+         - { age: 0,  limit: AL ,   prob: 100 , rational : at burial the defunct is no longer alive }
+         
+
+ 

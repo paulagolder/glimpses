@@ -1,0 +1,169 @@
+{# templates/actor/compare.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link href="{{ asset('css/actor.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block js %}
+{{ parent() }}
+
+{% endblock %}
+
+{% block body %}
+<div id="actor" >
+    
+    
+    <div class ="heading" >
+        <div class="returnbutton button1"> <a href = "/actor/showall" >return </a> </div>
+       {# <div class="returnbutton">  <a   href = "/actor/delete/{{actor.actorid}}" >delete </a> </div>
+        <div class="returnbutton">  <a   href = "/actor/edit/{{actor.actorid}}" >edit </a> </div>
+        <div class="returnbutton">  <a   href = "/actor/editroles/{{actor.actorid}}" >edit roles </a> </div>
+        <div class="returnbutton"><a  href = "/actor/new" >Add New actor </a> </div>#}
+    </div>
+    <div class="twocols">
+        <div class="col1">
+            <div class="actor"> 
+                <div class="row">
+                    <div class="inputpair" >
+                        <div class="label">ID </div>
+                        <div class= "field"> {{actor1.actorid}}</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="inputpair" >
+                        <div class="label">name</div>
+                        <div class= "field"> {{actor1.name}} </div>
+                    </div>
+                    <div class="inputpair" >
+                        <div class="label"> specifier </div>
+                        <div class= "field"> {{actor1.specifier}} </div>
+                    </div>
+                </div>
+                <div class="row">
+                    
+                    <div class="inputpair" >
+                        <div class="label"> text </div>
+                        <div class= "field"> {{actor1.text}} </div>
+                    </div>
+                </div>
+                <div class="returnbutton">  <a   href = "/actor/impute/{{actor1.actorid}}" >Impute Life history </a> </div>
+                <div class="subheading" >
+                    <div class="title"> roles </div>
+                </div>
+                {% set birthdate = "00000000" %}
+                <div class="LifeEventTable" >
+                    <div class="body">
+                        {% for event in lifeevents2 %}
+                        <div class="row">
+                            <div class="cell">
+                                <div class="subheading">
+                                </div>
+                            </div>
+                            <div class="cell" > {{event.eventtype}} </div> 
+                            <div class="cell" > {{event.lowdate}} </div> 
+                            <div class="cell" > {{event.highdate}} </div> 
+                            
+                        </div>
+                        {% if event.eventtype =="birth" %}
+                        {% set birthdate = event.lowdate %}
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="roleTable" >
+                    <div class="body">
+                        {% for pid, role in roles1 %}
+                        <div class="row">
+                            <div class="cell">
+                                <div class="subheading">
+                                </div>
+                            </div>
+                            {% set age = roletemplates.calcAge( birthdate , role.glimpse.date ) %}
+                            
+                            {% set formatedtext = roletemplates.getRoleFormat(role, roles1) %}
+                            <div class="cell" >{{formatedtext}} age: {{age}}</div>
+                        </div>
+                        
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col2">
+            <div class="actor"> 
+                <div class="row">
+                    <div class="inputpair" >
+                        <div class="label">ID </div>
+                        <div class= "field"> {{actor2.actorid}}</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="inputpair" >
+                        <div class="label">name</div>
+                        <div class= "field"> {{actor2.name}} </div>
+                    </div>
+                    <div class="inputpair" >
+                        <div class="label"> specifier </div>
+                        <div class= "field"> {{actor2.specifier}} </div>
+                    </div>
+                </div>
+                <div class="row">
+                    
+                    <div class="inputpair" >
+                        <div class="label"> text </div>
+                        <div class= "field"> {{actor2.text}} </div>
+                    </div>
+                </div>
+                <div class="returnbutton">  <a   href = "/actor/impute/{{actor2.actorid}}" >Impute Life history </a> </div>
+                <div class="subheading" >
+                    <div class="title"> roles </div>
+                </div>
+                {% set birthdate = "00000000" %}
+                <div class="LifeEventTable" >
+                    <div class="body">
+                        {% for event in lifeevents2 %}
+                        <div class="row">
+                            <div class="cell">
+                                <div class="subheading">
+                                </div>
+                            </div>
+                            <div class="cell" > {{event.eventtype}} </div> 
+                            <div class="cell" > {{event.lowdate}} </div> 
+                            <div class="cell" > {{event.highdate}} </div> 
+                            
+                        </div>
+                        {% if event.eventtype =="birth" %}
+                        {% set birthdate = event.lowdate %}
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="roleTable" >
+                    <div class="body">
+                        {% for pid, role in roles2 %}
+                        <div class="row">
+                            <div class="cell">
+                                <div class="subheading">
+                                </div>
+                            </div>
+                            {% set age = roletemplates.calcAge( birthdate , role.glimpse.date ) %}
+                            
+                            {% set formatedtext = roletemplates.getRoleFormat(role, roles2) %}
+                            <div class="cell" >{{formatedtext}} age: {{age}}</div>
+                        </div>
+                        
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+
+
