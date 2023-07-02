@@ -36,3 +36,10 @@ services:
         alias:  App\Service\Templates
         public: true
 
+#twig.extension:
+#    class: App\Extension\AppTwigExtensions
+#    tags:
+#        -  { name: twig.extension}
+
+
+    App\Twig\Extension\AppExtension: ~

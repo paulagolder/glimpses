@@ -105,11 +105,50 @@ class Templates
       return $this->agelist;
     }
 
-    public function getDates($gtype,$gdate,$role)
+    public function getDates($gtype,$role,$gdate)
     {
-      dump($gtype."-".$gdate."-".$role);
+      $dt = new \DateTimeImmutable($gdate);
+      $dt0 = $dt;
+      $dt1 = $dt;
+      $dt2 = $dt;
+      dump( $dt->format("Y-m-d"));;
+      $ags = $this->agelist[$gtype][$role];
+      dump($gtype."-".$role);
+      dump($ags);
+      $comps = array();
+      foreach($ags as $ag)
+      {
+        dump("dt:". $dt->format("Y-m-d"));;
+        $t = $ag["type"];
+        $v = $ag["value"] +0;
+       // dump($v);
+        $i=1;
+        if($t=="minage")
+        {
+            $dt0 = $dt0->modify(-$v." year");
+            dump("Birthdate before:".$dt0->format("Y"));
+            $comps[$i]=array("birthdate","before",$dt0->format("Y"));
+        }
+        if($t=="maxage")
+        {
+          $dt1 = $dt1->modify(-$v." year");
+          dump("Birthdate after:".$dt1->format("Y"));
+            $comps[$i]=array("birthdate","after",$dt0->format("Y"));
+        }
+        if($t=="alive")
+        {
+          dump("Birthdate before:".$dt->format("Y"));
+            $comps[$i]=array("birthdate","before",$dt0->format("Y"));
+          dump("Deathdate after:".$dt->format("Y"));
+            $comps[$i]=array("deathdate","after",$dt0->format("Y"));
+        }
+        $i=$i+1;
+      }
+      dump($comps);
       return ;
     }
+
+
 
 
 }

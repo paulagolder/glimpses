@@ -14,29 +14,36 @@
 
 {% block body %}
 <div id="actor" >
-    
-    
+
+
     <div class ="heading" >
        <div class="title"> Create new Actor </div>
         <div class="returnbutton button1"> <a class="button" href = "{{returnlink}}" >return </a> </div>
         <div class="returnbutton "> <a class="button" href = "/actor/new" >Add New Actor </a> </div>
     </div>
-    <div class="actor inputform"> 
+    <div class="actor inputform">
         <form action="/actor/process_edit/{{actor.actorid}}" method="post" id="actorform"  >
             <div class="row">
                 <div class="label">ID </div>
                 <div class= "field"> <input class="id" type="text" name="_actorid" value="{{actor.actorid}}" > </div>
-                
+
                 </div>
+                 <div class="row">
       <div class="label">Name</div>
                 <div class= "field"> <input class="name" type="text" name="_name" value="{{actor.name}}" > </div>
-                
+
                     <div class="label">Specifier</div>
                 <div class= "field"> <input class="specifier" type="text" name="_specifier" value="{{actor.specifier}}" > </div>
-                
-                
-  
-              <button type="submit" id="submitbutton"   > enregistrer</button> 
+      </div>
+        <div class="row">
+      <div class="label">Birthdate</div>
+                <div class= "field"> <input class="name" type="text" name="_birthdate" value="{{actor.birthdate}}" > </div>
+
+                    <div class="label">Deathdate</div>
+                <div class= "field"> <input class="specifier" type="text" name="_deathdate" value="{{actor.deathdate}}" > </div>
+      </div>
+
+              <button type="submit" id="submitbutton"   > enregistrer</button>
        </form>
        </div>
        </div>

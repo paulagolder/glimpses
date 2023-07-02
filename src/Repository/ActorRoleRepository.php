@@ -22,7 +22,7 @@ class ActorRoleRepository extends EntityRepository
 
     public function xfindRoles($aid)
     {
-        $sql = "select r from ActorRole::class g JOIN App:Role r  ";
+        $sql = "select r from App:ActorRole g JOIN App:Role r  ";
          $sql .= " where  g.roleref = r.roleid  ";
         $sql .= " and g.actorref = ".$aid." ";
         $query = $this->getEntityManager()->createQuery($sql);
@@ -37,7 +37,7 @@ class ActorRoleRepository extends EntityRepository
 
     public function findOne($aref,$rref)
     {
-        $sql = "select g from ActorRole::class g ";
+        $sql = "select g from App:ActorRole g ";
         $sql .= " where g.actorref = ".$aref." ";
         $sql .= " and g.roleref = ".$rref." ";
         $query = $this->getEntityManager()->createQuery($sql);

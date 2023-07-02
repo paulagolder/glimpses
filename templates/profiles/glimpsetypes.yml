@@ -14,13 +14,13 @@ burial:
      format: "was buried on #date at #location"
      cardinality: 1
    father: 1
-   husband: 1
+   groom: 1
    official: 0
 marriage:
-   format: "wedding between #husband and #bride on #date at #location"
+   format: "wedding between #groom and #bride on #date at #location"
    bride:
-      format: "wedded to #husband on #date at #location "
-   husband :
+      format: "wedded to #groom on #date at #location "
+   groom :
       format: "wedded to  #bride on #date at #location "
    father_of_bride: 1
    witness: 2

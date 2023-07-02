@@ -124,10 +124,6 @@ class Actor
     }
 
 
-
-
-
-
     public function getName(): ?string
     {
         return $this->name;
@@ -141,7 +137,7 @@ class Actor
         return $this;
     }
 
-        public function getSpecifier(): ?string
+    public function getSpecifier(): ?string
     {
         return $this->specifier;
     }
@@ -217,13 +213,13 @@ class Actor
 
     public function getBirthdate(): ?string
     {
-        return $this->Birthdate;
+        return $this->birthdate;
     }
 
 
     public function setBirthdate(string $text): self
     {
-        $this->Birthdate = $text;
+        $this->birthdate = $text;
         return $this;
     }
 

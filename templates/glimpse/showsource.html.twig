@@ -15,13 +15,13 @@
 
 {% block body %}
 <div id="glimpse" >
-    
+
     <div class="heading">
-        
+
       <div class="title"> Glimpses of </div>
          <div class="title"> {{source.title}} </div>
-    </div> 
-    
+    </div>
+
      <div class= "glimpselist">
     {% for pid, glimpse in glimpses %}
     <div class= "glimpse">
@@ -34,24 +34,24 @@
             <div class= "field ctext"> {{glimpse.text}} </div>
             {% else %}
             {% dump(glimpse.roles) %}
-              {% set formatedtext = roletemplates.getEventFormat(glimpse, glimpse.roles) %}
+              {% set formatedtext = EventFormat(glimpse, glimpse.roles) %}
               {% if formatedtext %}
-              <div class= "field ctext"> 
+              <div class= "field ctext">
                 {{formatedtext}}
               </div>
               {% else %}
-              <div class= "field ctext"> 
+              <div class= "field ctext">
                 {% for rid, role in glimpse.roles %}
-               
+
                 {{role.role}}:{{role.name}} ;
                 {% endfor %}
               </div>
               {% endif %}
               {% endif %}
         </div>
-        
+
     </div>
-    
+
     {% endfor %}
     </div>
 </div>

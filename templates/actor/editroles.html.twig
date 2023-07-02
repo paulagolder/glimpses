@@ -23,6 +23,7 @@
 
         <div class="returnbutton"><a  href = "/actor/new" >Add New actor </a> </div>
     </div>
+    {% dump(actor) %}
     <div class="twocols">
         <div class="actor">
             <div class="row">
@@ -39,6 +40,20 @@
                 <div class="inputpair" >
                     <div class="label"> specifier </div>
                     <div class= "field"> {{actor.specifier}} </div>
+                </div>
+            </div>
+              <div class="row">
+                <div class="inputpair" >
+                    <div class="label">birthdate</div>
+                    {% if actor.birthdate is not null  %}
+                    <div class= "field"> {{actor.Birthdate}} </div>
+                    {% else %}
+                       <div class= "field"> "Null"" </div>
+                    {% endif %}
+                </div>
+                <div class="inputpair" >
+                    <div class="label"> deathdate</div>
+                    <div class= "field"> {{actor.deathdate}} </div>
                 </div>
             </div>
             <div class="row">
@@ -65,6 +80,7 @@
                 <div class="cell" > {{grole.glimpse.location}} </div>
                 <div class="cell" > {{grole.glimpse.type}} </div>
                 <div class="cell" > {{grole.glimpse.date}} </div>
+                <div class="cell" > Age: {{calAge(actor.Birthdate,grole.glimpse.date)}} </div>
             </div>
             {% endfor %}
         </div>

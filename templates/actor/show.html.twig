@@ -40,6 +40,20 @@
                 <div class= "field"> {{actor.specifier}} </div>
             </div>
         </div>
+           <div class="row">
+                <div class="inputpair" >
+                    <div class="label">birthdate</div>
+                    {% if actor.birthdate is not null  %}
+                    <div class= "field"> {{actor.Birthdate}} </div>
+                    {% else %}
+                       <div class= "field"> "Null"" </div>
+                    {% endif %}
+                </div>
+                <div class="inputpair" >
+                    <div class="label"> deathdate</div>
+                    <div class= "field"> {{actor.deathdate}} </div>
+                </div>
+            </div>
         <div class="row">
 
             <div class="inputpair" >
@@ -64,6 +78,7 @@
                     {% if role.glimpse is defined %}
                      <div class="cell" > {{role.glimpse.type}} </div>
                     <div class="cell" > {{role.glimpse.date}} </div>
+                     <div class="cell" > Age: {{calAge(actor.Birthdate,role.glimpse.date)}} </div>
                     {% dump role.glimpse %}
                     {% dump role.role %}
 

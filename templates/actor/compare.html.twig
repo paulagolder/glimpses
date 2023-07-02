@@ -14,8 +14,8 @@
 
 {% block body %}
 <div id="actor" >
-    
-    
+
+
     <div class ="heading" >
         <div class="returnbutton button1"> <a href = "/actor/showall" >return </a> </div>
        {# <div class="returnbutton">  <a   href = "/actor/delete/{{actor.actorid}}" >delete </a> </div>
@@ -25,7 +25,7 @@
     </div>
     <div class="twocols">
         <div class="col1">
-            <div class="actor"> 
+            <div class="actor">
                 <div class="row">
                     <div class="inputpair" >
                         <div class="label">ID </div>
@@ -43,7 +43,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    
+
                     <div class="inputpair" >
                         <div class="label"> text </div>
                         <div class= "field"> {{actor1.text}} </div>
@@ -62,10 +62,10 @@
                                 <div class="subheading">
                                 </div>
                             </div>
-                            <div class="cell" > {{event.eventtype}} </div> 
-                            <div class="cell" > {{event.lowdate}} </div> 
-                            <div class="cell" > {{event.highdate}} </div> 
-                            
+                            <div class="cell" > {{event.eventtype}} </div>
+                            <div class="cell" > {{event.lowdate}} </div>
+                            <div class="cell" > {{event.highdate}} </div>
+
                         </div>
                         {% if event.eventtype =="birth" %}
                         {% set birthdate = event.lowdate %}
@@ -81,19 +81,19 @@
                                 <div class="subheading">
                                 </div>
                             </div>
-                            {% set age = roletemplates.calcAge( birthdate , role.glimpse.date ) %}
-                            
+                            {% set age = calcAge( birthdate , role.glimpse.date ) %}
+
                             {% set formatedtext = roletemplates.getRoleFormat(role, roles1) %}
                             <div class="cell" >{{formatedtext}} age: {{age}}</div>
                         </div>
-                        
+
                         {% endfor %}
                     </div>
                 </div>
             </div>
         </div>
         <div class="col2">
-            <div class="actor"> 
+            <div class="actor">
                 <div class="row">
                     <div class="inputpair" >
                         <div class="label">ID </div>
@@ -111,7 +111,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    
+
                     <div class="inputpair" >
                         <div class="label"> text </div>
                         <div class= "field"> {{actor2.text}} </div>
@@ -130,10 +130,10 @@
                                 <div class="subheading">
                                 </div>
                             </div>
-                            <div class="cell" > {{event.eventtype}} </div> 
-                            <div class="cell" > {{event.lowdate}} </div> 
-                            <div class="cell" > {{event.highdate}} </div> 
-                            
+                            <div class="cell" > {{event.eventtype}} </div>
+                            <div class="cell" > {{event.lowdate}} </div>
+                            <div class="cell" > {{event.highdate}} </div>
+
                         </div>
                         {% if event.eventtype =="birth" %}
                         {% set birthdate = event.lowdate %}
@@ -150,11 +150,11 @@
                                 </div>
                             </div>
                             {% set age = roletemplates.calcAge( birthdate , role.glimpse.date ) %}
-                            
+
                             {% set formatedtext = roletemplates.getRoleFormat(role, roles2) %}
                             <div class="cell" >{{formatedtext}} age: {{age}}</div>
                         </div>
-                        
+
                         {% endfor %}
                     </div>
                 </div>

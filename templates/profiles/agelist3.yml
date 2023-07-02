@@ -1,17 +1,32 @@
 
-birth:
-  baptism:
-        child: 
-         - { age: 1 ,  limit: LT ,   prob: 80  , rational : at baptism a child is usually ls than a year old }
-         - { age: 0 ,  limit: GT ,   prob: 100 , rational : at baptism a child cannot be born before it is baptised }
+baptism:
+        child:
+         - {type : minage, value: 0 ,  rational : at baptism a child is usually ls than a year old }
+         - {type : maxage, value: 20 ,   rational : at baptism a child cannot be born before it is baptised }
         father:
-         - { age: 20,  limit: AL ,   prob: 80 , rational : at baptism a baby's father will usually be over 20 years old }
-         - { age: 60,  limit: AM  ,   prob: 80  , rational : at baptism a baby's father will usually be under 60 years old }
-death:
-  burial:
-       defunct:
-         - { age: 0,  limit: AM ,   prob: 100 , rational : at burial the defunct is no longer alive }
-         - { age: 0,  limit: AL ,   prob: 100 , rational : at burial the defunct is no longer alive }
-         
+         - {type : minage, value: 20,   rational : at baptism a baby's father will usually be over 20 years old }
+         - {type : maxage, value: 60,  rational : at baptism a baby's father will usually be under 60 years old }
+         - {type : alive, value: 0,  rational : at baptism a baby's father will usually be alive }
+        mother:
+         - {type : minage, value: 20,   rational : at baptism a baby's mother will usually be over 20 years old }
+         - {type : maxage, value: 60,  rational : at baptism a baby's mother will usually be under 60 years old }
+         - {type : alive, value: 0,  rational : at baptism a baby's mother will usually be alive }
 
- 
+burial:
+       defunct:
+         - { type : minage, value: 0,   rational : at burial the defunct is no longer alive }
+         - { type : maxage, value: 100,   rational : at burial the defunct is no older than 100}
+         - { type : dead, value: 0,   rational : at burial the defunct is dead}
+
+marriage:
+       groom:
+         - { type : minage, value: 20,   rational : at marriage  the gropom is over 20}
+         - { type : maxage, value: 80,   rational : at marriage  the defunct is under 80}
+         - { type : alive, value: 0,   rational : at marriage the groom is alive}
+       bride:
+         - { type : minage, value: 15,   rational : at marriage  the bride is over 15 }
+         - { type : maxage, value: 80,   rational : at marriage  the bride is under 80}
+         - { type : alive, value: 0,   rational : at marriage the bride is allive}
+
+
+
