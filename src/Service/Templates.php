@@ -126,28 +126,57 @@ class Templates
         if($t=="minage")
         {
             $dt0 = $dt0->modify(-$v." year");
-            dump("Birthdate before:".$dt0->format("Y"));
-            $comps[$i]=array("birthdate","before",$dt0->format("Y"));
+            $this->mergeDates($comps,"birthdate","before",$dt0->format("Y"));
         }
         if($t=="maxage")
         {
           $dt1 = $dt1->modify(-$v." year");
-          dump("Birthdate after:".$dt1->format("Y"));
-            $comps[$i]=array("birthdate","after",$dt0->format("Y"));
+          $this->mergeDates($comps,"birthdate","after",$dt1->format("Y"));
         }
         if($t=="alive")
         {
-          dump("Birthdate before:".$dt->format("Y"));
-            $comps[$i]=array("birthdate","before",$dt0->format("Y"));
-          dump("Deathdate after:".$dt->format("Y"));
-            $comps[$i]=array("deathdate","after",$dt0->format("Y"));
+           $this->mergedates($comps,"birthdate","before",$dt0->format("Y"));
+           $this->mergeDates($comps,"deathdate","after",$dt0->format("Y"));
         }
         $i=$i+1;
       }
+
+
       dump($comps);
       return ;
     }
 
+      public function mergeDates(&$datearray,$datetype,$comp,$year)
+      {
+        if(!array_key_exists($datetype, $datearray))
+        {
+          $datearray[$datetype]= array();
+        }
+        if(!array_key_exists($comp,$datearray[$datetype]))
+        {
+          $datearray[$datetype][$comp]=$year;
+
+        }
+        else
+        {
+          $y1=$datearray[$datetype][$comp];
+          switch( $comp)
+          {
+            case "before":
+              $y2=  $datearray[$datetype][$comp];
+              if($y2<$y1) $datearray[$datetype][$comp]=$y2;
+              break;
+            case "after":
+              $y2=  $datearray[$datetype][$comp];
+              if($y2>$y1) $datearray[$datetype][$comp]=$y2;
+               break;
+          }
+
+
+        }
+
+
+      }
 
 
 

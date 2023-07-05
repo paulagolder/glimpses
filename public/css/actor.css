@@ -12,62 +12,62 @@
 #actor div.twocols div.glimpses
 {
      border:2 solid green;
-} 
+}
 
 #actor div.row  div.inputpair
 {
-    
+
     margin-right: 2em;
     display:flex;
-   
+
 }
 
 div#actor input.title
-{ 
+{
     width:40em;
       height:4em;
 }
 
 div#actor textarea.title
-{ 
+{
     width:40em;
       height:4em;
 }
 
 div#actor input.id
-{ 
+{
     width:3em;
 }
 
 div#actor input.language
-{ 
+{
     width:3em;
 }
 
 
 div#actor input.region
-{ 
+{
     width:10em;
 }
 
 div#actor input.period
-{ 
+{
     width:10em;
 }
 
 div#actor input.url
-{ 
+{
     width:40em;
     height:4em;
 }
 
 div#actor textarea.url
-{ 
+{
     width:40em;
     height:4em;
 }
 
-#actor   div.row 
+#actor   div.row
 {
     display:flex;
     margin-left: 1em;
@@ -110,9 +110,33 @@ div#actor textarea.url
    width:6em;
 }
 
+#actor   div.row div.cell.cmtext
+{
+    width:10em;
+}
+
+#actor   div.row div.cell.cstext
+{
+    width:4em;
+}
 
 
-#actor   div.form 
+#actor   div.row div.cell.cltext
+{
+    width:6em;
+}
+
+#actor   div.row div.cell.cint
+{
+    width:2em;
+}
+
+#actor   div.row div.cell.cdate
+{
+    width:6em;
+}
+
+#actor   div.form
 {
    background-color:silver;
 }

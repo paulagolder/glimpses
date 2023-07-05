@@ -142,7 +142,7 @@ public function showall(ManagerRegistry $doctrine)
 {
 
     $sources = $doctrine->getRepository(Source::class)->getAll();
-    foreach($sources as $key=> $source)
+    foreach($sources as $key=> &$source)
     {
      $stats =   $doctrine->getRepository(Glimpse::class)->Countglimpses($source->getSourceid());
      $source->stats = $stats;

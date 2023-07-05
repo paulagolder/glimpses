@@ -33,6 +33,21 @@ class RoleRepository extends EntityRepository
         return $aroles;
     }
 
+    public function filter($keyword)
+    {
+        $qb = $this->createQueryBuilder('r');
+        $qb->where("r.name  like  :gid ");
+        $qb->setParameter( "gid", $keyword);
+        $qy = $qb->getQuery();
+        $roles = $qy->getResult();
+        $aroles = array();
+        foreach( $roles as $key=>$role)
+        {
+            $aroles[$role->getroleid()]= $role;
+        }
+        return $aroles;
+    }
+
     public function findOne($gid,$rid)
     {
         $sql = "select r from App:role r ";

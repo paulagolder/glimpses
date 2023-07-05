@@ -33,19 +33,10 @@ class AppExtension extends AbstractExtension
     {
        $bdate2 = substr($bdate."-01-01",0,10);
        $gdate2 = substr($gdate."-01-01",0,10);
-        dump($bdate2);
-        dump($gdate2);
-
-        $date1 = new \DateTime($bdate2);
-        $date2 = new \DateTime($gdate2);
-
-
-        dump($date1->format('Y'));
-        dump($date2->format('Y'));
-      $year1 =  (int)$date1->format('Y');
-      $year2 = (int) $date2->format('Y');
-      dump($year1);
-      dump($year2);
+       $date1 = new \DateTime($bdate2);
+       $date2 = new \DateTime($gdate2);
+       $year1 =  (int)$date1->format('Y');
+       $year2 = (int) $date2->format('Y');
         return  $year2-$year1 ;
     }
 

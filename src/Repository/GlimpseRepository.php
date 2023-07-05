@@ -111,37 +111,29 @@ class GlimpseRepository extends EntityRepository
 
     public function filterf($filter)
     {
-        $filter = "Edward";
-        $roles = $this->getEntityManager()->getRepository(Role::class)->findChildren($gid);
-        $qb = $this->createQueryBuilder(null);
+       // $filter = "Edward";
+        $roles = $this->getEntityManager()->getRepository(Role::class)->filter($filter);
+        $qb = $this->createQueryBuilder('g');
+        $qb->select('g');
         $qb->from('App:Role','r');
-       // $qb->innerJoin('App:Role', 'r', \Doctrine\ORM\Query\Expr\Join::WITH ,' g.glimpseid = r.glimpseref ');
+         $qb->andwhere('  r.glimpseref = g.glimpseid  ');
+
         $qb->andwhere('  r.name like :name  ');
-      //  $qb->where('  r.name like :filter ');
-     //    $qb->andwhere("  r.name = '$filter' ");
-      //        $qb->where('  r.name like :filter ');
-      // $qb->where(' g.location like :filter or r.name like :filter ');
-        $qb->setparameter( 'name', 'Edward');
+
+        $qb->setparameter( 'name', $filter);
         dump($qb);
         $qy= $qb->getQuery();
              dump($qy);
         $glimpses = $qy->getResult();
         dump($glimpses);
-
         $n=0;
-
         //not happy with this but it works
         foreach($glimpses as &$glimpse )
         {
-
-
         $roles = $this->getEntityManager()->getRepository(Role::class)->findChildren($glimpse->getGlimpseid());
          $glimpse->{"role"} = $roles;
-
-
-
-
         }
+         dump($glimpses);
         return $glimpses;
     }
 

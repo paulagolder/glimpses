@@ -56,28 +56,45 @@ class ActorController extends AbstractController
     public function  editroles(ManagerRegistry $doctrine,$aid)
     {
         $request = $this->requestStack->getCurrentRequest();
-        // $gfilter = $this->lib->getCookieFilter();
+
         $actor = $doctrine->getRepository(Actor::class)->findOne($aid);
         dump($actor);
+        $gfilter = str_replace("  "," ",$actor->getName());
         $roles =  $doctrine->getRepository(ActorRole::class)->findRoles($aid);
         dump($roles);
         dump($this->templates->getAgelist());
-        foreach($roles as $role)
+        $froles = array();
+        foreach($roles as &$role)
         {
             dump($role);
+            $froles[$role->getRoleref()]=$role;
+            dump($role);
             $dates = $this->templates->getDates($role->glimpse->getType(),$role->role->getRole(),$role->glimpse->getDate());
+            dump($dates);
         }
-        // $filter = "%".$gfilter."%";
-        //  $glimpses = $doctrine->getRepository(Glimpse::class)->filterf($filter);
-        //  dump($glimpses);
-        $glimpses = array();
+        dump($froles);
+        $filter = "%".$gfilter."%";
+        $sroles = $doctrine->getRepository(Role::class)->filter($filter);
+        $croles = array();
+        foreach($sroles as &$srole)
+        {
+            dump($srole);
+            if(! array_key_exists($srole->getRoleid(), $froles))
+            {
+           $srole->glimpse = $doctrine->getRepository(Glimpse::class)->findOne($srole->getGlimpseref());
+           $croles[]=$srole;
+            }
+
+        }
+         dump($croles);
+       // $glimpses = array();
 
         return $this->render('actor/editroles.html.twig', array(
             'actor' => $actor,
-            'groles'=>$roles,
+            'groles'=>$froles,
             'returnlink' => "/actor/show/".$aid,
-            'glimpses' => $glimpses,
-            'typelist' =>['baptism','marriage', 'burial'],
+            'xroles' => $croles,
+            'typelist' =>['baptism','marriage', 'burial', 'inventory', 'will'],
         ));
 
     }

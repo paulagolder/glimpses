@@ -20,13 +20,22 @@ burial:
 
 marriage:
        groom:
-         - { type : minage, value: 20,   rational : at marriage  the gropom is over 20}
+         - { type : minage, value: 20,   rational : at marriage  the groom is over 20}
          - { type : maxage, value: 80,   rational : at marriage  the defunct is under 80}
          - { type : alive, value: 0,   rational : at marriage the groom is alive}
        bride:
          - { type : minage, value: 15,   rational : at marriage  the bride is over 15 }
          - { type : maxage, value: 80,   rational : at marriage  the bride is under 80}
-         - { type : alive, value: 0,   rational : at marriage the bride is allive}
-
-
-
+         - { type : alive, value: 0,   rational : at marriage the bride is alive}
+       husband:
+         - { type : minage, value: 20,   rational : at marriage  the groom is over 20}
+         - { type : maxage, value: 80,   rational : at marriage  the defunct is under 80}
+         - { type : alive, value: 0,   rational : at marriage the groom is alive}
+       wife:
+         - { type : minage, value: 15,   rational : at marriage  the bride is over 15 }
+         - { type : maxage, value: 80,   rational : at marriage  the bride is under 80}
+         - { type : alive, value: 0,   rational : at marriage the bride is alive}
+       witness:
+         - { type : minage, value: 20,   rational : at marriage  the groom is over 20}
+         - { type : maxage, value: 80,   rational : at marriage  the defunct is under 80}
+         - { type : alive, value: 0,   rational : at marriage the groom is alive}

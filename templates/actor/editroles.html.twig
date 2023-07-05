@@ -69,35 +69,40 @@
         <div class="body">
             {% for pid, grole in groles %}
             <div class="row">
-                <div class="returnbutton">  <a   href = "/actor/deleterole/{{actor.actorid}}/{{grole.roleref}}" >delete </a> </div>
+                <div class="returnbutton">  <a   href = "/actor/deleterole/{{actor.actorid}}/{{grole.roleref}}" >remove </a> </div>
+                 <div class="returnbutton">  <a   href = "/glimpse/show/{{grole.glimpse.glimpseid}}" >view </a> </div>
                 <div class="cell">
                     <div class="subheading">
                     </div>
                 </div>
-                <div class="cell" > {{grole.roleref}} </div>
-                <div class="cell" > {{grole.role.role}} </div>
-                <div class="cell" > {{grole.role.name}} </div>
-                <div class="cell" > {{grole.glimpse.location}} </div>
-                <div class="cell" > {{grole.glimpse.type}} </div>
-                <div class="cell" > {{grole.glimpse.date}} </div>
-                <div class="cell" > Age: {{calAge(actor.Birthdate,grole.glimpse.date)}} </div>
+                <div class="cell cint" > {{grole.roleref}} </div>
+                <div class="cell  cstext" > {{grole.role.role}} </div>
+                <div class="cell cmtext"> {{grole.role.name}} </div>
+                <div class="cell cmtext" > {{grole.glimpse.location}} </div>
+                <div class="cell  cstext" > {{grole.glimpse.type}} </div>
+                <div class="cell  cdate" > {{grole.glimpse.date}} </div>
+                <div class="cell  cstext" > Age: {{calAge(actor.Birthdate,grole.glimpse.date)}} </div>
             </div>
             {% endfor %}
         </div>
     </div>
         </div>
-        <div class= "glimpses">
-            {% for pid, glimpse in glimpses %}
-            <div class= "glimpse row">
-                <div class="returnbutton" >  <a  href = "/glimpse/show/{{glimpse.glimpseid}}" >View </a> </div>
-                <div class= "field cloc"> {{glimpse.location}}</div>
-                <div class= "field ctype"> {{glimpse.type}}</div>
-                <div class= "field cdate"> {{glimpse.date}}</div>
-                {% for rid,role in glimpse.roles %}
-                <div class="returnbutton"> <a href="/actor/addrole/{{actor.actorid}}/{{role.roleid}}">
-                        {{role.role}}:{{role.name}}</a>
-                </div>
-                {% endfor %}
+        </div>
+        <div class= "xroles">
+          <div class="subheading" >
+                <div class="title">  candidate roles </div>
+            </div>
+            {% for pid, xrole in xroles %}
+            <div class= "xrole row">
+                 <div class="returnbutton">  <a   href = "/actor/addrole/{{actor.actorid}}/{{xrole.roleid}}" >Add </a> </div>
+                 <div class="returnbutton" >  <a  href = "/glimpse/show/{{xrole.glimpseref}}" >View </a> </div>
+                 <div class= "cell cstext"> {{xrole.glimpse.type}}</div>
+                 <div class= "cell cdate"> {{xrole.glimpse.date}}</div>
+                 <div class= "cell cmtext"> {{xrole.glimpse.location}}</div>
+                <div class= "cell cmtext"> {{xrole.role}}</div>
+                <div class= "cell cmtext"> {{xrole.name}}</div>
+                <div class= "cell cltext"> {{xrole.predicates}}</div>
+                    <div class="cell  cstext" > Age: {{calAge(actor.Birthdate,xrole.glimpse.date)}} </div>
             </div>
             {% endfor %}
         </div>
