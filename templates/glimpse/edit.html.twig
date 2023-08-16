@@ -14,16 +14,17 @@
 
 {% block body %}
 <div id="glimpse" >
-    
-    
+
+
     <div class ="heading" >
         <div class="returnbutton button1"> <a  href = "{{returnlink}}" >return </a> </div>
+           <div class="returnbutton button1"> <a  href = "/glimpse/showsource/{{glimpse.sourceid}}" >Show All</a> </div>
         <div class="returnbutton button1"> <a  href = "/glimpse/new/X" >Add New Glimpse </a> </div>
         {% for type in typelist %}
         <div class="returnbutton button1"> <a  href = "/glimpse/new/{{type}}" >Add New {{type}} </a> </div>
         {% endfor %}
     </div>
-    <div class="glimpse"> 
+    <div class="glimpse">
         <form action="/glimpse/process_edit/{{glimpse.glimpseid}}" method="post"  id="sourceform"  >
             <div class="row">
                 <div class="inputpair id">
@@ -34,10 +35,7 @@
                     <div class="label"> language </div>
                     <div class= "field">{{glimpse.language}} </div>
                 </div>
-                <div class="inputpair location">
-                    <div class="label"> location </div>
-                    <div class= "field"> {{glimpse.location}} </div>
-                </div>
+
             </div>
             <div class="row">
                 <div class="inputpair sourceid">
@@ -61,14 +59,18 @@
                     <div class="label"> type </div>
                     <div class= "field"> <input class="type" type="text" name="_type" value="{{glimpse.type}}" /> </div>
                 </div>
-                
+
                 <div class="inputpair datequalifier">
                     <div class="label"> Qual </div>
                     <div class= "field"> <input class="datequalifier" type="text" name="_datequalifier" value="{{glimpse.datequalifier}}" /> </div>
                 </div>
                 <div class="inputpair date">
                     <div class="label"> date </div>
-                    <div class= "field"> <input class="date" type="text" name="_date" value="{{glimpse.date}}" /> </div>
+                    <div class= "field"> <input class="date" type="text" name="_gdate" value="{{glimpse.date}}" /> </div>
+                </div>
+                  <div class="inputpair location">
+                    <div class="label"> location </div>
+                    <div class= "field"> <input class="ref" type="text" name="_location" value="{{glimpse.location}}" /> </div>
                 </div>
             </div>
             <div class="row">
@@ -76,7 +78,7 @@
                     <div class="label"> text </div>
                     <div class= "field"> <input class="text" type="text" name="_text" value="{{glimpse.text}}" /> </div>
                 </div>
-                
+
             </div>
             <div class="subheading" >
                 <div class="title"> roles </div>
@@ -86,49 +88,50 @@
                     {% for pid, role in roles %}
                     {% if role.role != 'format' %}
                     {%  if role.roleid>0 %}
-                    
+
                     <div class="row">
                         <div class="cell">
-                            <div class="subheading">
+                        <div class="row">
                                 <div class="returnbutton"> <a    href = "/glimpse/deleterole/{{glimpse.glimpseid}}/{{pid}}" >delete </a> </div>
-                                
                                 <div class="returnbutton">  <a  href = "/glimpse/editrole/{{glimpse.glimpseid}}/{{pid}}" >edit </a>  </div>
-                            </div>
+                                </div>
                         </div>
-                        <div class="cell" > {{role.roleid}} </div> 
-                        
-                        <div class="cell"> {{role.role}}</div> 
-                        <div class="cell">{{role.name}} </div> 
-                        <div class="cell">{{role.predicates}} </div> 
+                        <div class="cell" >{{role.roleid}} </div>
+                        <div class="cell">{{role.role}}</div>
+                        <div class="cell">{{role.name}}</div>
+                        <div class="cell">{{role.predicates}}</div>
+                          <div class="cell">
+                                <div class="returnbutton"> <a    href = "/actor/newactor/{{glimpse.glimpseid}}/{{role.roleid}}" >New Actor</a> </div>
+                        </div>
                     </div>
                     {% else %}
-                    
+
                     <div class="row">
                         <div class="cell label" >
-                            
+
                         </div>
                         <div class="cell hidden" >
-                            <input type="hidden" name="_role[{{pid}}]['ref']" value="{{role.roleid}}" /> 
-                        </div> 
-                        <div class="cell" >
-                            
-                            <input type="text" name="_role[{{pid}}]['role']" value="{{role.role}}" /> 
+                            <input type="hidden" name="_role[{{pid}}]['ref']" value="{{role.roleid}}" />
                         </div>
                         <div class="cell" >
-                            <input type="text" name="_role[{{pid}}]['name']" value="{{role.name}}" /> 
+
+                            <input type="text" name="_role[{{pid}}]['role']" value="{{role.role}}" />
                         </div>
                         <div class="cell" >
-                            <input type="text" name="_role[{{pid}}]['predicates']" value="{{role.predicates}}" /> 
+                            <input type="text" name="_role[{{pid}}]['name']" value="{{role.name}}" />
                         </div>
-                        
+                        <div class="cell" >
+                            <input type="text" name="_role[{{pid}}]['predicates']" value="{{role.predicates}}" />
+                        </div>
+
                     </div>
                     {% endif %}
                       {% endif %}
                     {% endfor %}
                 </div>
             </div>
-            
-            <button type="submit" id="submitbutton"   > enregistrer</button> 
+
+            <button type="submit" id="submitbutton"   > enregistrer</button>
         </form>
     </div>
 </div>

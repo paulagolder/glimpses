@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\ActorRole;
+use App\Entity\Role;
+
 
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -80,34 +82,22 @@ class ActorRoleRepository extends EntityRepository
           }
           if( "App\Entity\Role" == $contentname )
           {
-            $arole->{"role"}=  $content;
+            $arole->{"role"}=  $content->getRole();
+            $arole->{"rolename"}=  $content->getName();
+              $arole->{"predicates"}=  $content->getPredicatestr();
+            $gref =  $content->getGlimpseref();
           }
           if( "App\Entity\Glimpse" == $contentname )
           {
             $arole->{"glimpse"}=  $content;
+              $arole->{"glimpse"}->{"roles"}=   $this->getEntityManager()->getRepository(Role::class)->findChildren($gref);
+
+
           }
           }
           $aroles[$i]= $arole;
         }
 
-       /* foreach( $aroles as $key=>$role)
-        {
-
-            $gid = $role["r_glimpseref"];
-            $qb = $this->createQueryBuilder('ar');
-            $sql2 =  "select g from App:glimpse g ";
-            $sql2 .= " where g.glimpseid = ".$gid." ";
-            $query2 = $this->getEntityManager()->createQuery($sql2);
-            $glimpses = $query2->getResult();
-            dump($glimpses);
-            $aroles[$role->getRoleid()]->glimpse =$glimpses[0];
-            $sql3 =  "select r from App:role r ";
-            $sql3 .= " where r.glimpseref = ".$gid." ";
-            $query3 = $this->getEntityManager()->createQuery($sql3);
-            $roles = $query3->getResult();
-            $aroles[$role->getRoleid()]->glimpse->setRoles($roles);
-
-        }*/
         return $aroles;
     }
 }

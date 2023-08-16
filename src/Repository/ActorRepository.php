@@ -28,18 +28,62 @@ class ActorRepository extends EntityRepository
         return $actors;
     }
 
+    public function findAllIndexed()
+    {
+        $qb = $this->createQueryBuilder('g');
+        $qy = $qb->getQuery();
+        $actors = $qy->getResult();
+        $indexedactors = array();
+        foreach($actors as $actor)
+        {
+             $indexedactors[$actor->getActorId()] = $actor;
+        }
+        return $indexedactors;
+    }
+
 
 
 
 
     public function findOne($aid)
     {
-     $qb = $this->createQueryBuilder('g');
-     $qb -> where(" g.actorid = :aid ");
-     $qb->setParameter('aid', $aid);
-    $qy = $qb->getQuery();
-    $actor = $qy->getOneOrNullResult();
-    return $actor;
+        $qb = $this->createQueryBuilder('g');
+        $qb -> where(" g.actorid = :aid ");
+        $qb->setParameter('aid', $aid);
+        $qy = $qb->getQuery();
+        $actor = $qy->getOneOrNullResult();
+        return $actor;
+    }
+
+
+
+
+    public function findAllMatching($actor)
+    {
+        $qb = $this->createQueryBuilder('g');
+        $qb -> where(" g.forename = :afname ");
+        $qb->setParameter('afname', $actor->getForename());
+        $qb ->andwhere(" g.surname = :asname ");
+        $qb->setParameter('asname', $actor->getSurname());
+        $qy = $qb->getQuery();
+          $actors = $qy->getResult();
+        return $actors;
+    }
+
+
+
+
+
+    public function findDups($surname,$forename)
+    {
+        $qb = $this->createQueryBuilder('g');
+        $qb -> where(" g.surname = :surname ");
+        $qb->setParameter('surname', $surname);
+        $qb -> andwhere(" g.forename = :forename ");
+        $qb->setParameter('forename', $forename);
+        $qy = $qb->getQuery();
+        $actors = $qy->getResult();
+        return $actors;
     }
 
 

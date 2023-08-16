@@ -14,54 +14,57 @@
 
 {% block body %}
 <div id="glimpse" >
-    
-    
+
+
     <div class ="heading" >
         <div class="returnbutton button1"> <a href = "/glimpse/showall" >return </a> </div>
         <div class="returnbutton">  <a   href = "/glimpse/delete/{{glimpse.glimpseid}}" >delete </a> </div>
-         <div class="returnbutton">  <a   href = "/glimpse/edit/{{glimpse.glimpseid}}" >edit </a> </div>
+        <div class="returnbutton">  <a   href = "/glimpse/edit/{{glimpse.glimpseid}}" >edit </a> </div>
         <div class="returnbutton"><a  href = "/source/selectinput/{{glimpse.location}}" >Add New Glimpse </a> </div>
     </div>
-    <div class="glimpse"> 
+    <div class="glimpse">
             <div class="row">
-              <div class="inputpair" >
+            <div class="inputpair" >
                 <div class="label">ID </div>
                 <div class= "field"> {{glimpse.glimpseid}}</div>
-                   </div>
-                   <div class="inputpair" >
+                </div>
+                <div class="inputpair" >
                     <div class="label"> language </div>
                     <div class= "field"> {{glimpse.language}}</div>
                     </div>
-                     <div class="inputpair" >
+                    <div class="inputpair" >
                     <div class="label"> sourceid </div>
                     <div class= "field"> {{glimpse.sourceid}}</div>
                     </div>
                         <div class="inputpair" >
                     <div class="label"> source </div>
-                    <div class= "field"> {{glimpse.source}}</div>
+                    <div class= "field"> {{source.title}}</div>
                     </div>
-                  
+                    <div class="inputpair" >
+                    <div class="label"> source </div>
+                    <div class= "field"><a href={{source.url}}>View</a></div>
+                    </div>
                 </div>
-                
+
                 <div class="row">
-        
-              <div class="inputpair" >
+
+            <div class="inputpair" >
                     <div class="label"> location </div>
                     <div class= "field"> {{glimpse.location}}</div>
-                 </div>
-              <div class="inputpair" >
+                </div>
+            <div class="inputpair" >
                     <div class="label"> type </div>
                     <div class= "field"> {{glimpse.type}} </div>
                         </div>
-             
+
                 </div>
                 <div class="row">
-                 <div class="inputpair" >
+                <div class="inputpair" >
                     <div class="label"> date </div>
                     <div class= "field"> {{glimpse.date}} </div>
                         </div>
-              <div class="inputpair" >
-                      <div class="label"> text </div>
+            <div class="inputpair" >
+                    <div class="label"> text </div>
                     <div class= "field"> {{glimpse.text}} </div>
                     </div>
                 </div>
@@ -71,33 +74,33 @@
                 <div class="roleTable" >
                     <div class="body">
                         {% for pid, role in roles %}
-                        
+
                         {%  if role.roleid>0 %}
-                        
+
                         <div class="row">
                             <div class="cell">
                                 <div class="subheading">
                                 </div>
                             </div>
-                            <div class="cell" > {{role.roleid}} </div> 
-                            
-                            <div class="cell">{{role.role}}</div> 
-                            <div class="cell">{{role.name}} </div> 
-                            <div class="cell">{{role.predicates}} </div> 
+                            <div class="cell" > {{role.roleid}} </div>
+
+                            <div class="cell">{{role.role}}</div>
+                            <div class="cell">{{role.name}} </div>
+                            <div class="cell">{{role.predicates}} </div>
                         </div>
                         {% else %}
-                        
+
                         <div class="row">
                             <div class="cell label" >
-                                
+
                             </div>
                             <div class="cell" >
-                                <input type="hidden" name="_role[{{pid}}]['ref']" value="{{role.roleref}}" /> 
+                                <input type="hidden" name="_role[{{pid}}]['ref']" value="{{role.roleref}}" />
                             </div>
                             <div class="cell" >{{role.role}} /div>
                             <div class="cell" >{{role.name}}</div>
                             <div class="cell" >{{role.predicates}}</div>
-                          
+
                         </div>
                         {% endif %}
                         {% endfor %}

@@ -58,19 +58,8 @@ class GlimpseRepository extends EntityRepository
         return $glimpses;
     }
 
-        public function xviewsource($sourceid)
-    {
-        $sql = "select g, r from App:glimpse g ";
-        $sql .= "  JOIN App:Role as r ";
-        $sql .= " where  r.glimpseref = g.glimpseid  ";
-        $sql .= " and g.sourceid = $sourceid  order by g.date";
-        $query = $this->getEntityManager()->createQuery($sql);
-        $glimpses = $query->getResult();
-        dump($glimpses);
-        return $glimpses;
-    }
 
-     public function viewsource($sourceid)
+    public function viewsource($sourceid)
     {
         $qb = $this->createQueryBuilder('g');
         $qb->where("g.sourceid = :sourceid ");
@@ -82,7 +71,7 @@ class GlimpseRepository extends EntityRepository
          $gid= $source->getGlimpseid();
          $roles = $this->getEntityManager()->getRepository(Role::class)->findChildren($gid);
          $source->{"roles"} = $roles;
-         }
+        }
         dump($sources);
         return $sources;
     }
@@ -99,14 +88,6 @@ class GlimpseRepository extends EntityRepository
         dump($results);
         return $results;
 
-    /*    $q = Doctrine_Query::create()
-        ->select('u.location')
-        ->from('App:Glimpse  u');
-       // ->where("LOWER(u.username) = 'jon wage'");
-
-        dump($q->getSqlQuery());
-        $glimpses = $q->getResult();
-        dump($glimpses);*/
     }
 
     public function filterf($filter)
@@ -116,10 +97,10 @@ class GlimpseRepository extends EntityRepository
         $qb = $this->createQueryBuilder('g');
         $qb->select('g');
         $qb->from('App:Role','r');
-         $qb->andwhere('  r.glimpseref = g.glimpseid  ');
-
-        $qb->andwhere('  r.name like :name  ');
-
+        $qb->andwhere('  r.glimpseref = g.glimpseid  ');
+        $qb->andwhere('  r.name like :name  or r.predicates like :name ');
+        $qb->orwhere('  g.location like :name  ');
+        $qb->orderby(' g.date ');
         $qb->setparameter( 'name', $filter);
         dump($qb);
         $qy= $qb->getQuery();

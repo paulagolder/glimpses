@@ -34,41 +34,38 @@ class Glimpse
     private $language;
 
 
-        /**
+    /**
      * @ORM\Column(type="string", length=200, nullable=true)
      */
     private $location;
 
 
-        /**
+    /**
      * @ORM\Column(type="string", length=12, nullable=true)
      */
     private $type;
 
 
 
-        /**
+    /**
      * @ORM\Column(type="string", length=12, nullable=true)
      */
     private $date;
 
 
-              /**
+    /**
      * @ORM\Column(type="string", length=12, nullable=true)
      */
     private $datequalifier;
 
-                /**
+    /**
      * @ORM\Column(type="integer",  nullable=true)
      */
     private $sourceid;
 
-            /**
-     * @ORM\Column(type="text",  nullable=true)
-     */
-    private $source;
 
-            /**
+
+    /**
      * @ORM\Column(type="string", length=12, nullable=true)
      */
     private $ref;
@@ -100,7 +97,7 @@ class Glimpse
         return $this;
     }
 
-     public function getSourceid()
+    public function getSourceid()
     {
         return $this->sourceid;
     }
@@ -139,7 +136,7 @@ class Glimpse
         return $this;
     }
 
-      public function getLocation(): ?string
+    public function getLocation(): ?string
     {
         return $this->location;
     }
@@ -154,7 +151,7 @@ class Glimpse
 
 
 
-      public function getType(): ?string
+    public function getType(): ?string
     {
         return $this->type;
     }
@@ -168,20 +165,8 @@ class Glimpse
     }
 
 
-      public function getSource(): ?string
-    {
-        return $this->source;
-    }
 
-
-    public function setSource(string $text): self
-    {
-        $this->source = $text;
-
-        return $this;
-    }
-
-        public function getRef(): ?string
+    public function getRef(): ?string
     {
         return $this->ref;
     }
@@ -195,7 +180,7 @@ class Glimpse
     }
 
 
-      public function getDate(): ?string
+    public function getDate(): ?string
     {
         return $this->date;
     }
@@ -203,35 +188,50 @@ class Glimpse
 
     public function setDate(string $dt)
     {
-     $this->datequalifier = null;
-     if (!$dt)
-     {
-        $this->date =  " no date ";
-        return;
-    }
-      $dt =  str_replace(' y ', ' ', $dt);
+          dump($dt);
+        $this->datequalifier = null;
+        if (!$dt)
+        {
+            $this->date =  " no date ";
+            return;
+        }
+        $dt =  str_replace(' y ', ' ', $dt);
         $dt =  str_replace(' ye ', ' ', $dt);
-          $dt =  str_replace('th ', ' ', $dt);
-    $dt =  str_replace('(', '', $dt);
-    $dt =  str_replace(')', '', $dt);
-    if( stripos($dt, ':') !== false )
-    {
-       $datestruct = explode( ":",$dt );
-       dump($datestruct);
-       $this->datequalifier = trim($datestruct[0]);
-       $dt = trim($datestruct[01]);
-    }
-    try
-    {
-        new \DateTime($dt);
-         $this->date = date('Y-m-d', strtotime($dt));
-    } catch (\Exception $e)
-    {
-       $this->date = $dt;
-    }
-}
+        $dt =  str_replace('th ', ' ', $dt);
+        $dt =  str_replace('(', '', $dt);
+        $dt =  str_replace(')', '', $dt);
+        if( stripos($dt, ':') !== false )
+        {
+            $datestruct = explode( ":",$dt );
+            dump($datestruct);
+            $this->datequalifier = trim($datestruct[0]);
+            $dt = trim($datestruct[01]);
+             dump($dt);
+        }
+        dump($dt);
 
-  public function getDateQualifier(): ?string
+             if($this->validatedate($dt))
+             {
+                 $this->date = date('Y-m-d', strtotime($dt));
+                 dump($this->date);
+            }
+            else if ($this->validatedate($dt,"Y-m"))
+            {
+                $this->date = date('Y-m', strtotime($dt));
+
+            }else if ($this->validatedate($dt,"Y"))
+            {
+                $d = \DateTime::createFromFormat('Y', $dt);
+                  $this->date = $d->format('Y');
+            }
+            else
+        {
+            $this->date = "Error".$dt;
+               dump($this->date);
+        }
+    }
+
+    public function getDateQualifier(): ?string
     {
         return $this->datequalifier;
     }
@@ -240,12 +240,8 @@ class Glimpse
     public function setDateQualifier(string $type): self
     {
         $this->datequalifier = $type;
-
         return $this;
     }
-
-
-
 
     public function getContributor(): ?string
     {
@@ -255,7 +251,6 @@ class Glimpse
     public function setContributor(?string $contributor): self
     {
         $this->contributor = $contributor;
-
         return $this;
     }
 
@@ -276,11 +271,23 @@ class Glimpse
 
     public function setRoles($roles)
     {
-      $this->roles = $roles;
+        $this->roles = $roles;
     }
 
-     public function getRoles()
+    public function getRoles()
     {
-     return  $this->roles;
+        return  $this->roles;
+    }
+
+    function validateDate($date, $format = 'Y-m-d')
+    {
+        dump($date);
+        dump($format);
+        $d = \DateTime::createFromFormat($format, $date);
+        // The Y ( 4 digits year ) returns TRUE for any integer with any number of digits so changing the comparison from == to === fixes the issue.
+        dump($d);
+        if(!$d) return false;
+        dump($d->format($format));
+        return $d && $d->format($format) === $date;
     }
 }

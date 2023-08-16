@@ -22,10 +22,10 @@
    <div class="subheading">
       <div class="returnbutton " >  <a  href = "/glimpses" >View Sources </a> </div>
        <div class="returnbutton " >  <a  href = "/actor/showall" >View Actors </a> </div>
-    </div> 
+    </div>
     <div class="heading">
       <div class="title"> Glimpses of </div>
-    </div> 
+    </div>
     <form  action="/glimpse/filter">
   <div class="row">
    <div class="label"> Filter</div>
@@ -36,28 +36,29 @@
      <div class= "glimpselist">
     {% for pid, glimpse in glimpses %}
     <div class= "glimpse row">
-         
             <div class="returnbutton" >  <a  href = "/glimpse/show/{{glimpse.glimpseid}}" >View </a> </div>
-                        
+
             <div class= "field cloc"> {{glimpse.location}}</div>
-         
+
             <div class= "field ctype"> {{glimpse.type}}</div>
-         
+
             <div class= "field cdate"> {{glimpse.date}}</div>
-            {% if glimpse.text %}
+         {#   {% if glimpse.text is not null and glimpse.text is not empty %}
             <div class= "field ctext"> {{glimpse.text}} </div>
-            {% else %}
-              <div class= "field ctext"> 
-                {% for rid, role in glimpse.roles %}
-                {{role.role}}:{{role.name}} 
-                {% endfor %}
+            {% else %} #}
+              <div class= "field ctext">
+                             {% set formatedtext = FormatEvent(glimpse) %}
+                <div class="cell" >{{formatedtext}}</div>
+            {#   {% for rid, role in glimpse.roles %}
+                {{role.role}}:{{role.name}}
+                {% endfor %} #}
               </div>
-              {% endif %}
-                 
-            
-            
+          {#    {% endif %} #}
+
+
+
     </div>
-    
+
     {% endfor %}
     </div>
 </div>

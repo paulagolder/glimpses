@@ -26,6 +26,9 @@
     <div class='returnbutton'>
                 <a  href = "/glimpse/showall" >Glimspses</a>
             </div>
+                <div class='returnbutton'>
+                <a  href = "/relation/showall" >Relations</a>
+            </div>
 
                  <div class='returnbutton button1 '>
                 <a  href = "/actor/new" >New Actor</a>
@@ -47,7 +50,7 @@
 
              <div class="returnbutton col1">   <a   href = "/actor/show/{{actor.actorid}}" >view </a> </div>
             <div class= "col2">{{actor.actorId}}</div>
-            <div class= "col3"> {{actor.name}}</div>
+            <div class= "col3"> {{actor.surname}}, {{actor.forename}}</div>
             <div class= "col4"> {{actor.specifier}}</div>
         </div>
         </div>

@@ -28,7 +28,7 @@ class LifeEvent
 
 
 
- /**
+    /**
      * @ORM\Column(type="text", nullable=true)
      */
     private $eventtype;
@@ -40,31 +40,31 @@ class LifeEvent
     private $lowdate;
 
 
-     /**
+    /**
      * @ORM\Column(type="string", length=12, nullable=true)
      */
     public $highdate ;
 
 
-      /**
+    /**
      * @ORM\Column(type="string", length=12, nullable=true)
      */
     public $middate ;
 
 
-   public function __construct($actorref,$type)
+    public function __construct($actorref,$type)
     {
         $this->setActorref($actorref);
         $this->seteventtype($type);
-        $this->lowdate ="9999-99-99";
-        $this->highdate ="0000-00-00";
+        $this->lowdate ="0000-01-01";
+        $this->highdate ="9999-12-31";
     }
 
 
     public function initialise()
     {
-        $this->highdate ="9999-99-99";
-        $this->lowdate ="0000-00-00";
+        $this->lowdate ="0000-01-01";
+        $this->highdate ="9999-12-31";
     }
 
 
@@ -76,12 +76,11 @@ class LifeEvent
     public function setlifeeventid(int $ref): self
     {
         $this->lifeeventid= $ref;
-
         return $this;
     }
 
 
-   public function getactorref(): ?int
+    public function getactorref(): ?int
     {
         return $this->actorref;
     }
@@ -89,7 +88,6 @@ class LifeEvent
     public function setactorref(int $ref): self
     {
         $this->actorref= $ref;
-
         return $this;
     }
 
@@ -103,7 +101,6 @@ class LifeEvent
     public function seteventtype(string $text): self
     {
         $this->eventtype = $text;
-
         return $this;
     }
 
@@ -113,15 +110,13 @@ class LifeEvent
         return $this->highdate ;
     }
 
-
     public function sethighdate($text): self
     {
         $this->highdate = $text;
-
         return $this;
     }
 
-       public function getlowdate(): ?string
+    public function getlowdate(): ?string
     {
         return $this->lowdate ;
     }
@@ -130,11 +125,10 @@ class LifeEvent
     public function setlowdate($text): self
     {
         $this->lowdate = $text;
-
         return $this;
     }
 
-       public function getmiddate(): ?string
+    public function getmiddate(): ?string
     {
         return $this->middate ;
     }
@@ -143,77 +137,100 @@ class LifeEvent
     public function setmiddate($text): self
     {
         $this->middate = $text;
-
         return $this;
     }
 
 
-    public function setDates($date,$agerule)
+    public static  function mergeLifeevents(&$lifeevents,$newlifeevents)
     {
-      dump($this);
-      dump($date);
-      dump($agerule);
-      $age = intval($agerule['age']);
-      $dir = $agerule['limit'];
-      if($dir=="GT")
-      {
-         $ndate = $this->subtract($date ,$age);
-         if($ndate > $this->lowdate) $this->lowdate = $ndate;
-
-      }
-      elseif($dir=="LT")
-      {
-          $ndate = $this->add($date ,$age);
-         if($ndate < $this->highdate) $this->highdate = $ndate;
-      }
-      elseif($dir=="AL")
-      {
-          $ndate = $this->subtract($date ,$age);
-         if($ndate < $this->highdate) $this->highdate = $ndate;
-      }
-       elseif($dir=="AM")
-      {
-          $ndate = $this->subtract($date ,$age);
-         if($ndate > $this->lowdate) $this->lowdate = $ndate;
-      }
-      elseif($dir=="LE")
-      {
-          $ndate = $this->add($date ,$age);
-         if($ndate > $this->highdate || $this->highdate=="9999-99-99") $this->highdate = $ndate;
-      }
-      dump($this);
+        dump($newlifeevents);
+        foreach($newlifeevents as $eventtype => $lifeevent)
+        {
+            $yb = $lifeevent->getLowDate();
+            $ya = $lifeevent->getHighDate();
+            if( array_key_exists( $eventtype,$lifeevents))
+            {
+                $yl=  $lifeevents[$eventtype]->getLowdate();
+                if($yb>$yl) $lifeevents[$eventtype]->setLowdate($yb);
+                $yh=  $lifeevents[$eventtype]->getHighDate();
+                if($ya<$yh) $lifeevents[$eventtype]->setHighDate($ya);
+            }
+            else
+            {
+                $lifeevents[$eventtype] = new LifeEvent($lifeevent->getActorref(),$eventtype);
+                $lifeevents[$eventtype]->setLowDate($yb);
+                $lifeevents[$eventtype]->setHighDate($ya);
+            }
+        }
 
     }
 
-      public function subtract($date,$dif)
-      {
-         $darray = $this->parsedate($date);
-         $totmonths = $darray[0] *12 + $darray[1];
-         $ntotmonths = $totmonths - $dif*12;
-         $ndate = $this->fuseMD($ntotmonths, $darray[2]);
-         return $ndate;
-      }
 
-      public function add($date,$dif)
-      {
-         $darray = $this->parsedate($date);
-         $totmonths = $darray[0] *12 + $darray[1];
-         $ntotmonths = $totmonths + $dif*12;
-         $ndate = $this->fuseMD($ntotmonths, $darray[2]);
-         return $ndate;
-      }
+    public static function xsetDates($date,$agerule)
+    {
 
-      public function parsedate($date)
-      {
+        dump($date);
+        dump($agerule);
+        $age = intval($agerule['age']);
+        $dir = $agerule['limit'];
+        if($dir=="GT")
+        {
+            $ndate = $this->subtract($date ,$age);
+            if($ndate > $this->lowdate) $this->lowdate = $ndate;
+        }
+        elseif($dir=="LT")
+        {
+            $ndate = $this->add($date ,$age);
+            if($ndate < $this->highdate) $this->highdate = $ndate;
+        }
+        elseif($dir=="AL")
+        {
+            $ndate = $this->subtract($date ,$age);
+            if($ndate < $this->highdate) $this->highdate = $ndate;
+        }
+        elseif($dir=="AM")
+        {
+            $ndate = $this->subtract($date ,$age);
+            if($ndate > $this->lowdate) $this->lowdate = $ndate;
+        }
+        elseif($dir=="LE")
+        {
+            $ndate = $this->add($date ,$age);
+            if($ndate > $this->highdate || $this->highdate=="9999-12-31") $this->highdate = $ndate;
+        }
+        dump($this);
+
+    }
+
+    public function subtract($date,$dif)
+    {
+        $darray = $this->parsedate($date);
+        $totmonths = $darray[0] *12 + $darray[1];
+        $ntotmonths = $totmonths - $dif*12;
+        $ndate = $this->fuseMD($ntotmonths, $darray[2]);
+        return $ndate;
+    }
+
+    public function add($date,$dif)
+    {
+        $darray = $this->parsedate($date);
+        $totmonths = $darray[0] *12 + $darray[1];
+        $ntotmonths = $totmonths + $dif*12;
+        $ndate = $this->fuseMD($ntotmonths, $darray[2]);
+        return $ndate;
+    }
+
+    public function parsedate($date)
+    {
         $ndate= array();
         $ndate[0] = intval(substr($date, 0,4));
         $ndate[1] = intval(substr($date, 5,6));
         $ndate[2] = intval(substr($date, 8,9));
         return $ndate;
-      }
+    }
 
-       public function fuseMD($months,$days)
-      {
+    public function fuseMD($months,$days)
+    {
         $years = intval($months/12);
         $resmonths = $months - $years *12;
         $syears = "".$years;
@@ -221,5 +238,5 @@ class LifeEvent
         $sdays = substr("00".$days,strlen("00".$days)-2);
         $ndate = $syears."-".$smonths."-".$sdays;
         return $ndate;
-      }
+    }
 }

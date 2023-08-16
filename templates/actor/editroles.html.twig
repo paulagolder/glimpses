@@ -9,18 +9,16 @@
 
 {% block js %}
 {{ parent() }}
-
 {% endblock %}
 
 {% block body %}
 <div id="actor" >
-
-
     <div class ="heading" >
+        <div class="label">Actor:</div>
+        <div class= "field">{{actor.surname}}, {{actor.forename}}</div>
         <div class="returnbutton button1"> <a href = "/actor/showall" >return </a> </div>
         <div class="returnbutton">  <a   href = "/actor/delete/{{actor.actorid}}" >delete </a> </div>
         <div class="returnbutton">  <a   href = "/actor/edit/{{actor.actorid}}" >edit </a> </div>
-
         <div class="returnbutton"><a  href = "/actor/new" >Add New actor </a> </div>
     </div>
     {% dump(actor) %}
@@ -35,20 +33,20 @@
             <div class="row">
                 <div class="inputpair" >
                     <div class="label">name</div>
-                    <div class= "field"> {{actor.name}} </div>
+                    <div class= "field"> {{actor.surname}}, {{actor.forename}}</div>
                 </div>
                 <div class="inputpair" >
                     <div class="label"> specifier </div>
                     <div class= "field"> {{actor.specifier}} </div>
                 </div>
             </div>
-              <div class="row">
+            <div class="row">
                 <div class="inputpair" >
                     <div class="label">birthdate</div>
                     {% if actor.birthdate is not null  %}
                     <div class= "field"> {{actor.Birthdate}} </div>
                     {% else %}
-                       <div class= "field"> "Null"" </div>
+                    <div class= "field"> "Null"" </div>
                     {% endif %}
                 </div>
                 <div class="inputpair" >
@@ -62,55 +60,99 @@
                     <div class= "field"> {{actor.text}} </div>
                 </div>
             </div>
-            <div class="subheading" >
-                <div class="title"> roles </div>
-            </div>
-                <div class="roleTable" >
+        </div>
+    </div>
+
+    <div class="eventTable" >
+        <div class="subheading" >
+            <div class="title"> Life Events </div>
+            <div class="returnbutton">  <a   href = "/actor/updatelifeevents/{{actor.actorid}}" >Update</a> </div>
+        </div>
         <div class="body">
-            {% for pid, grole in groles %}
+            {% for eid, levent in lifeevents %}
             <div class="row">
-                <div class="returnbutton">  <a   href = "/actor/deleterole/{{actor.actorid}}/{{grole.roleref}}" >remove </a> </div>
-                 <div class="returnbutton">  <a   href = "/glimpse/show/{{grole.glimpse.glimpseid}}" >view </a> </div>
-                <div class="cell">
-                    <div class="subheading">
-                    </div>
-                </div>
-                <div class="cell cint" > {{grole.roleref}} </div>
-                <div class="cell  cstext" > {{grole.role.role}} </div>
-                <div class="cell cmtext"> {{grole.role.name}} </div>
-                <div class="cell cmtext" > {{grole.glimpse.location}} </div>
-                <div class="cell  cstext" > {{grole.glimpse.type}} </div>
-                <div class="cell  cdate" > {{grole.glimpse.date}} </div>
-                <div class="cell  cstext" > Age: {{calAge(actor.Birthdate,grole.glimpse.date)}} </div>
+                <div class="cell"> {{levent.lifeeventid}}</div>
+                <div class="cell">{{levent.eventtype}} </div>
+                <div class="cell">{{levent.lowdate}} </div>
+                <div class="cell">{{levent.highdate}} </div>
             </div>
             {% endfor %}
         </div>
     </div>
+
+    <div class="eventTable" >
+        <div class="subheading" >
+            <div class="title"> Matches? </div>
         </div>
-        </div>
-        <div class= "xroles">
-          <div class="subheading" >
-                <div class="title">  candidate roles </div>
+        <div class="body">
+            {% for aid, anactor in duplicates %}
+            <div class="row">
+                <div class="cell"> {{anactor.actorid}}</div>
+                <div class="cell">{{anactor.surname}}, {{anactor.forename}}</div>
+                <div class="cell">({{anactor.birthdate}}-{{anactor.deathdate}}) </div>
+                <div class="returnbutton">  <a   href = "/actor/merge/{{actor.actorid}}/{{anactor.actorid}}" >Merge</a> </div>
             </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="relationTable" >
+        <div class="subheading" >
+            <div class="title">Relationships</div>
+                <div class="returnbutton">  <a   href = "/actor/newrelationship/{{actor.actorid}}" >New Relationship</a> </div>
+        </div>
+        <div class="body">
+            {% for rid, relation in relations %}
+            <div class="row">
+                {% dump(relation) %}
+                <div class="cell">{{relation.actor1ref}}  {{relation.relation}} {{relation.actor2ref}} </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="roleTable" >
+        <div class="subheading" >
+            <div class="title">Roles</div>
+        </div>
+        <div class="body">
+            {% for pid, role in roles %}
+            {% dump(role)  %}
+            <div class="row">
+                <div class="returnbutton">  <a   href = "/actor/deleterole/{{actor.actorid}}/{{role.roleref}}" >remove </a> </div>
+                {% if role.glimpse is defined %}
+                <div class="returnbutton">  <a   href = "/glimpse/show/{{role.glimpse.glimpseid}}" >view </a> </div>
+
+                <div class= "id"> {{role.roleref}}</div>
+                {% set formatedtext = FormatRole(role.roleref,role.glimpse) %}
+                <div class="cell" >{{formatedtext}}</div>
+                <div class="cell" > Age: {{calAge(actor.Birthdate,role.glimpse.date)}} </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class= "xrolestable">
+        <div class="subheading" >
+            <div class="title">Candidate Roles </div>
+        </div>
+        <div class="body">
+            {% dump(xroles) %}
             {% for pid, xrole in xroles %}
-            <div class= "xrole row">
-                 <div class="returnbutton">  <a   href = "/actor/addrole/{{actor.actorid}}/{{xrole.roleid}}" >Add </a> </div>
-                 <div class="returnbutton" >  <a  href = "/glimpse/show/{{xrole.glimpseref}}" >View </a> </div>
-                 <div class= "cell cstext"> {{xrole.glimpse.type}}</div>
-                 <div class= "cell cdate"> {{xrole.glimpse.date}}</div>
-                 <div class= "cell cmtext"> {{xrole.glimpse.location}}</div>
-                <div class= "cell cmtext"> {{xrole.role}}</div>
-                <div class= "cell cmtext"> {{xrole.name}}</div>
-                <div class= "cell cltext"> {{xrole.predicates}}</div>
-                    <div class="cell  cstext" > Age: {{calAge(actor.Birthdate,xrole.glimpse.date)}} </div>
+            <div class= "row">
+                <div class="returnbutton"><a   href = "/actor/addrole/{{actor.actorid}}/{{xrole.roleid}}" >Add</a> </div>
+                <div class="returnbutton" ><a  href = "/glimpse/show/{{xrole.glimpseref}}" >View</a></div>
+                <div class= "id"> {{xrole.roleid}}</div>
+                {% set formatedtext = FormatRole(xrole.roleid,xrole.glimpse) %}
+                <div class="cell" >{{formatedtext}}</div>
+                {% if role is defined  %}
+                <div class="cell" > Age: {{calAge(actor.Birthdate,role.glimpse.date)}} </div>
+                {% else %}
+                {% endif %}
             </div>
             {% endfor %}
         </div>
     </div>
-
-
-</div>
-</div>
 </div>
 {% endblock %}
 

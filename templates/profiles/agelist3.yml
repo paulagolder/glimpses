@@ -2,7 +2,9 @@
 baptism:
         child:
          - {type : minage, value: 0 ,  rational : at baptism a child is usually ls than a year old }
-         - {type : maxage, value: 20 ,   rational : at baptism a child cannot be born before it is baptised }
+         - {type : maxage, value: 20 ,   rational : at baptism a child is usually less than 20 }
+         - {type : alive, value: 0,  rational : at baptism a baby will usually be alive }
+         - {type : alive, value: -100,  rational : at baptism a baby will usually live 100 years }
         father:
          - {type : minage, value: 20,   rational : at baptism a baby's father will usually be over 20 years old }
          - {type : maxage, value: 60,  rational : at baptism a baby's father will usually be under 60 years old }
@@ -12,11 +14,58 @@ baptism:
          - {type : maxage, value: 60,  rational : at baptism a baby's mother will usually be under 60 years old }
          - {type : alive, value: 0,  rational : at baptism a baby's mother will usually be alive }
 
+birth:
+        child:
+        - {type : alive, value: 0,  rational : at baptism a baby  will usually be alive}
+        father:
+        - {type : minage, value: 20,   rational : at baptism a baby's father will usually be over 20 years old }
+        - {type : maxage, value: 60,  rational : at baptism a baby's father will usually be under 60 years old }
+        - {type : alive, value: 0,  rational : at baptism a baby's father will usually be alive }
+        mother:
+        - {type : minage, value: 20,   rational : at baptism a baby's mother will usually be over 20 years old }
+        - {type : maxage, value: 60,  rational : at baptism a baby's mother will usually be under 60 years old }
+        - {type : alive, value: 0,  rational : at baptism a baby's mother will usually be alive }
+
 burial:
        defunct:
-         - { type : minage, value: 0,   rational : at burial the defunct is no longer alive }
-         - { type : maxage, value: 100,   rational : at burial the defunct is no older than 100}
          - { type : dead, value: 0,   rational : at burial the defunct is dead}
+       father:
+        - {type : minage, value: 20,   rational : at baptism a baby's father will usually be over 20 years old }
+        - {type : maxage, value: 60,  rational : at baptism a baby's father will usually be under 60 years old }
+        - {type : alive, value: 0,  rational : at baptism a baby's father will usually be alive }
+
+death:
+       defunct:
+         - { type : dead, value: 0,   rational : at burial the defunct is dead}
+
+will:
+       testator:
+         - { type : minage, value: 20,   rational : only an aldult would make a will }
+         - { type : maxage, value: 100,   rational : unlikey to be over 100 when making a will}
+         - { type : alive, value: 0,   rational : must be alive when makimng a will}
+       beneficiary:
+         - { type : minage, value: 0,   rational : must exist to be in a will }
+         - { type : maxage, value: 100,   rational : unlikey to be over 100 when given as a beneficiary}
+         - { type : alive, value: 0,   rational : must be alive when include in a will}
+         - { type : dead, value: -100,   rational : unlikely to live more than 100 years}
+
+       brother:
+         - { type : minage, value: 0,   rational : must exist to be in a will }
+         - { type : maxage, value: 80,   rational : unlikey to be over 80 when given as a beneficiary}
+         - { type : alive, value: 0,   rational : must be alive when include in a will}
+       sister:
+         - { type : minage, value: 0,   rational : must exist to be in a will }
+         - { type : maxage, value: 80,   rational : unlikey to be over 80 when given as a beneficiary}
+         - { type : alive, value: 0,   rational : must be alive when include in a will}
+       daughter:
+         - { type : minage, value: 0,   rational : must exist to be in a will }
+         - { type : maxage, value: 80,   rational : unlikey to be over 60 when given as a beneficiary}
+         - { type : alive, value: 0,   rational : must be alive when include in a will}
+       son:
+         - { type : minage, value: 0,   rational : must exist to be in a will }
+         - { type : maxage, value: 80,   rational : unlikey to be over 60 when given as a beneficiary}
+         - { type : alive, value: 0,   rational : must be alive when include in a will}
+
 
 marriage:
        groom:
@@ -26,7 +75,8 @@ marriage:
        bride:
          - { type : minage, value: 15,   rational : at marriage  the bride is over 15 }
          - { type : maxage, value: 80,   rational : at marriage  the bride is under 80}
-         - { type : alive, value: 0,   rational : at marriage the bride is alive}
+         - { type : minle, value: 0,     rational : at marriage the bride is alive}
+         - { type : maxle, value: 80,   rational : at marriage the bride islikely to live 80 years}
        husband:
          - { type : minage, value: 20,   rational : at marriage  the groom is over 20}
          - { type : maxage, value: 80,   rational : at marriage  the defunct is under 80}

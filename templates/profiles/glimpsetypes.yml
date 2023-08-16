@@ -1,38 +1,103 @@
 baptism:
-  format: "#child baptised on #date at #location"
+  format: "#child baptised on #date at #location, parents #father #mother"
   child:
-     format: "was baptised on #date at #location"
+     format: "#child was baptised on #date at #location parents #father #mother"
      cardinality: 1
   father:
-     format: "baptised child #child on #date at #location"
+     format: "baptised child #child on #date at #location parents #father #mother"
      cardinality: 1
-  mother: 1
+  mother:
+     format: "baptised child #child on #date at #location parents #father #mother"
+     cardinality: 1
+
   official: 0
+birth:
+  format: "#child born on #date at #location, parents #father #mother"
+  child:
+     format: "#child was born on #date at #location"
+     cardinality: 1
+  father:
+     format: " of child #child born on #date at #location"
+     cardinality: 1
+  mother:
+     format: " of child #child born on #date at #location"
+     cardinality: 1
+  official: 0
+
+census:
+     format: " census on #date at #location "
+     resident:
+       format: "#name was present at #location on #date "
+       cardinality: 10
+
 burial:
    format: "#defunct buried on #date at #location"
    defunct:
      format: "was buried on #date at #location"
      cardinality: 1
-   father: 1
-   groom: 1
+   father:
+     format: " father of #defunct  buried on #date at #location"
+     cardinality: 1
+   mother:
+     format: " mother of #defunct  buried on #date at #location"
+     cardinality: 1
+   official: 0
+death:
+   format: "#defunct buried on #date at #location"
+   defunct:
+     format: "was buried on #date at #location"
+     cardinality: 1
+   father:
+     format: " father of #defunct  buried on #date at #location"
+     cardinality: 1
+   mother:
+     format: " mother of #defunct  buried on #date at #location"
+     cardinality: 1
    official: 0
 marriage:
    format: "wedding between #groom and #bride on #date at #location"
    bride:
-      format: "wedded to #groom on #date at #location "
+      format: "#bride wedded to #groom on #date at #location "
    groom :
-      format: "wedded to  #bride on #date at #location "
-   father_of_bride: 1
-   witness: 2
-   official: 1
+      format: "#groom wedded to #bride on #date at #location "
+   father_of_bride:
+      format: " #father_of_bride is father of #bride wedded to #groom  on #date at #location "
+   father_of_groom:
+      format: " #father_of_groom is father of #groom wedded to #bride  on #date at #location "
+   witness:
+      format: " #witness was witness at wedding between #groom and #bride on #date at #location"
+      cardinality: 2
+   official:
+     format: " #official was official at wedding between #groom and #bride on #date at #location"
 will:
    format: "last testement of  #testator on #date at #location"
-   defunct:
-      format: "will of #testator "
+   testator:
+      format: "will of #testator dated #date "
       cardinality: 1
-   beneficiary: 10
-   witness: 2
-   official: 1
+   beneficiary:
+      format: "#beneficiary  is beneficiary of #testator 's will  dated #date"
+      cardinality: 10
+   brother:
+      format: "#brother  id brother cited in  #testator 's will dated #date "
+      cardinality: 10
+   son:
+      format: "#son  is son cited in #testator 's will dated #date"
+      cardinality: 10
+   daughter:
+      format: "#daughter  is daughter cited in #testator 's will dated #date "
+      cardinality: 10
+   witness:
+       format: "will of #testator dated #date at #location "
+       cardinality: 2
+   executor:
+       format: " #executor  of the will of #testator dated #date "
+   tenants:
+       format: " #tenant  of  #testator dated #date "
+   official:
+       format: " #official officiated at signing of the will of #testator dated #date "
 note:
-  participant: 2
-  official: 0
+  format: "note on #date at #location"
+  participant:
+   format: " #participant particpated in note on #date at #location"
+  official:
+   format: " #official officiated in note on #date at #location "

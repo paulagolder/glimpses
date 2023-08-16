@@ -8,12 +8,9 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping as ORM;
-
 use Doctrine\DBAL\DriverManager;
 use Doctrine\ORM\EntityManagerInterface;
-
 use Doctrine\DBAL\Driver\Connection;
-
 
 class LifeEventRepository extends EntityRepository
 {
@@ -23,20 +20,24 @@ class LifeEventRepository extends EntityRepository
         $sql = "select l from App:Lifeevent  l";
         $sql .= ' where  l.actorref ='. $aid  ;
         $sql .= " and l.eventtype = '".$type."' ";
-           dump($sql);
         $query = $this->getEntityManager()->createQuery($sql);
         $events = $query->getResult();
         if(count($events)>0) return $events[0];
         else return null;
     }
 
-      public function findAllEvents($aid)
+    public function findAllEvents($aid)
     {
         $sql = "select l from App:Lifeevent  l";
         $sql .= ' where  l.actorref ='. $aid  ;
         $query = $this->getEntityManager()->createQuery($sql);
         $events = $query->getResult();
-        return $events;
+        $eventarray = array();
+        foreach($events as $event)
+        {
+            $eventarray[$event->getEventtype()]=$event;
+        }
+        return $eventarray;
     }
 
     public function findOne($aref,$rref)
@@ -59,7 +60,7 @@ class LifeEventRepository extends EntityRepository
         $query->getResult();
     }
 
-      public function findRoles($aid)
+    public function findRoles($aid)
     {
         $sql = "select r from ActorRole::class a JOIN App:Role r ";
         $sql .= " where r.roleid = a.roleref  ";
@@ -69,7 +70,7 @@ class LifeEventRepository extends EntityRepository
         $aroles = array();
         foreach( $roles as $key=>$role)
         {
-          $aroles[$role->getRoleid()]= $role;
+            $aroles[$role->getRoleid()]= $role;
         }
         foreach( $aroles as $key=>$role)
         {
@@ -87,5 +88,18 @@ class LifeEventRepository extends EntityRepository
         }
         return $aroles;
     }
+
+
+
+    public function saveLifeEvents( $lifeevents  )
+    {
+        foreach($lifeevents as $lifeevent)
+        {
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($lifeevent);
+            $entityManager->flush();
+        }
+    }
+
 }
 

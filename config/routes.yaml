@@ -81,6 +81,11 @@ glimpse_clearfilter:
    controller:  App\Controller\GlimpseController::clearfilter
 
 
+actor_newactor:
+   path:  /actor/newactor/{gid}/{rref}
+   controller:  App\Controller\ActorController::newactor
+
+
 source_all:
    path:  /source/showall
    controller:  App\Controller\SourceController::showall
@@ -112,7 +117,6 @@ source_selectinput:
     path: /source/selectinput/{location}
     controller:  App\Controller\SourceController::selectinput
 
-
 actor_show_all:
     path: /actor/showall/
     controller:  App\Controller\ActorController::showall
@@ -124,6 +128,14 @@ actor_show:
 actor_new:
     path: /actor/new/
     controller:  App\Controller\ActorController::new
+
+actor_newrelationship:
+    path: /actor/newrelationship/{aid}
+    controller:  App\Controller\ActorController::newrelationship
+
+actor_process_newrelationship:
+    path: /actor/process_newrelationship/{a1ref}
+    controller:  App\Controller\ActorController::process_newrelationship
 
 actor_edit:
     path: /actor/edit/{aid}
@@ -149,3 +161,22 @@ actor_addrole:
 actor_deleterole:
     path: /actor/deleterole/{aid}/{rid}
     controller:  App\Controller\ActorController::deleterole
+
+actor_updatelifeevents:
+    path: actor/updatelifeevents/{aid}
+    controller:  App\Controller\ActorController::updatelifeevents
+
+actor_merge:
+   path: /actor/merge/{aid}/{daid}
+   controller:  App\Controller\ActorController::merge
+
+relation_show_all:
+    path: /relation/showall/
+    controller:  App\Controller\RelationController::showall
+
+relation_show_one:
+    path: /relation/show/{rid}
+    controller:  App\Controller\RelationController::showone
+
+
+

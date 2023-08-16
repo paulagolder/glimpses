@@ -29,8 +29,13 @@ class Actor
      /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $name;
+    private $forename;
 
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $surname;
 
   /**
      * @ORM\Column(type="text", nullable=true)
@@ -42,29 +47,6 @@ class Actor
      * @ORM\Column(type="string", length="20",nullable=true)
      */
     private $birthdate;
-
-
-    /**
-     * @ORM\Column(type="string", length="20",nullable=true)
-     */
-    private $ebirthdate;
-
-
-    /**
-     * @ORM\Column(type="string", length="20",nullable=true)
-     */
-    private $lbirthdate;
-
-
-    /**
-     * @ORM\Column(type="string", length="20",nullable=true)
-     */
-    private $ldeathdate;
-
-    /**
-     * @ORM\Column(type="string", length="20",nullable=true)
-     */
-    private $edeathdate;
 
 
     /**
@@ -86,7 +68,13 @@ class Actor
     private $updatedt;
 
 
-   private $roles;
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $keywords;
+
+
+   //private $roles;
 
 
      public function __construct() {
@@ -124,15 +112,33 @@ class Actor
     }
 
 
-    public function getName(): ?string
+    public function getForename(): ?string
     {
-        return $this->name;
+        return $this->forename;
     }
 
 
-    public function setName(string $name): self
+    public function setForename(string $name): self
     {
-        $this->name = $name;
+        $this->forename = $name;
+
+        return $this;
+    }
+
+    public function getSurname(): ?string
+    {
+        return $this->surname;
+    }
+
+
+    public function getLabel(): ?string
+    {
+        return $this->surname.", ".$this->forename." (".$this->birthdate."-".$this->deathdate.")";
+    }
+
+    public function setSurname(string $name): self
+    {
+        $this->surname = $name;
 
         return $this;
     }
@@ -163,53 +169,7 @@ class Actor
         return $this;
     }
 
-    public function getlDeathdate(): ?string
-    {
-        return $this->ldeathdate;
-    }
 
-
-    public function setlDeathdate(string $text): self
-    {
-        $this->ldeathdate = $text;
-        return $this;
-    }
-
-    public function geteDeathdate(): ?string
-    {
-        return $this->edeathdate;
-    }
-
-
-    public function seteDeathdate(string $text): self
-    {
-        $this->edeathdate = $text;
-        return $this;
-    }
-
-    public function getlBirthdate(): ?string
-    {
-        return $this->lbirthdate;
-    }
-
-
-    public function setlBirthdate(string $text): self
-    {
-        $this->lbirthdate = $text;
-        return $this;
-    }
-
-    public function geteBirthdate(): ?string
-    {
-        return $this->ebirthdate;
-    }
-
-
-    public function seteBirthdate(string $text): self
-    {
-        $this->ebirthdate = $text;
-        return $this;
-    }
 
     public function getBirthdate(): ?string
     {
@@ -246,6 +206,19 @@ class Actor
     public function setUpdateDt(?\DateTimeInterface $updatedt): self
     {
         $this->updatedt = $updatedt;
+
+        return $this;
+    }
+
+    public function getKeywords(): ?string
+    {
+        return $this->keywords;
+    }
+
+
+    public function setKeywords(string $name): self
+    {
+        $this->keywords = $name;
 
         return $this;
     }

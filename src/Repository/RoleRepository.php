@@ -33,12 +33,19 @@ class RoleRepository extends EntityRepository
         return $aroles;
     }
 
-    public function filter($keyword)
+    public function filter($keywords)
     {
+        $kwarray = explode("+",$keywords);
         $qb = $this->createQueryBuilder('r');
-        $qb->where("r.name  like  :gid ");
-        $qb->setParameter( "gid", $keyword);
+        $i=0;
+        foreach($kwarray as $key=>$kw)
+        {
+             $qb->where("r.name  like  :kw$key ");
+              $qb->setParameter( "kw".$key, "%".$kw."%");
+              $i=$i+1;
+        }
         $qy = $qb->getQuery();
+        dump($qy);
         $roles = $qy->getResult();
         $aroles = array();
         foreach( $roles as $key=>$role)
@@ -46,6 +53,12 @@ class RoleRepository extends EntityRepository
             $aroles[$role->getroleid()]= $role;
         }
         return $aroles;
+
+        /*
+         *    ->where("firstname LIKE ? AND surname LIKE ?")
+         - >setParameter(0, $user_input_1st_name) *
+         ->setParameter(1, $user_input_2nd_name);
+         */
     }
 
     public function findOne($gid,$rid)
@@ -67,6 +80,39 @@ class RoleRepository extends EntityRepository
         $query = $this->getEntityManager()->createQuery($sql);
         $query->getResult();
     }
+
+
+    public function getRelationClues($actor1,$actor2)
+    {
+        $kw1 = $actor1->getSurname();
+        $fn1 = $actor1->getForename();
+        $kw2 = $actor2->getSurname();
+         $fn2 = $actor2->getForename();
+        $qb = $this->createQueryBuilder('r1');
+        $qb->select('r2');
+         $qb->select('r2');
+        $qb->leftjoin('App:role', 'r2',\Doctrine\ORM\Query\Expr\Join::WITH, "r2.glimpseref  = r1.glimpseref ");
+        $qb->where("r2.glimpseref  = r1.glimpseref ");
+        $qb->andwhere("r2.name  like  :kw2");
+        $qb->andwhere("r1.name  like  :kw1");
+        $qb->andwhere("r1.name  like  :fn1");
+        $qb->andwhere("r2.name  like  :fn2");
+        $qb->setParameter( "kw1", "%".$kw1."%");
+        $qb->setParameter( "fn1", "%".$fn1."%");
+          $qb->setParameter( "fn2", "%".$fn2."%");
+        $qb->setParameter( "kw2", "%".$kw2."%");
+        $qy = $qb->getQuery();
+        dump($qy);
+        $roles = $qy->getResult();
+        $aroles = array();
+        foreach( $roles as $key=>$role)
+        {
+            $aroles[$role->getroleid()]= $role;
+        }
+        return $aroles;
+    }
+
+
 
 }
 

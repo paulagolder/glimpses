@@ -36,10 +36,22 @@ services:
         alias:  App\Service\Templates
         public: true
 
-#twig.extension:
-#    class: App\Extension\AppTwigExtensions
-#    tags:
-#        -  { name: twig.extension}
 
 
-    App\Twig\Extension\AppExtension: ~
+    App\Twig\Extension\AppExtension:
+        arguments:
+           $templatedir : '%templatedir%'
+
+
+    App\Controller\ActorController:
+        arguments:
+            $templatedir : '%templatedir%'
+
+    App\Controller\RelationController:
+        arguments:
+            $templatedir : '%templatedir%'
+
+
+    App\Controller\GlimpseController:
+        arguments:
+            $templatedir : '%templatedir%'

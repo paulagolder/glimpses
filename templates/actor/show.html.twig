@@ -33,27 +33,27 @@
         <div class="row">
             <div class="inputpair" >
                 <div class="label">name</div>
-                <div class= "field"> {{actor.name}} </div>
+                <div class= "field"> {{actor.surname}}, {{actor.forename}} </div>
             </div>
             <div class="inputpair" >
                 <div class="label"> specifier </div>
                 <div class= "field"> {{actor.specifier}} </div>
             </div>
         </div>
-           <div class="row">
-                <div class="inputpair" >
-                    <div class="label">birthdate</div>
-                    {% if actor.birthdate is not null  %}
-                    <div class= "field"> {{actor.Birthdate}} </div>
-                    {% else %}
-                       <div class= "field"> "Null"" </div>
-                    {% endif %}
-                </div>
-                <div class="inputpair" >
-                    <div class="label"> deathdate</div>
-                    <div class= "field"> {{actor.deathdate}} </div>
-                </div>
+        <div class="row">
+            <div class="inputpair" >
+                <div class="label">birthdate</div>
+                {% if actor.birthdate is not null  %}
+                <div class= "field"> {{actor.Birthdate}} </div>
+                {% else %}
+                <div class= "field"> "Null"" </div>
+                {% endif %}
             </div>
+            <div class="inputpair" >
+                <div class="label"> deathdate</div>
+                <div class= "field"> {{actor.deathdate}} </div>
+            </div>
+        </div>
         <div class="row">
 
             <div class="inputpair" >
@@ -62,39 +62,60 @@
             </div>
         </div>
         <div class="subheading" >
-            <div class="title"> roles </div>
+            <div class="title">Life Events </div>
         </div>
-                 {% dump roles %}
-        <div class="roleTable" >
+        <div class="eventTable" >
             <div class="body">
-                {% for pid, role in roles %}
+                {% for eid, levent in lifeevents %}
                 <div class="row">
-                    <div class="cell">
-                        <div class="subheading">
-                        </div>
-                    </div>
-                    <div class="cell"> {{role.role.role}}</div>
-                    <div class="cell">{{role.role.name}} </div>
-                    {% if role.glimpse is defined %}
-                     <div class="cell" > {{role.glimpse.type}} </div>
-                    <div class="cell" > {{role.glimpse.date}} </div>
-                     <div class="cell" > Age: {{calAge(actor.Birthdate,role.glimpse.date)}} </div>
-                    {% dump role.glimpse %}
-                    {% dump role.role %}
-
-                 {#   {% set formatedtext = roletemplates.getRoleFormat(role.glimpse,role.role, roles) %}
-                    <div class="cell" >{{formatedtext}}</div>#}
-                     {% endif %}
-
-
-               {# <div class="cell">{{role.predicates}} </div> #}
+                    <div class="cell"> {{levent.lifeeventid}}</div>
+                    <div class="cell">{{levent.eventtype}} </div>
+                    <div class="cell">{{levent.lowdate}} </div>
+                    <div class="cell">{{levent.highdate}} </div>
                 </div>
-
                 {% endfor %}
             </div>
         </div>
+        <div class="subheading" >
+            <div class="title">Clues </div>
+        </div>
+        <div class="relationTable" >
+            <div class="body">
+                {% for rid, role in roles %}
+                <div class="row">
+                    {% dump(relation) %}
+
+                    <div class="cell"> {{actor.surname}}, {{actor.forename}} is {{relation.relation}} of </div>
+                    <div class="cell" >
+                         <div class="returnbutton">  <a   href = "/actor/show/{{relation.actor2ref}}" >{{actors[relation.actor2ref].surname}}, {{actors[relation.actor2ref].forename}} </a> </div>
+                     </div>
+
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="subheading" >
+                <div class="title">Roles </div>
+            </div>
+            {% dump roles %}
+            <div class="roleTable" >
+                <div class="body">
+                    {% for pid, role in roles %}
+                    {% dump(role) %}
+                     {% dump(role.glimpse) %}
+                   {# {% if role.glimspse is defined  %} #}
+                    <div class="row">
+                    {% set formatedtext = FormatRole(role.roleref,role.glimpse) %}
+                        <div class="cell" >{{formatedtext}}</div>
+                        <div class="cell" >  Age: {{calAge(actor.Birthdate,role.glimpse.date)}} </div>
+                         <div class="cell">{{role.predicates}} </div>
+                    </div>
+                 {#   {% endif %} #}
+
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
     </div>
-</div>
 </div>
 {% endblock %}
 
