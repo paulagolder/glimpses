@@ -24,6 +24,9 @@
         <div class="returnbutton"><a  href = "/actor/new" >Add New actor </a> </div>
     </div>
     <div class="actor">
+            <div class="heading" >
+            <div class="title">Actor </div>
+        </div>
         <div class="row">
             <div class="inputpair" >
                 <div class="label">ID </div>
@@ -77,19 +80,24 @@
             </div>
         </div>
         <div class="subheading" >
-            <div class="title">Clues </div>
+            <div class="title">Relationship</div>
         </div>
         <div class="relationTable" >
-            <div class="body">
-                {% for rid, role in roles %}
+            <div class="list">
+                {% for rid, relation in relations %}
                 <div class="row">
                     {% dump(relation) %}
 
-                    <div class="cell"> {{actor.surname}}, {{actor.forename}} is {{relation.relation}} of </div>
-                    <div class="cell" >
-                         <div class="returnbutton">  <a   href = "/actor/show/{{relation.actor2ref}}" >{{actors[relation.actor2ref].surname}}, {{actors[relation.actor2ref].forename}} </a> </div>
-                     </div>
+                         <div class="returnbutton">  <a   href = "/relation/show/{{relation.relationid}}" >View</a> </div>
 
+                       <div class="returnbutton">
+                      <a   href = "/actor/show/{{relation.actor1ref}}" >{{actors[relation.actor1ref].label}} </a>
+                     </div>
+                    <div class="cell">  is {{relation.relation}} of </div>
+
+                         <div class="returnbutton">  <a   href = "/actor/show/{{relation.actor2ref}}" >{{actors[relation.actor2ref].label}}</a> </div>
+
+                     </div>
                     {% endfor %}
                 </div>
             </div>

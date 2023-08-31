@@ -74,25 +74,20 @@
                 <div class="roleTable" >
                     <div class="body">
                         {% for pid, role in roles %}
-
                         {%  if role.roleid>0 %}
-
                         <div class="row">
                             <div class="cell">
                                 <div class="subheading">
                                 </div>
                             </div>
                             <div class="cell" > {{role.roleid}} </div>
-
                             <div class="cell">{{role.role}}</div>
                             <div class="cell">{{role.name}} </div>
                             <div class="cell">{{role.predicates}} </div>
                         </div>
                         {% else %}
-
                         <div class="row">
                             <div class="cell label" >
-
                             </div>
                             <div class="cell" >
                                 <input type="hidden" name="_role[{{pid}}]['ref']" value="{{role.roleref}}" />
@@ -100,7 +95,6 @@
                             <div class="cell" >{{role.role}} /div>
                             <div class="cell" >{{role.name}}</div>
                             <div class="cell" >{{role.predicates}}</div>
-
                         </div>
                         {% endif %}
                         {% endfor %}

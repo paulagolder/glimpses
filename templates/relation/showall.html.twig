@@ -1,0 +1,44 @@
+{# templates/relation/show.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link href="{{ asset('css/relation.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block js %}
+{{ parent() }}
+
+{% endblock %}
+
+{% block body %}
+<div id="relation" >
+
+
+    <div class ="heading" >
+      <div class="title">Relations</div></div>
+        <div class="returnbutton button1"> <a href = "/actor/showall" >return </a> </div>
+    </div>
+    <div class="list" >
+
+
+    {% for relation in relations %}
+
+    <div class="row" >
+     <div class="returnbutton"> <a href = "/relation/show/{{relation.relationid}}" >show </a> </div>
+    <div>{{relation.actor1.label}} {{relation.relation}} {{relation.actor2.label}}</div>
+
+    </div>
+    {% endfor %}
+
+
+
+    </div>
+</div>
+
+{% endblock %}
+
+
+
+

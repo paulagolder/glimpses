@@ -328,7 +328,7 @@ dump($glimpse);
     {
 
         $glimpse = $doctrine->getRepository(Glimpse::class)->findOne($gid);
-        $role =  $doctrine->getRepository(Role::class)->findOne($gid,$aref);
+        $role =  $doctrine->getRepository(Role::class)->getOne($aref);
         //  $predicates =  $doctrine->getRepository("App:Predicate")->findChildren($gid,$aref);
            $request = $this->requestStack->getCurrentRequest();
         if ($request->getMethod() == 'POST')

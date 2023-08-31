@@ -90,7 +90,7 @@
                 <div class="cell"> {{anactor.actorid}}</div>
                 <div class="cell">{{anactor.surname}}, {{anactor.forename}}</div>
                 <div class="cell">({{anactor.birthdate}}-{{anactor.deathdate}}) </div>
-                <div class="returnbutton">  <a   href = "/actor/merge/{{actor.actorid}}/{{anactor.actorid}}" >Merge</a> </div>
+                <div class="returnbutton">  <a   href = "/actor/compare/{{actor.actorid}}/{{anactor.actorid}}" >Compare</a> </div>
             </div>
             {% endfor %}
         </div>
@@ -103,9 +103,15 @@
         </div>
         <div class="body">
             {% for rid, relation in relations %}
-            <div class="row">
-                {% dump(relation) %}
-                <div class="cell">{{relation.actor1ref}}  {{relation.relation}} {{relation.actor2ref}} </div>
+                       <div class="row">
+                    {% dump(relation) %}
+                         <div class="returnbutton">  <a   href = "/relation/show/{{relation.relationid}}" >View</a> </div>
+                       <div class="returnbutton">
+                      <a   href = "/actor/show/{{relation.actor1ref}}" >{{actors[relation.actor1ref].label}} </a>
+                     </div>
+                    <div class="cell">  is {{relation.relation}} of </div>
+                         <div class="returnbutton">  <a   href = "/actor/show/{{relation.actor2ref}}" >{{actors[relation.actor2ref].label}}</a> </div>
+                     </div>
                 {% endfor %}
             </div>
         </div>
@@ -121,7 +127,6 @@
                 <div class="returnbutton">  <a   href = "/actor/deleterole/{{actor.actorid}}/{{role.roleref}}" >remove </a> </div>
                 {% if role.glimpse is defined %}
                 <div class="returnbutton">  <a   href = "/glimpse/show/{{role.glimpse.glimpseid}}" >view </a> </div>
-
                 <div class= "id"> {{role.roleref}}</div>
                 {% set formatedtext = FormatRole(role.roleref,role.glimpse) %}
                 <div class="cell" >{{formatedtext}}</div>

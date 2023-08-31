@@ -9,8 +9,8 @@ baptism:
   mother:
      format: "baptised child #child on #date at #location parents #father #mother"
      cardinality: 1
-
   official: 0
+
 birth:
   format: "#child born on #date at #location, parents #father #mother"
   child:
@@ -22,7 +22,9 @@ birth:
   mother:
      format: " of child #child born on #date at #location"
      cardinality: 1
-  official: 0
+  official:
+     format: " #name officiated at birth of  #child born on #date at #location"
+     cardinality: 1
 
 census:
      format: " census on #date at #location "
@@ -42,6 +44,8 @@ burial:
      format: " mother of #defunct  buried on #date at #location"
      cardinality: 1
    official: 0
+   husband:
+      format: "#husband of #defunct at buried #location "
 death:
    format: "#defunct buried on #date at #location"
    defunct:
@@ -58,7 +62,7 @@ marriage:
    format: "wedding between #groom and #bride on #date at #location"
    bride:
       format: "#bride wedded to #groom on #date at #location "
-   groom :
+   groom:
       format: "#groom wedded to #bride on #date at #location "
    father_of_bride:
       format: " #father_of_bride is father of #bride wedded to #groom  on #date at #location "

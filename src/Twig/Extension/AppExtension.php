@@ -69,14 +69,17 @@ class AppExtension extends AbstractExtension
 
     public function FormatRole($roleref,$glimpse)
     {
+        dump($this->templatelist);
         $type= $glimpse->getType();
         $roles= $glimpse->roles;
         $role= $roles[$roleref]->getRole();
+        dump($type);
+        dump($role);
         $fmt =  $this->templatelist[$type][$role]["format"];
         $fmt = str_replace("#location", $glimpse->getLocation(), $fmt);
         $fmt = str_replace("#date", $glimpse->getDate(), $fmt);
         $krole = $roles[$roleref];
-          $fmt = str_replace("#".$krole->getRole(), $krole->getName(), $fmt);
+        $fmt = str_replace("#".$krole->getRole(), $krole->getName(), $fmt);
         foreach($roles as $key=>$arole)
         {
             $fmt = str_replace("#".$arole->getRole(), $arole->getName(), $fmt);

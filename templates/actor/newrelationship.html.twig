@@ -1,0 +1,127 @@
+{# templates/actor/editroles.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link href="{{ asset('css/actor.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block js %}
+{{ parent() }}
+{% endblock %}
+
+{% block body %}
+<div id="actor" >
+    <div class ="heading" >
+        <div class="label">Actor:</div>
+        <div class= "field">{{actor.surname}}, {{actor.forename}}</div>
+        <div class="returnbutton button1"> <a href = "/actor/show/{{actor.actorid}}" >return </a> </div>
+        <div class="returnbutton">  <a   href = "/actor/delete/{{actor.actorid}}" >delete </a> </div>
+        <div class="returnbutton">  <a   href = "/actor/edit/{{actor.actorid}}" >edit </a> </div>
+        <div class="returnbutton"><a  href = "/actor/new" >Add New actor </a> </div>
+    </div>
+    {% dump(actor) %}
+    <div class="twocols">
+        <div class="actor">
+            <div class="row">
+                <div class="inputpair" >
+                    <div class="label">ID </div>
+                    <div class= "field"> {{actor.actorid}}</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="inputpair" >
+                    <div class="label">name</div>
+                    <div class= "field"> {{actor.surname}}, {{actor.forename}} </div>
+                </div>
+                <div class="inputpair" >
+                    <div class="label"> specifier </div>
+                    <div class= "field"> {{actor.specifier}} </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="inputpair" >
+                    <div class="label">birthdate</div>
+                    {% if actor.birthdate is not null  %}
+                    <div class= "field"> {{actor.Birthdate}} </div>
+                    {% else %}
+                    <div class= "field"> "Null"" </div>
+                    {% endif %}
+                </div>
+                <div class="inputpair" >
+                    <div class="label"> deathdate</div>
+                    <div class= "field"> {{actor.deathdate}} </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="inputpair" >
+                    <div class="label"> text </div>
+                    <div class= "field"> {{actor.text}} </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="relationTable" >
+        <div class="subheading" >
+            <div class="title">Relationships</div>
+
+        </div>
+        <div class="body">
+            {% for rid, relation in relations %}
+            <div class="row">
+                {% dump(relation) %}
+                <div class="cell">{{relation.actor1ref}}  {{relation.relation}} {{relation.actor2ref}} </div>
+
+            </div>
+                         {% endfor %}
+        </div>
+        <div class="subheading" >
+            <div class="title">Make New Relationships</div>
+        </div>
+        <div class="actor inputform">
+            <form action="/actor/process_newrelationship/{{actor.actorid}}" method="post" id="relationshipform"  >
+                <div class="row">
+                       <div class="inputpair" >
+                    <div class="label">ID </div>
+                    <div class= "field">{{actor.actorid}}</div>
+                </div>
+                <div class="inputpair" >
+
+                        <div class="label">Name</div>
+                        <div class= "field">{{actor.surname}}, {{actor.forename}}</div>
+            </div>
+            <div class="inputpair" >
+                <div class="label"> Relationship </div>
+                <select name="_relationship">
+                    <option selected="selected">Choose one</option>
+                   {% for  relationship in relationships %}
+                     <option value='{{relationship}}'>{{relationship}}</option>
+                   {% endfor %}
+                    </select>
+            </div>
+            <div class="inputpair" >
+                <div class="label"> of </div>
+                <select name="_actor2ref">
+                    <option selected="selected">Choose Actor</option>
+                    {% for  actor in actors %}
+                    <option value='{{actor.actorid}}'>{{actor.surname}}, {{actor.forename}}: {{actor.birthdate}}({{actor.specifier}})</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <button type="submit" id="submitbutton"   > enregistrer</button>
+    </form>
+        <div class="returnbutton">  <a   href = "/actor/newrelationship/{{actor.actorid}}" >Make</a> </div>
+    </div>
+
+</div>
+{% endblock %}
+
+
+
+

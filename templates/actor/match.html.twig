@@ -1,4 +1,4 @@
-{# templates/actor/compare.html.twig #}
+{# templates/actor/match.html.twig #}
 
 {% extends 'base.html.twig' %}
 
@@ -18,6 +18,10 @@
 
     <div class ="heading" >
         <div class="returnbutton button1"> <a href = "/actor/showall" >return </a> </div>
+       {# <div class="returnbutton">  <a   href = "/actor/delete/{{actor.actorid}}" >delete </a> </div>
+        <div class="returnbutton">  <a   href = "/actor/edit/{{actor.actorid}}" >edit </a> </div>
+        <div class="returnbutton">  <a   href = "/actor/editroles/{{actor.actorid}}" >edit roles </a> </div>
+        <div class="returnbutton"><a  href = "/actor/new" >Add New actor </a> </div>#}
     </div>
     <div class="twocols">
         <div class="col1">
@@ -31,7 +35,7 @@
                 <div class="row">
                     <div class="inputpair" >
                         <div class="label">name</div>
-                        <div class= "field"> {{actor1.name}} </div>
+                        <div class= "field"> {{actor1.label}} </div>
                     </div>
                     <div class="inputpair" >
                         <div class="label"> specifier </div>
@@ -47,10 +51,10 @@
                 </div>
                 <div class="returnbutton">  <a   href = "/actor/impute/{{actor1.actorid}}" >Impute Life history </a> </div>
                 <div class="subheading" >
-                    <div class="title"> Dates </div>
+                    <div class="title"> roles </div>
                 </div>
                 {% set birthdate = "00000000" %}
-                <div class="LifeEventTable" >
+               <div class="LifeEventTable" >
                     <div class="body">
                         {% for event in lifeevents2 %}
                         <div class="row">
@@ -69,9 +73,6 @@
                         {% endfor %}
                     </div>
                 </div>
-                  <div class="subheading" >
-                    <div class="title"> roles </div>
-                </div>
                 <div class="roleTable" >
                     <div class="body">
                         {% for pid, role in roles1 %}
@@ -80,9 +81,9 @@
                                 <div class="subheading">
                                 </div>
                             </div>
-                            {% set age = calcAge( birthdate , role.glimpse.date ) %}
+                            {% set age = calAge(actor1.Birthdate,role.glimpse.date) %}
 
-                            {% set formatedtext = FormatRole(role, roles1) %}
+                            {% set formatedtext = FormatRole(role.roleref, role.glimpse) %}
                             <div class="cell" >{{formatedtext}} age: {{age}}</div>
                         </div>
 
@@ -102,7 +103,7 @@
                 <div class="row">
                     <div class="inputpair" >
                         <div class="label">name</div>
-                        <div class= "field"> {{actor2.name}} </div>
+                        <div class= "field"> {{actor2.label}} </div>
                     </div>
                     <div class="inputpair" >
                         <div class="label"> specifier </div>
@@ -148,8 +149,8 @@
                                 <div class="subheading">
                                 </div>
                             </div>
-                            {% set age = FormatRole.calcAge( birthdate , role.glimpse.date ) %}
-                            {% set formatedtext = FormatRole(role, roles2) %}
+                            {% set age = calAge(actor2.Birthdate,role.glimpse.date) %}
+                            {% set formatedtext = FormatRole(role.roleref, role.glimpse) %}
                             <div class="cell" >{{formatedtext}} age: {{age}}</div>
                         </div>
 
@@ -158,7 +159,9 @@
                 </div>
             </div>
         </div>
-        </div>
+    </div>
+
+
 
       <div class ="heading" >
        <div class="returnbutton">  <a   href = "/actor/merge/{{actor1.actorid}}/{{actor2.actorid}}" >MERGE</a> </div>

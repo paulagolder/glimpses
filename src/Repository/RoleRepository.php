@@ -35,13 +35,14 @@ class RoleRepository extends EntityRepository
 
     public function filter($keywords)
     {
-        $kwarray = explode("+",$keywords);
+        $kwarray = explode(",",$keywords);
         $qb = $this->createQueryBuilder('r');
         $i=0;
         foreach($kwarray as $key=>$kw)
         {
-             $qb->where("r.name  like  :kw$key ");
-              $qb->setParameter( "kw".$key, "%".$kw."%");
+            $k= trim($kw);
+             $qb->andwhere("r.name  like  :kw$i ");
+              $qb->setParameter( "kw".$i, "%".$k."%");
               $i=$i+1;
         }
         $qy = $qb->getQuery();
@@ -61,11 +62,10 @@ class RoleRepository extends EntityRepository
          */
     }
 
-    public function findOne($gid,$rid)
+    public function getOne($rid)
     {
         $sql = "select r from App:role r ";
-        $sql .= " where r.glimpseref = ".$gid." ";
-        $sql .= " and r.roleid = ".$rid." ";
+        $sql .= " where r.roleid = ".$rid." ";
         $query = $this->getEntityManager()->createQuery($sql);
         $roles = $query->getResult();
 
@@ -89,10 +89,9 @@ class RoleRepository extends EntityRepository
         $kw2 = $actor2->getSurname();
          $fn2 = $actor2->getForename();
         $qb = $this->createQueryBuilder('r1');
-        $qb->select('r2');
-         $qb->select('r2');
+        $qb->select('r1','r2');
         $qb->leftjoin('App:role', 'r2',\Doctrine\ORM\Query\Expr\Join::WITH, "r2.glimpseref  = r1.glimpseref ");
-        $qb->where("r2.glimpseref  = r1.glimpseref ");
+        //$qb->where("r2.glimpseref  = r1.glimpseref ");
         $qb->andwhere("r2.name  like  :kw2");
         $qb->andwhere("r1.name  like  :kw1");
         $qb->andwhere("r1.name  like  :fn1");

@@ -40,22 +40,14 @@ class LifeEventRepository extends EntityRepository
         return $eventarray;
     }
 
-    public function findOne($aref,$rref)
-    {
-        $sql = "select g from ActorRole::class g ";
-        $sql .= " where g.actorref = ".$aref." ";
-        $sql .= " and g.roleref = ".$rref." ";
-        $query = $this->getEntityManager()->createQuery($sql);
-        $roles = $query->getResult();
 
-        return $roles[0];
-    }
 
-    public function delete($gid,$pref)
+
+
+    public function deleteAll($aid)
     {
-        $sql = "delete from App:role g ";
-        $sql .= " where g.glimpseid = ".$gid." ";
-        $sql .= " and g.roleref = ".$pref." ";
+        $sql = "delete from App:Lifeevent  l";
+        $sql .= ' where  l.actorref ='. $aid  ;
         $query = $this->getEntityManager()->createQuery($sql);
         $query->getResult();
     }

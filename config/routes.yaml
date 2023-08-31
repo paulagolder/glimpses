@@ -170,6 +170,10 @@ actor_merge:
    path: /actor/merge/{aid}/{daid}
    controller:  App\Controller\ActorController::merge
 
+actor_compare:
+   path: /actor/compare/{aid}/{daid}
+   controller:  App\Controller\ActorController::compare
+
 relation_show_all:
     path: /relation/showall/
     controller:  App\Controller\RelationController::showall
@@ -178,5 +182,7 @@ relation_show_one:
     path: /relation/show/{rid}
     controller:  App\Controller\RelationController::showone
 
-
+relation_addclue:
+    path: /relation/addclue/{rid}/{gref}
+    controller:  App\Controller\RelationController::addclue
 

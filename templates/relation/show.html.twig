@@ -1,0 +1,81 @@
+{# templates/relation/show.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link href="{{ asset('css/relation.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block js %}
+{{ parent() }}
+
+{% endblock %}
+
+{% block body %}
+<div id="relation" >
+    <div class ="heading" >
+        <div class="title">Relationship</div>
+        <div class="returnbutton button1"> <a href = "/actor/showall" >return </a> </div>
+    </div>
+    <div class="subheading row" >
+    <div class= "title">{{actor1.label}} {{relation.relation}} {{actor2.label}}</div>
+</div>
+<div ></div>
+<div >
+  <div class="actor">
+        <div class="row">
+           <div class="returnbutton"> <a href = "/actor/show/{{relation.actor1ref}}" >show </a> </div>
+                <div class= "field"> {{actor1.label}}</div>
+                <div class= "field">( {{actor1.specifier}} )</div>
+            </div>
+        </div>
+  <div class="actor">
+        <div class="row">
+           <div class="returnbutton"> <a href = "/actor/show/{{relation.actor2ref}}" >show </a> </div>
+                <div class= "field"> {{actor2.label}}</div>
+                <div class= "field">( {{actor2.specifier}} )</div>
+            </div>
+        </div>
+    </div>
+    <div ></div>
+      <div class="subheading" >
+            <div class="title">Clues </div>
+        </div>
+{% dump  clues %}
+            <div class="">
+                {% for cid, clue in clues %}
+                <div class="row">
+                   <div class="returnbutton"> <a href = "/glimpse/show/{{clue.glimpseref}}" >View Glimpse </a></div>
+                            <div class="cell">{{  FormatEvent(clue.glimpse)}}  </div>
+
+   </div>
+                    {% endfor %}
+</div>
+
+      <div class="subheading" >
+            <div class="title">Roles </div>
+        </div>
+{% dump  roles %}
+            <div class="list">
+                {% for rid, role in roles %}
+                <div class="row">
+                   <div class="returnbutton"> <a href = "/glimpse/show/{{role.glimpse.glimpseid}}" >View Glimpse </a></div>
+
+                         <div class="cell"> {{role.glimpse.location}}  </div>
+                         <div class="cell"> {{role.glimpse.type}}  </div>
+                           <div class="cell">{{role.glimpse.date}}  </div>
+                         <div class="cell"> {{role.role}}  </div>
+                         <div class="cell">{{role.name}}   </div>
+                         <div class="cell">{{role.predicates}}   </div>
+                          <div class="returnbutton"> <a href = "/relation/addclue/{{relation.relationid}}/{{role.glimpseref}}" >Add to clues </a></div>
+
+   </div>
+                    {% endfor %}
+</div>
+
+{% endblock %}
+
+
+
+

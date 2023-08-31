@@ -141,7 +141,7 @@ class LifeEvent
     }
 
 
-    public static  function mergeLifeevents(&$lifeevents,$newlifeevents)
+    public static  function merge(&$lifeevents,$newlifeevents)
     {
         dump($newlifeevents);
         foreach($newlifeevents as $eventtype => $lifeevent)

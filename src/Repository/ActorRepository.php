@@ -23,6 +23,7 @@ class ActorRepository extends EntityRepository
     public function findAll()
     {
         $qb = $this->createQueryBuilder('g');
+        $qb->orderBy(" g.surname , g.forename ");
         $qy = $qb->getQuery();
         $actors = $qy->getResult();
         return $actors;
