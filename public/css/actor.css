@@ -151,3 +151,8 @@ div#actor textarea.url
 {
    background-color:silver;
 }
+
+#actorform div.field input.text
+{
+    width: 40em;
+}

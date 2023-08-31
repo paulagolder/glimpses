@@ -22,17 +22,17 @@ use Doctrine\DBAL\Driver\Connection;
 class ActorRoleRepository extends EntityRepository
 {
 
-    public function xfindRoles($aid)
+    public function getRoles($aid)
     {
-        $sql = "select r from App:ActorRole g JOIN App:Role r  ";
-         $sql .= " where  g.roleref = r.roleid  ";
-        $sql .= " and g.actorref = ".$aid." ";
+      $sql = "select g from App:ActorRole g ";
+      $sql .= " where g.actorref = ".$aid." ";
+
         $query = $this->getEntityManager()->createQuery($sql);
         $roles = $query->getResult();
         $aroles = array();
         foreach( $roles as $key=>$role)
         {
-          $aroles[$role->getRoleid()]= $role;
+          $aroles[$role->getRoleRef()]= $role;
         }
         return $aroles;
     }
@@ -48,13 +48,22 @@ class ActorRoleRepository extends EntityRepository
         return $roles[0];
     }
 
-    public function delete($gid,$pref)
+    public function delete($aref,$rref)
     {
-        $sql = "delete from App:role g ";
-        $sql .= " where g.glimpseid = ".$gid." ";
-        $sql .= " and g.roleref = ".$pref." ";
+      $sql = "delete from App:ActorRole g ";
+      $sql .= " where g.actorref = ".$aref." ";
+      $sql .= " and g.roleref = ".$rref." " ;
         $query = $this->getEntityManager()->createQuery($sql);
         $query->getResult();
+    }
+
+
+    public function deleteByActor($aid)
+    {
+      $sql = "delete from App:ActorRole g  ";
+      $sql .= " where g.actorref = ".$aid." ";
+      $query = $this->getEntityManager()->createQuery($sql);
+      $query->getResult();
     }
 
       public function findRoles($aid)

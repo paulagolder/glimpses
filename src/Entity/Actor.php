@@ -222,4 +222,59 @@ class Actor
 
         return $this;
     }
+
+
+    public function merge($actor2)
+    {
+
+        if (strlen(trim($this->text)) == 0)
+        {
+            $this->text =$actor2->text;
+        }
+        else if(!strcasecmp($this->text, $actor2->text))
+        {
+            $this->text .= "+T+". $actor2->text;
+        }
+        if (strlen(trim($this->specifier)) == 0)
+        {
+            $this->specifier =$actor2->specifier;
+        }
+        else if(!strcasecmp($this->specifier, $actor2->specifier))
+        {
+            $this->specifier.= "++". $actor2->specifier;
+        }
+        if (strlen(trim($this->surname)) == 0)
+        {
+            $this->surname =$actor2->surname;
+        }
+        else if(!strcasecmp($this->surname, $actor2->surname))
+        {
+            $this->text .= "+S+". $actor2->surname;
+        }
+        if (strlen(trim($this->forename)) == 0)
+        {
+            $this->forename =$actor2->forename;
+        }
+        else if(!strcasecmp($this->forename, $actor2->forename))
+        {
+            $this->text .= "+F+". $actor2->forename;
+        }
+        if (strlen(trim($this->birthdate)) == 0)
+        {
+            $this->birthdate =$actor2->birthdate;
+        }
+        else if(!strcasecmp($this->birthdate, $actor2->birthdate))
+        {
+            $this->text .= "+B+". $actor2->birthdate;
+        }
+        if (strlen(trim($this->deathdate)) == 0)
+        {
+            $this->deathdate =$actor2->deathdate;
+        }
+        else if(!strcasecmp($this->deathdate, $actor2->deathdate))
+        {
+            $this->text .= "+D+". $actor2->deathdate;
+        }
+
+    }
 }

@@ -248,9 +248,31 @@ class ActorController extends AbstractController
 
         $actor1 =  $doctrine->getRepository(Actor::class)->findOne($aid);
         $actor2 =  $doctrine->getRepository(Actor::class)->findOne($daid);
+        $actor1->merge($actor2);
         $lifeevents1 =  $doctrine->getRepository(LifeEvent::class)->findAllEvents($aid);
         $lifeevents2 =  $doctrine->getRepository(LifeEvent::class)->findAllEvents($daid);
+
         LifeEvent::merge($lifeevents1,$lifeevents2 );
+
+        $entityManager = $doctrine->getManager();
+        $entityManager->persist($actor1);
+        $entityManager->flush();
+
+
+         $roles =  $doctrine->getRepository(ActorRole::class)->getRoles($aid);
+         $roles2 =  $doctrine->getRepository(ActorRole::class)->getRoles($daid);
+         foreach($roles2 as $rid=>$role)
+         {
+             if(!array_key_exists($rid,$roles))
+             {
+                 $role->setActorRef($aid);
+                 $entityManager->persist($role);
+                 $entityManager->flush();
+            }
+
+
+        }
+        $doctrine->getRepository(ActorRole::class)->deleteByActor($daid);
           $doctrine->getRepository(LifeEvent::class)->deleteAll($daid);
          $doctrine->getRepository(Actor::class)->delete($daid);
         return $this->redirect("/actor/editroles/".$aid);
