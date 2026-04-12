@@ -25,22 +25,12 @@ class GlimpseController extends AbstractController
     private $templatesrc;
     private $lib;
 
- //   private  $templatelist=array();
- //   private  $agelist=array();
-
-
-
-
-
 
     public function __construct( Templates $templates ,MyLibrary $lib, RequestStack $request_stack ,string $templatedir)
     {
         $this->templatesrc = $templates;
         $this->requestStack = $request_stack;
         $this->lib = $lib;
-    //    $ageyml = $fileLocator->locate('agelist3.yml', null, false);
-    //    $this->agelist =   Yaml::parseFile($ageyml[0]);
-      //  $this->requestStack = $request_stack;
     }
 
 
@@ -49,8 +39,6 @@ class GlimpseController extends AbstractController
         $glimpse = new Glimpse();
         $glimpse->setType($type);
         $glimpse->setContributor("paul");
-       // $now = new \DateTime();
-      //  $glimpse->setUpdateDt($now);
         $glimpse->setGlimpseId(0);
         $roles = array();
         $roletemplate =  $this->templatesrc->getTemplates($type);
@@ -69,7 +57,6 @@ class GlimpseController extends AbstractController
             'returnlink' => "/glimpse/new",
             'typelist' =>['baptism','marriage', 'burial'],
         ));
-
     }
 
 
@@ -189,19 +176,8 @@ class GlimpseController extends AbstractController
         foreach ($roles as $key=> $role)
         {
             $aref = $role->getroleid();
-            /*        $predicates =  $doctrine->getRepository("App:Predicate")->findChildren($gid,$aref);
-             d ump($predicate*s);
-             $npredicate = new predicate();
-             $npredicate->setGlimpseid($gid);
-             $npredicate->setroleref($aref);
-             $npredicate->setVerb("");
-             $npredicate->setObject("");
-             #$predicates[]=$npredicate;
-             $predicates="";
-             $role->setPredicates($predicates); */
             dump($role );
         }
-
 
         dump($roles);
         return $this->render('glimpse/editrole.html.twig', array(
@@ -216,7 +192,8 @@ class GlimpseController extends AbstractController
 
     public function  delete(ManagerRegistry $doctrine,$gid)
     {
-        $roles =  $doctrine->getRepository(Glimpse::class)->delete($gid);
+        $doctrine->getRepository(Glimpse::class)->delete($gid);
+        $doctrine->getRepository(Role::class)->deleteAllinGlimpse($gid);
         return $this->redirect("/glimpse/showall/");
     }
 
@@ -362,47 +339,7 @@ dump($glimpse);
             $role->setPredicates($preds);
             $entityManager->persist($role);
             $entityManager->flush();
-            //   $predlist = explode(";", $preds);
-            /*   dump($predlist);
-             i f($predlist)  *
-             {
-             foreach( $predlist as $predref => $opred)
-             {
-             dump($opred);
-             if(array_key_exists($predref, $predicates))
-             {
-
-             $npredicate= $predicates[$predref];
-             $npredicate->setGlimpseid($gid);
-             $npredicate->setroleref($aref);
-             $npredicate->setPredicateref($predref);
-             $npredicate->setVerb($opred["'verb'"]);
-             $npredicate->setObject($opred["'object'"]);
-             $entityManager->persist($npredicate);
-             $entityManager->flush();
-        }
-        else
-        {
-        if($opred["'verb'"])
-        {
-        $npredicate= new predicate();
-        $npredicate->setGlimpseid($gid);
-        $npredicate->setroleref($aref);
-        $npredicate->setPredicateref($predref);
-        $npredicate->setVerb($opred["'verb'"]);
-        $npredicate->setObject($opred["'object'"]);
-        $entityManager->persist($npredicate);
-        $entityManager->flush();
-
-        }
-        }
-        }
-        }
-        */
-
             return $this->redirect("/glimpse/edit/".$gid);
-
-
         }
 
         return $this->render('glimpse/edit.html.twig', array(
@@ -475,17 +412,12 @@ dump($glimpse);
         );
     }
 
-
     public function clearfilter()
     {
         //$this->lib->setCookieFilter("fred");
         return $this->filter();
 
     }
-
-
-
-
 
     public function filter(ManagerRegistry $doctrine)
     {

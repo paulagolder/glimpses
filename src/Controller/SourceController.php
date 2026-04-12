@@ -72,10 +72,10 @@ class SourceController extends AbstractController
 
 
 
-    public function  delete(ManagerRegistry $doctrine,$gid)
+    public function  delete(ManagerRegistry $doctrine,$sid)
     {
 
-        $roles =  $doctrine->getRepository(Source::class)->delete($gid);
+         $doctrine->getRepository(Source::class)->delete($sid);
         return $this->redirect("/source/showall/");
 
     }

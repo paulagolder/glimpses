@@ -72,11 +72,20 @@ class RoleRepository extends EntityRepository
         return $roles[0];
     }
 
-    public function delete($gid,$pref)
+    public function deleteOne($gid,$pref)
     {
         $sql = "delete from App:role g ";
         $sql .= " where g.glimpseid = ".$gid." ";
         $sql .= " and g.roleref = ".$pref." ";
+        $query = $this->getEntityManager()->createQuery($sql);
+        $query->getResult();
+    }
+
+
+    public function deleteAllinGlimpse($gid)
+    {
+        $sql = "delete from App:role g ";
+        $sql .= " where g.glimpseid = ".$gid." ";
         $query = $this->getEntityManager()->createQuery($sql);
         $query->getResult();
     }

@@ -17,10 +17,10 @@ birth:
      format: "#child was born on #date at #location"
      cardinality: 1
   father:
-     format: " of child #child born on #date at #location"
+     format: " #father is father of child #child born on #date at #location"
      cardinality: 1
   mother:
-     format: " of child #child born on #date at #location"
+     format: " #mother is mother of child #child born on #date at #location"
      cardinality: 1
   official:
      format: " #name officiated at birth of  #child born on #date at #location"
@@ -38,14 +38,14 @@ burial:
      format: "was buried on #date at #location"
      cardinality: 1
    father:
-     format: " father of #defunct  buried on #date at #location"
+     format: " #father is father of #defunct  buried on #date at #location"
      cardinality: 1
    mother:
-     format: " mother of #defunct  buried on #date at #location"
+     format: " #mother is mother of #defunct  buried on #date at #location"
      cardinality: 1
    official: 0
    husband:
-      format: "#husband of #defunct at buried #location "
+      format: "#husband of #defunct at buried on #date  #location "
 death:
    format: "#defunct buried on #date at #location"
    defunct:

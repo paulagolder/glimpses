@@ -54,7 +54,7 @@ class RelationController extends AbstractController
             $relation->{"actor1"}= $this->doctrine->getRepository(Actor::class)->findOne($relation->getActor1ref());
             $relation->{"actor2"}= $this->doctrine->getRepository(Actor::class)->findOne($relation->getActor2ref());
         }
-
+        dump($relations);
         return $this->render(
             'relation/showall.html.twig',
             [

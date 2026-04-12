@@ -104,6 +104,11 @@ source_edit:
     path: /source/edit/{sid}
     controller:  App\Controller\SourceController::edit
 
+source_delete:
+    path: /source/delete/{sid}
+    controller:  App\Controller\SourceController::delete
+
+
 source_show:
     path: /source/show/{sid}
     controller:  App\Controller\SourceController::showone
