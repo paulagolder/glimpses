@@ -140,7 +140,7 @@ class ActorController extends AbstractController
         foreach($sroles as &$srole)
         {
 
-            if(! array_key_exists($srole->getRoleid(), $froles))
+            //if(! array_key_exists($srole->getRoleid(), $froles))
             {
                 $srole->glimpse = $doctrine->getRepository(Glimpse::class)->findOne($srole->getGlimpseref());
                 dump($srole);

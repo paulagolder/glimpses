@@ -27,8 +27,14 @@
 
     <div class="row" >
      <div class="returnbutton"> <a href = "/relation/show/{{relation.relationid}}" >show </a> </div>
+        {% if relation.actor1 is defined %}
+                    {% if relation.actor1 is not null %}
+                    {% if relation.actor2 is defined %}
+                                        {% if relation.actor2 is not null %}
     <div>{{relation.actor1.label}} {{relation.relation}} {{relation.actor2.label}}</div>
-
+       {% endif %}
+               {% endif %}       {% endif %}
+                                         {% endif %}
     </div>
     {% endfor %}
 

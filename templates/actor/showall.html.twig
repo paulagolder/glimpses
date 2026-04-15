@@ -35,33 +35,23 @@
             </div>
             </div>
 
-
-
-
     <div class="heading">
       <div class="title">Actors</div>
             </div>
-
 
      <div class= "actorlist">
     {% for actor in actors %}
     <div class= "actor">
         <div class="row ">
-
              <div class="returnbutton col1">   <a   href = "/actor/show/{{actor.actorid}}" >view </a> </div>
             <div class= "col2">{{actor.actorId}}</div>
             <div class= "col3"> {{actor.surname}}, {{actor.forename}}</div>
             <div class= "col4"> {{actor.specifier}}</div>
         </div>
         </div>
-
-
     {% endfor %}
        </div>
-
 </div>
-
-
 {% endblock %}
 
 

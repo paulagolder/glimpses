@@ -26,8 +26,12 @@
   <div class="actor">
         <div class="row">
            <div class="returnbutton"> <a href = "/actor/show/{{relation.actor1ref}}" >show </a> </div>
+           {% if actor1 is defined %}
+               {% if actor1 is not null %}
                 <div class= "field"> {{actor1.label}}</div>
                 <div class= "field">( {{actor1.specifier}} )</div>
+              {% endif %}
+               {% endif %}
             </div>
         </div>
   <div class="actor">

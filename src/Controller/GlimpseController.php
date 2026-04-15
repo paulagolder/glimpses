@@ -357,7 +357,11 @@ dump($glimpse);
 
         $glimpse = $doctrine->getRepository(Glimpse::class)->findOne($gid);
         $roles =  $doctrine->getRepository(Role::class)->findChildren($gid);
-        $source =   $doctrine->getRepository(Source::class)->findOne($glimpse->getSourceid());
+        if($glimpse != null)
+           $source =   $doctrine->getRepository(Source::class)->findOne($glimpse->getSourceid());
+        else
+            $source ="";
+
         return $this->render(
             'glimpse/show.html.twig',
             [
@@ -442,17 +446,20 @@ dump($glimpse);
         }
         else
         {
-            $this->lib->setCookieFilter($pfield);
-            $filter = "%".$pfield."%";
-            $glimpses = $doctrine->getRepository(Glimpse::class)->filterf($filter);
+            if(is_numeric($pfield))
+            {
+              $glimpses[] = $doctrine->getRepository(Glimpse::class)->findOne($pfield);
+            }else
+            {
+              $this->lib->setCookieFilter($pfield);
+              $filter = "%".$pfield."%";
+              $glimpses = $doctrine->getRepository(Glimpse::class)->filterf($filter);
+            }
             dump($glimpses);
         }
-
-
         foreach($glimpses as &$glimpse)
         {
               $glimpse->{"roles"} =  $doctrine->getRepository(Role::class)->findChildren($glimpse->getGlimpseId());
-
         }
         return $this->render(
             'glimpse/showall.html.twig',
