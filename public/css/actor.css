@@ -6,12 +6,12 @@
 
 #actor div.twocols div.actor
 {
-     border:2 solid red;
+     border: 2px solid red;
 }
 
 #actor div.twocols div.glimpses
 {
-     border:2 solid green;
+     border:2px solid green;
 }
 
 #actor div.row  div.inputpair
@@ -95,15 +95,13 @@ div#actor textarea.url
 #actor   div.row div.col3
 {
       width:20em;
-      xborder: 1px solid #CC33CC;
       white-space: nowrap;
       overflow: hidden;
-      o-text-overflow: ellipsis;
       text-overflow: ellipsis;
 }
 #actor   div.row div.col4
 {
-   width:16em;
+   width:30em;
 }
 #actor   div.row div.col5
 {

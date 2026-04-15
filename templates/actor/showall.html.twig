@@ -1,8 +1,5 @@
 {# templates/actor/showall.html.twig #}
 
-
-
-
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
@@ -38,6 +35,13 @@
     <div class="heading">
       <div class="title">Actors</div>
             </div>
+    <form  action="/actor/filter">
+  <div class="row">
+   <div class="label"> Filter</div>
+   <input type="text" name="filter" value="{{filter}}" >
+   <input type="submit" value="action" >
+   </div>
+   </form>
 
      <div class= "actorlist">
     {% for actor in actors %}

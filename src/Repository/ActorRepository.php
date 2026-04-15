@@ -42,10 +42,6 @@ class ActorRepository extends EntityRepository
         return $indexedactors;
     }
 
-
-
-
-
     public function findOne($aid)
     {
         $qb = $this->createQueryBuilder('g');
@@ -55,9 +51,6 @@ class ActorRepository extends EntityRepository
         $actor = $qy->getOneOrNullResult();
         return $actor;
     }
-
-
-
 
     public function findAllMatching($actor)
     {
@@ -71,10 +64,6 @@ class ActorRepository extends EntityRepository
         return $actors;
     }
 
-
-
-
-
     public function findDups($surname,$forename)
     {
         $qb = $this->createQueryBuilder('g');
@@ -87,7 +76,6 @@ class ActorRepository extends EntityRepository
         return $actors;
     }
 
-
     public function delete($aid)
     {
         $qb = $this->createQueryBuilder('a');
@@ -96,6 +84,21 @@ class ActorRepository extends EntityRepository
         $qb->setParameter('aid', $aid);
         $qb->getQuery()->execute();
     }
+
+   public function filterf($filter)
+       {
+           $qb = $this->createQueryBuilder('a');
+           $qb->select();
+           $qb->where('  a.surname like :name  ');
+           $qb->setparameter( 'name', $filter);
+           dump($qb);
+           $qy= $qb->getQuery();
+                dump($qy);
+           $actors = $qy->getResult();
+           dump($actors);
+           return $actors;
+       }
+
 
 }
 

@@ -130,6 +130,14 @@ actor_show:
     path: /actor/show/{aid}
     controller:  App\Controller\ActorController::show
 
+actor_filter:
+      path: /actor/filter/
+      controller: App\Controller\ActorController::filter
+
+actor_clearfilter:
+      path: /actor/clearsearch/
+      controller: App\Controller\ActorController::clearfilter
+
 actor_new:
     path: /actor/new/
     controller:  App\Controller\ActorController::new

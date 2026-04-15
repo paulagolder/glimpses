@@ -66,6 +66,32 @@ class ActorController extends AbstractController
         );
     }
 
+  public function filter2(ManagerRegistry $doctrine,$aid)
+    {
+        $actor = $doctrine->getRepository(Actor::class)->findOne($aid);
+        $actors = $doctrine->getRepository(Actor::class)->findAllIndexed();
+        dump($actor);
+        $lifeevents =  $doctrine->getRepository(LifeEvent::class)->findAllEvents($aid);
+        $relations = $doctrine->getRepository(Relation::class)->findByActor($aid);
+        dump($relations);
+        $roles =  $doctrine->getRepository(ActorRole::class)->findroles($aid);
+        dump($roles);
+        $dups =  $doctrine->getRepository(Actor::class)->findDups($actor->getSurname(),$actor->getForename());
+        dump($dups);
+        return $this->render(
+            'actor/show.html.twig',
+            [
+            'actor'=>$actor,
+            'actors'=>$actors,
+            'lifeevents'=>$lifeevents,
+            'relations'=>$relations,
+            'roles'=>$roles,
+            'dups'=>$dups,
+            'returnlink'=>"/actor/show/$aid",
+            ]
+        );
+    }
+
 
     public function  edit(ManagerRegistry $doctrine,$aid)
     {
@@ -318,7 +344,6 @@ class ActorController extends AbstractController
         return $this->redirect("/actor/edit/".$aid);
     }
 
-
     public function  process_edit(ManagerRegistry $doctrine,$aid)
     {
         if($aid <1)
@@ -393,12 +418,10 @@ class ActorController extends AbstractController
             'returnlink' => "/actor/show/".$gid,
             'typelist' =>['baptism','marriage', 'burial'],
         ));
-
     }
 
     public function  process_editrole(ManagerRegistry $doctrine,$gid,$aref)
     {
-
         $actor = $doctrine->getRepository(Actor::class)->findOne($gid);
         $role =  $doctrine->getRepository(ActorRole::class)->findOne($gid,$aref);
         $predicates =  $doctrine->getRepository("App:Predicate")->findChildren($gid,$aref);
@@ -466,7 +489,6 @@ class ActorController extends AbstractController
 
     }
 
-
     public function  process_newrelationship(ManagerRegistry $doctrine,$a1ref)
     {
 
@@ -494,7 +516,6 @@ class ActorController extends AbstractController
             'roles'=>$roles,
             'returnlink' => "/actor/show/".$gid,
         ));
-
     }
 
     public function  updatelifeevents(ManagerRegistry $doctrine,$aid)
@@ -557,10 +578,6 @@ class ActorController extends AbstractController
 
     }
 
-
-
-
-
     public function filter(ManagerRegistry $doctrine,)
     {
         $request = $this->requestStack->getCurrentRequest();
@@ -598,8 +615,6 @@ class ActorController extends AbstractController
         );
     }
 
-
-
     public function addrole(ManagerRegistry $doctrine,$aid, $rid)
     {
 
@@ -621,4 +636,33 @@ class ActorController extends AbstractController
         $em->flush();
         return $this->redirect("/actor/editroles/".$aid);
     }
+
+public function filterf($filter)
+    {
+       // $filter = "Edward";
+        $roles = $this->getEntityManager()->getRepository(Actor::class)->filter($filter);
+        $qb = $this->createQueryBuilder('g');
+        $qb->select('g');
+        $qb->from('App:Role','r');
+        $qb->andwhere('  r.glimpseref = g.glimpseid  ');
+        $qb->andwhere('  r.name like :name  or r.predicates like :name ');
+        $qb->orwhere('  g.location like :name  ');
+        $qb->orderby(' g.date ');
+        $qb->setparameter( 'name', $filter);
+        dump($qb);
+        $qy= $qb->getQuery();
+             dump($qy);
+        $glimpses = $qy->getResult();
+        dump($glimpses);
+        $n=0;
+        //not happy with this but it works
+        foreach($glimpses as &$glimpse )
+        {
+        $roles = $this->getEntityManager()->getRepository(Role::class)->findChildren($glimpse->getGlimpseid());
+         $glimpse->{"role"} = $roles;
+        }
+         dump($glimpses);
+        return $glimpses;
+    }
+
 }
