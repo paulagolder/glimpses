@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-//use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -13,8 +12,6 @@ use App\Service\MyLibrary;
 use App\Service\Templates;
 use Symfony\Component\Yaml\Yaml;
 use Doctrine\Persistence\ManagerRegistry;
-
-
 use App\Entity\Actor;
 use App\Entity\ActorRole;
 use App\Entity\Role;
@@ -34,62 +31,9 @@ class ActorController extends AbstractController
 
     public function __construct( MyLibrary $lib, Templates $templates,  RequestStack $request_stack, string $templatedir)
     {
-
         $this->requestStack = $request_stack;
         $this->lib = $lib;
         $this->templates = $templates;
-    }
-
-    public function show(ManagerRegistry $doctrine,$aid)
-    {
-        $actor = $doctrine->getRepository(Actor::class)->findOne($aid);
-        $actors = $doctrine->getRepository(Actor::class)->findAllIndexed();
-        dump($actor);
-        $lifeevents =  $doctrine->getRepository(LifeEvent::class)->findAllEvents($aid);
-        $relations = $doctrine->getRepository(Relation::class)->findByActor($aid);
-        dump($relations);
-        $roles =  $doctrine->getRepository(ActorRole::class)->findroles($aid);
-        dump($roles);
-        $dups =  $doctrine->getRepository(Actor::class)->findDups($actor->getSurname(),$actor->getForename());
-        dump($dups);
-        return $this->render(
-            'actor/show.html.twig',
-            [
-            'actor'=>$actor,
-            'actors'=>$actors,
-            'lifeevents'=>$lifeevents,
-            'relations'=>$relations,
-            'roles'=>$roles,
-            'dups'=>$dups,
-            'returnlink'=>"/actor/show/$aid",
-            ]
-        );
-    }
-
-  public function filter2(ManagerRegistry $doctrine,$aid)
-    {
-        $actor = $doctrine->getRepository(Actor::class)->findOne($aid);
-        $actors = $doctrine->getRepository(Actor::class)->findAllIndexed();
-        dump($actor);
-        $lifeevents =  $doctrine->getRepository(LifeEvent::class)->findAllEvents($aid);
-        $relations = $doctrine->getRepository(Relation::class)->findByActor($aid);
-        dump($relations);
-        $roles =  $doctrine->getRepository(ActorRole::class)->findroles($aid);
-        dump($roles);
-        $dups =  $doctrine->getRepository(Actor::class)->findDups($actor->getSurname(),$actor->getForename());
-        dump($dups);
-        return $this->render(
-            'actor/show.html.twig',
-            [
-            'actor'=>$actor,
-            'actors'=>$actors,
-            'lifeevents'=>$lifeevents,
-            'relations'=>$relations,
-            'roles'=>$roles,
-            'dups'=>$dups,
-            'returnlink'=>"/actor/show/$aid",
-            ]
-        );
     }
 
 
@@ -234,11 +178,14 @@ class ActorController extends AbstractController
         $now = new \DateTime();
         $actor->setUpdateDt($now);
         $actor->setSpecifier($specifier);
-
         $entityManager = $doctrine->getManager();
         $entityManager->persist($actor);
+        dump($actor);
         $entityManager->flush();
         $aid = $actor->getActorid();
+
+        dump($actor);
+
 
         return $this->render('actor/edit.html.twig', array(
             'actor' => $actor,
@@ -283,8 +230,6 @@ class ActorController extends AbstractController
         $entityManager = $doctrine->getManager();
         $entityManager->persist($actor1);
         $entityManager->flush();
-
-
          $roles =  $doctrine->getRepository(ActorRole::class)->getRoles($aid);
          $roles2 =  $doctrine->getRepository(ActorRole::class)->getRoles($daid);
          foreach($roles2 as $rid=>$role)
@@ -295,8 +240,6 @@ class ActorController extends AbstractController
                  $entityManager->persist($role);
                  $entityManager->flush();
             }
-
-
         }
         $doctrine->getRepository(ActorRole::class)->deleteByActor($daid);
           $doctrine->getRepository(LifeEvent::class)->deleteAll($daid);
@@ -307,7 +250,6 @@ class ActorController extends AbstractController
 
     public function  compare(ManagerRegistry $doctrine,$aid,$daid)
     {
-
         $actor1 =  $doctrine->getRepository(Actor::class)->findOne($aid);
         $actor2 =  $doctrine->getRepository(Actor::class)->findOne($daid);
         $lifeevents1 =  $doctrine->getRepository(LifeEvent::class)->findAllEvents($aid);
@@ -507,7 +449,6 @@ class ActorController extends AbstractController
             $entityManager->flush();
 
             dump($reln);
-
             return $this->redirect("/actor/editroles/".$a1ref);
         }
         return $this->render('actor/edit.html.twig', array(
@@ -520,7 +461,6 @@ class ActorController extends AbstractController
 
     public function  updatelifeevents(ManagerRegistry $doctrine,$aid)
     {
-
         $actor = $doctrine->getRepository(Actor::class)->findOne($aid);
         $roles =  $doctrine->getRepository(ActorRole::class)->findRoles($aid);
         $entityManager = $doctrine->getManager();
@@ -532,7 +472,7 @@ class ActorController extends AbstractController
         {
             $froles[$role->getRoleref()]=$role;
             $slevents = $this->templates->getLifeEvents($aid,$role->glimpse->getType(),$role->{"role"},$role->glimpse->getDate());
-            LifeEvent::mergeLifeevents($lifeevents,$slevents);
+      //      LifeEvent::mergeLifeevents($lifeevents,$slevents);
         }
 
         dump($lifeevents);
@@ -543,23 +483,14 @@ class ActorController extends AbstractController
             $em->persist($lifeevent);
             $em->flush();
         }
-
-
         return $this->redirect("/actor/editroles/".$aid);
-
-
     }
 
 
-
-
-
-    public function showall(ManagerRegistry $doctrine)
+    public function zzshowall(ManagerRegistry $doctrine)
     {
-
-        $pfield =   $this->lib->getCookieFilter();
+        $pfield =   $this->lib->getCookieFilter('actor');
         $actors = $doctrine->getRepository(Actor::class)->findAll();
-
         return $this->render(
             'actor/showall.html.twig',
             [
@@ -570,40 +501,37 @@ class ActorController extends AbstractController
         );
     }
 
-
     public function clearfilter()
     {
-        //$this->lib->setCookieFilter("fred");
         return $this->filter();
-
     }
 
-    public function filter(ManagerRegistry $doctrine,)
+     public function setfilter(ManagerRegistry $doctrine)
     {
-        $request = $this->requestStack->getCurrentRequest();
-        $pfield = $request->query->get('filter');
-        //  $pfield = $request->request->get('filter');
-        dump($pfield);
+            $request = $this->requestStack->getCurrentRequest();
+            $pfield = $request->query->get('filter');
+            if (is_null($pfield))
+            {
+                $this->lib->clearCookieFilter("actor");
+            }else
+            {
+               $this->lib->setCookieFilter('actor',$pfield);
+            }
+            return $this->redirect("/actor/showall/");
+    }
+
+    public function showall(ManagerRegistry $doctrine)
+    {
+
+        $pfield =   $this->lib->getCookieFilter('actor');
         if (is_null($pfield))
         {
-            $pfield =   $this->lib->getCookieFilter();
-            dump($pfield);
-        }
-        if (!$pfield)
-        {
-            # $pfield =   $this->lib->getCookieFilter();
-            dump($pfield);
-        }
-        if (!$pfield)
-        {
-            $this->lib->setCookieFilter("");
             $actors = $doctrine->getRepository(Actor::class)->findAll();
         }
         else
         {
-            $this->lib->setCookieFilter($pfield);
             $filter = "%".$pfield."%";
-            $actors = $doctrine->getRepository(Actor::class)->filterf($filter);
+            $actors = $doctrine->getRepository(Actor::class)->seek($filter);
         }
         return $this->render(
             'actor/showall.html.twig',
@@ -637,7 +565,7 @@ class ActorController extends AbstractController
         return $this->redirect("/actor/editroles/".$aid);
     }
 
-public function filterf($filter)
+    public function filterf($filter)
     {
        // $filter = "Edward";
         $roles = $this->getEntityManager()->getRepository(Actor::class)->filter($filter);

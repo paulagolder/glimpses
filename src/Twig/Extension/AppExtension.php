@@ -45,9 +45,9 @@ class AppExtension extends AbstractExtension
         ];
     }
 
-
     public function calcAge( $bdate, string $gdate)
     {
+    try{
         if( is_null($bdate)) return 0;
        $bdate2 = substr($bdate."-01-01",0,10);
        $gdate2 = substr($gdate."-01-01",0,10);
@@ -56,6 +56,10 @@ class AppExtension extends AbstractExtension
        $year1 =  (int)$date1->format('Y');
        $year2 = (int) $date2->format('Y');
         return  $year2-$year1 ;
+        } catch (Exception $e) {
+            return "****";
+            }
+
     }
 
 

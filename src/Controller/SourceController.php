@@ -9,23 +9,23 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Doctrine\Persistence\ManagerRegistry;
 
 use App\Service\Templates;
-
+use App\Service\MyLibrary;
 
 use App\Entity\Source;
 use App\Entity\Glimpse;
 
-
-
 class SourceController extends AbstractController
 {
-
     private $requestStack ;
+    private $lib;
+    private $templates;
 
 
-    public function __construct( RequestStack $request_stack)
+    public function __construct( MyLibrary $lib, Templates $templates,  RequestStack $request_stack, string $templatedir)
     {
-
         $this->requestStack = $request_stack;
+        $this->lib = $lib;
+        $this->templates = $templates;
     }
 
 
@@ -140,7 +140,9 @@ public function showone(ManagerRegistry $doctrine,$sid)
 
 public function showall(ManagerRegistry $doctrine)
 {
-
+    $request = $this->requestStack->getCurrentRequest();
+    $pfield = $request->query->get('filter');
+    $pfield =   $this->lib->getCookieFilter('source');
     $sources = $doctrine->getRepository(Source::class)->getAll();
     foreach($sources as $key=> &$source)
     {
@@ -152,9 +154,14 @@ public function showall(ManagerRegistry $doctrine)
     return $this->render('source/showall.html.twig',
         [
         'sources'=>$sources,
-
+        'filter'=>$pfield,
+        'returnlink'=>"returnlink",
         ]
         );
 }
+
+
+
+
 
 }

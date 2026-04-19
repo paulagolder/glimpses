@@ -9,9 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Source
 {
-
-
-
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -19,12 +16,10 @@ class Source
      */
     private $sourceid;
 
-
     /**
      * @ORM\Column(type="text",  nullable=true)
      */
     private $title;
-
 
  /**
      * @ORM\Column(type="text", nullable=true)

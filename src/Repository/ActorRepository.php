@@ -85,11 +85,13 @@ class ActorRepository extends EntityRepository
         $qb->getQuery()->execute();
     }
 
-   public function filterf($filter)
+ /*  public function filterf($filter)
        {
            $qb = $this->createQueryBuilder('a');
            $qb->select();
            $qb->where('  a.surname like :name  ');
+
+            $qb->orwhere('  a. like :name  ');
            $qb->setparameter( 'name', $filter);
            dump($qb);
            $qy= $qb->getQuery();
@@ -97,8 +99,24 @@ class ActorRepository extends EntityRepository
            $actors = $qy->getResult();
            dump($actors);
            return $actors;
-       }
+       }*/
 
+
+ public function seek($filter)
+       {
+           $qb = $this->createQueryBuilder('a');
+           $qb->select();
+           $qb->where('  a.surname like :name  ');
+            $qb->orwhere('  a.keywords like :name  ');
+            $qb->orwhere('  a.forename like :name  ');
+           $qb->setparameter( 'name', $filter);
+           dump($qb);
+           $qy= $qb->getQuery();
+           dump($qy);
+           $actors = $qy->getResult();
+           dump($actors);
+           return $actors;
+       }
 
 }
 

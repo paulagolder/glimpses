@@ -55,3 +55,8 @@ services:
     App\Controller\GlimpseController:
         arguments:
             $templatedir : '%templatedir%'
+
+    App\Controller\SourceController:
+        arguments:
+            $templatedir : '%templatedir%'
+

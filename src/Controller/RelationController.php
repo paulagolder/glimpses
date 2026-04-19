@@ -110,6 +110,51 @@ class RelationController extends AbstractController
         );
     }
 
+
+ public function edit(ManagerRegistry $doctrine,$rid)
+    {
+        $relation = $doctrine->getRepository(Relation::class)->getOne($rid);
+        $actor1 = $doctrine->getRepository(Actor::class)->findOne($relation->getActor1ref());
+        $actor2 = $doctrine->getRepository(Actor::class)->findOne($relation->getActor2ref());
+
+        dump($actor1);
+        dump($actor2);
+
+        $clues = $doctrine->getRepository(RelationClue::class)->findClues($rid);
+        $cluelist=array();
+        foreach($clues as $clue)
+        {
+            $clue->{"glimpse"} =  $doctrine->getRepository(Glimpse::class)->findOne($clue->getGlimpseRef());
+              $clue->{"glimpse"}->{"roles"} =  $doctrine->getRepository(Role::class)->findChildren($clue->getGlimpseRef());
+            $cluelist[]=$clue->getGlimpseRef();
+        }
+        dump($clues);
+        $allroles = $doctrine->getRepository(Role::class)->getRelationClues($actor1,$actor2);
+        $glimpses = array();
+        $roles = array();
+        foreach($allroles as &$role)
+        {
+            if((!in_array($role->getGlimpseref(), $cluelist, true)))
+            {
+                $roles[$role->getGlimpseref()]=$role;
+                $role->{"glimpse"}=$doctrine->getRepository(Glimpse::class)->findOne($role->getGlimpseref());
+                $glimpses[$role->getGlimpseref()] =  $doctrine->getRepository(Glimpse::class)->findOne($role->getGlimpseref());
+            }
+        }
+        dump($roles);
+        return $this->render(
+            'relation/show.html.twig',
+            [
+            'relation'=>$relation,
+            'actor1'=>$actor1,
+            'actor2'=>$actor2,
+            'clues'=>$clues,
+            'roles'=>$roles,
+            'returnlink'=>"/relation/showall",
+            ]
+        );
+    }
+
     public function addclue(ManagerRegistry $doctrine,$rid, $gref)
     {
 

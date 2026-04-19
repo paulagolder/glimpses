@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
-
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -11,26 +10,22 @@ use Doctrine\ORM\Mapping as ORM;
 class Actor
 {
 
-
-    /**
+   /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
     private $actorid;
 
-
     /**
      * @ORM\Column(type="text", nullable=true)
      */
     private $text;
 
-
      /**
      * @ORM\Column(type="text", nullable=true)
      */
     private $forename;
-
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -41,7 +36,6 @@ class Actor
      * @ORM\Column(type="text", nullable=true)
      */
     private $specifier;
-
 
     /**
      * @ORM\Column(type="string", length="20",nullable=true)
@@ -54,9 +48,6 @@ class Actor
      */
     private $deathdate;
 
-
-
-
     /**
      * @ORM\Column(type="string", length=40, nullable=true)
      */
@@ -67,20 +58,17 @@ class Actor
      */
     private $updatedt;
 
-
     /**
      * @ORM\Column(type="text", nullable=true)
      */
     private $keywords;
 
-
    //private $roles;
 
-
-     public function __construct() {
+     public function __construct()
+     {
         $this->roles = new ArrayCollection();
     }
-
 
     public function getActorid(): ?int
     {
@@ -94,34 +82,25 @@ class Actor
         return $this;
     }
 
-
-
-
-
     public function getText(): ?string
     {
         return $this->text;
     }
 
-
     public function setText($text): self
     {
         $this->text = $text;
-
         return $this;
     }
-
 
     public function getForename(): ?string
     {
         return $this->forename;
     }
 
-
     public function setForename(string $name): self
     {
         $this->forename = $name;
-
         return $this;
     }
 
@@ -129,7 +108,6 @@ class Actor
     {
         return $this->surname;
     }
-
 
     public function getLabel(): ?string
     {
@@ -139,7 +117,6 @@ class Actor
     public function setSurname(string $name): self
     {
         $this->surname = $name;
-
         return $this;
     }
 
@@ -148,20 +125,16 @@ class Actor
         return $this->specifier;
     }
 
-
     public function setSpecifier($name): self
     {
         $this->specifier = $name;
-
         return $this;
     }
-
 
     public function getDeathdate(): ?string
     {
         return $this->deathdate;
     }
-
 
     public function setDeathdate(string $text): self
     {
@@ -169,20 +142,16 @@ class Actor
         return $this;
     }
 
-
-
     public function getBirthdate(): ?string
     {
         return $this->birthdate;
     }
-
 
     public function setBirthdate(string $text): self
     {
         $this->birthdate = $text;
         return $this;
     }
-
 
     public function getContributor(): ?string
     {
@@ -192,7 +161,6 @@ class Actor
     public function setContributor(?string $contributor): self
     {
         $this->contributor = $contributor;
-
         return $this;
     }
 
@@ -201,12 +169,9 @@ class Actor
         return $this->updatedt;
     }
 
-
-
     public function setUpdateDt(?\DateTimeInterface $updatedt): self
     {
         $this->updatedt = $updatedt;
-
         return $this;
     }
 
@@ -215,14 +180,11 @@ class Actor
         return $this->keywords;
     }
 
-
     public function setKeywords(string $name): self
     {
         $this->keywords = $name;
-
         return $this;
     }
-
 
     public function merge($actor2)
     {
@@ -275,6 +237,5 @@ class Actor
         {
             $this->text .= "+D+". $actor2->deathdate;
         }
-
     }
 }

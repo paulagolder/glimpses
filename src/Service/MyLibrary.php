@@ -15,23 +15,15 @@ class MyLibrary
 {
 
 
-
-
      private $requestStack ;
-
 
     public function __construct(  RequestStack $request_stack)
     {
-
         $this->requestStack = $request_stack;
-
     }
-
-
 
      public function getCookieRegion()
     {
-
      $request = new Request();
      $cookies = $request->cookies;
      $reg = $_COOKIE["glimpses_region"];
@@ -39,16 +31,15 @@ class MyLibrary
       else return '' ;
     }
 
-
-    public function getCookieFilter()
+    public function getCookieFilter($type)
     {
      $request = $this->requestStack->getCurrentRequest();
 
      $cookies = $request->cookies;
      $reg="";
-     if ($cookies->has('glimpses_filter'))
+     if ($cookies->has($type.'_filter'))
      {
-       $reg =$cookies->get("glimpses_filter");
+       $reg =$cookies->get($type."_filter");
      }
       if($reg) return $reg;
       else return '' ;
@@ -95,12 +86,11 @@ class MyLibrary
         $res->send();
     }
 
-     public function setCookieFilter($filter)
+     public function setCookieFilter($type,$filter)
     {
-
         $cookie = new Cookie
         (
-            'glimpses_filter',    // Cookie name.
+            $type.'_filter',    // Cookie name.
             $filter,    // Cookie value.
             time() + ( 24 * 60 * 60)  // Expires 1 day .
         );
@@ -109,6 +99,18 @@ class MyLibrary
         $res->send();
     }
 
+   public function clearCookieFilter($type)
+    {
+        $cookie = new Cookie
+        (
+            $type.'_filter',    // Cookie name.
+            "",    // Cookie value.
+            time() + ( 24 * 60 * 60)  // Expires 1 day .
+        );
+        $res = new Response();
+        $res->headers->setCookie( $cookie );
+        $res->send();
+    }
 
      static public function formatDate($date, $lang)
     {

@@ -16,32 +16,19 @@
 {% block body %}
 <div id="actor" >
 
-      <div class="subheading row">
-      <div class='returnbutton'>
-                <a  href = "/source/showall" >Sources</a>
-            </div>
-    <div class='returnbutton'>
-                <a  href = "/glimpse/showall" >Glimspses</a>
-            </div>
-                <div class='returnbutton'>
-                <a  href = "/relation/showall" >Relations</a>
-            </div>
-
-                 <div class='returnbutton button1 '>
-                <a  href = "/actor/new" >New Actor</a>
-            </div>
-            </div>
-
     <div class="heading">
       <div class="title">Actors</div>
-            </div>
-    <form  action="/actor/filter">
-  <div class="row">
-   <div class="label"> Filter</div>
-   <input type="text" name="filter" value="{{filter}}" >
-   <input type="submit" value="action" >
-   </div>
-   </form>
+         <div class='returnbutton button1 '>
+             <a  href = "/actor/new" >New Actor</a>
+         </div>
+      </div>
+<form  action="/actor/setfilter">
+     <div class="row">
+      <div class="label"> Filter</div>
+      <input type="text" name="filter" value="{{filter}}" >
+      <input type="submit" value="action" >
+      </div>
+      </form>
 
      <div class= "actorlist">
     {% for actor in actors %}

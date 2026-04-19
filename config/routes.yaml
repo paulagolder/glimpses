@@ -130,9 +130,9 @@ actor_show:
     path: /actor/show/{aid}
     controller:  App\Controller\ActorController::show
 
-actor_filter:
-      path: /actor/filter/
-      controller: App\Controller\ActorController::filter
+actor_setfilter:
+      path: /actor/setfilter/
+      controller: App\Controller\ActorController::setfilter
 
 actor_clearfilter:
       path: /actor/clearsearch/
@@ -161,7 +161,8 @@ actor_editroles:
 actor_process_edit:
     path: /actor/process_edit/{aid}
     controller:  App\Controller\ActorController::process_edit
-
+    requirements:
+      _method: POST
 
 actor_delete:
     path: /actor/delete/{aid}
@@ -194,6 +195,10 @@ relation_show_all:
 relation_show_one:
     path: /relation/show/{rid}
     controller:  App\Controller\RelationController::showone
+
+relation_edit:
+      path: /relation/edit/{rid}
+      controller: App\Controller\RelationController::edit
 
 relation_addclue:
     path: /relation/addclue/{rid}/{gref}

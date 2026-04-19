@@ -35,6 +35,7 @@ class RoleRepository extends EntityRepository
 
     public function filter($keywords)
     {
+    dump($keywords);
         $kwarray = explode(",",$keywords);
         $qb = $this->createQueryBuilder('r');
         $i=0;

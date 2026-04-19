@@ -22,34 +22,34 @@
         <div class="returnbutton "> <a class="button" href = "/actor/new" >Add New Actor </a> </div>
     </div>
     <div class="actor inputform">
-        <form action="/actor/process_edit/{{actor.actorid}}" method="post" id="actorform"  >
+        <form action="/actor/process_edit/{{actor.actorid}}" method="post" id="actorform"  > //process_edit
             <div class="row">
                 <div class="label">ID </div>
-                <div class= "field"> <input class="id" type="text" name="_actorid" value="{{actor.actorid}}" > </div>
+                <div class= "field"> <input class="id" type="text" name="_actorid" value="{{actor.actorid}}" /> </div>
 
                 </div>
                  <div class="row">
       <div class="label">Surname</div>
-                <div class= "field"> <input class="name" type="text" name="_surname" value="{{actor.surname}}" > </div>
+                <div class= "field"> <input class="name" type="text" name="_surname" value="{{actor.surname}}" /> </div>
    <div class="label">forename</div>
-                <div class= "field"> <input class="name" type="text" name="_forename" value="{{actor.forename}}" > </div>
+                <div class= "field"> <input class="name" type="text" name="_forename" value="{{actor.forename}}" /> </div>
                     <div class="label">Specifier</div>
-                <div class= "field"> <input class="specifier" type="text" name="_specifier" value="{{actor.specifier}}" > </div>
+                <div class= "field"> <input class="specifier" type="text" name="_specifier" value="{{actor.specifier}}" /> </div>
       </div>
         <div class="row">
       <div class="label">Birthdate</div>
-                <div class= "field"> <input class="name" type="text" name="_birthdate" value="{{actor.birthdate}}" > </div>
+                <div class= "field"> <input class="name" type="text" name="_birthdate" value="{{actor.birthdate}}" /> </div>
 
                     <div class="label">Deathdate</div>
-                <div class= "field"> <input class="specifier" type="text" name="_deathdate" value="{{actor.deathdate}}" > </div>
+                <div class= "field"> <input class="specifier" type="text" name="_deathdate" value="{{actor.deathdate}}" /> </div>
       </div>
  <div class="row">
       <div class="label">Text</div>
-                <div class= "field long"> <input class="text" type="text" name="_text" value="{{actor.text}}" > </div>
+                <div class= "field long"> <input class="text" type="text" name="_text" value="{{actor.text}}" /> </div>
       </div>
     <div class="row">
       <div class="label">Key words</div>
-                <div class= "field"> <input class="text" type="text" name="_keywords" value="{{actor.keywords}}" > </div>
+                <div class= "field"> <input class="text" type="text" name="_keywords" value="{{actor.keywords}}" /> </div>
       </div>
               <button type="submit" id="submitbutton"   > enregistrer</button>
        </form>

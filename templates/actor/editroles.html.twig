@@ -128,10 +128,17 @@
                 {% if role.glimpse is defined %}
                 <div class="returnbutton">  <a   href = "/glimpse/show/{{role.glimpse.glimpseid}}" >view </a> </div>
                 <div class= "id"> {{role.roleref}}</div>
+                  {% set formatedtext = FormatRole(role.roleref,role.glimpse) %}
                 {% set formatedtext = FormatRole(role.roleref,role.glimpse) %}
                 <div class="cell" >{{formatedtext}}</div>
-                <div class="cell" > Age: {{calAge(actor.Birthdate,role.glimpse.date)}} </div>
+               {% if(actor.Birthdate != null) %}
+                {
+                 <div class="cell" >{{actor.Birthdate}} </div>
+                  <div class="cell" > {{role.glimpse.date}} </div>
+               {#} <div class="cell" >Age: {{calAge(actor.Birthdate,role.glimpse.date)}} </div>#}
+                }
                 {% endif %}
+                 {% endif %}
             </div>
             {% endfor %}
         </div>
@@ -145,12 +152,14 @@
             {% dump(xroles) %}
             {% for pid, xrole in xroles %}
             <div class= "row">
-                <div class="returnbutton"><a   href = "/actor/addrole/{{actor.actorid}}/{{xrole.roleid}}" >Add</a> </div>
+                <div class="returnbutton"><a   href = "/actor/addrole/{{actor.actorid}}/{{xrole.roleid}}" >Add </a> </div>
+
                 <div class="returnbutton" ><a  href = "/glimpse/show/{{xrole.glimpseref}}" >View</a></div>
                 <div class= "id"> {{xrole.roleid}}</div>
                 {% set formatedtext = FormatRole(xrole.roleid,xrole.glimpse) %}
                 <div class="cell" >{{formatedtext}}</div>
                 {% if role is defined  %}
+                 <div class= "id"> {{role.name}}</div>
                 <div class="cell" > Age: {{calAge(actor.Birthdate,role.glimpse.date)}} </div>
                 {% else %}
                 {% endif %}
