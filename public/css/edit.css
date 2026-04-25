@@ -1,12 +1,7 @@
 
-
-
-
-
 div#page
 {
   min-height: 100vh;
-  xbackground: #ccc;
   display: flex;
   flex-direction: column;
 }
@@ -55,20 +50,6 @@ div#right
   background:rgba(0,0,0,0.05);
   padding: 10px;  
 }
-
-
-
-@mixin vertical-align($position: relative) 
-{
-  position: $position;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-}
-
-
-
 
 .button
 {
@@ -127,10 +108,6 @@ a.editbutton
     height: auto;
     box-sizing: content-box;
 }
-
-
-
-
 
 div.hidebar 
 {
@@ -297,7 +274,7 @@ div.subheading
   
 #glimpse div.inputpair div.field input.text
 {
-    xwidth:50em;
+
 }
 
 div.subheading div.title
@@ -384,7 +361,6 @@ div.datarow div.data
 .tooltip .tooltiptext {
     visibility: hidden;
     width: 120px;
-   # background-color: black;
     color: #f00;
     text-align: center;
     padding: 5px 0;

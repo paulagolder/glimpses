@@ -40,10 +40,6 @@ class LifeEventRepository extends EntityRepository
         return $eventarray;
     }
 
-
-
-
-
     public function deleteAll($aid)
     {
         $sql = "delete from App:Lifeevent  l";

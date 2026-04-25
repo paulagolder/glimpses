@@ -153,6 +153,13 @@ class Actor
         return $this;
     }
 
+    public function getDates(): ?string
+    {
+        $text = "(".$this->birthdate."-".$this->deathdate.")";
+        return $text;
+    }
+
+
     public function getContributor(): ?string
     {
         return $this->contributor;

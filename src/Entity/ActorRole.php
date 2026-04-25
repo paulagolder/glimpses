@@ -11,7 +11,6 @@ use Doctrine\ORM\Mapping as ORM;
 class ActorRole
 {
 
-
     /**
      * @ORM\Id()
      * @ORM\Column(type="integer")

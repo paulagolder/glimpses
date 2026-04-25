@@ -14,6 +14,7 @@ use App\Service\Templates;
 use App\Entity\Source;
 use App\Entity\Glimpse;
 use App\Entity\Role;
+use App\Entity\ActorRole;
 use App\Entity\Predicate;
 use App\Form\glimpseForm;
 use Symfony\Component\Config\FileLocator;
@@ -151,21 +152,27 @@ class GlimpseController extends AbstractController
     public function  edit(ManagerRegistry $doctrine,$gid)
     {
         $glimpse = $doctrine->getRepository(Glimpse::class)->findOne($gid);
-        $source =   $doctrine->getRepository(Source::class)->findOne($glimpse->getSourceid());
+        $source =  $doctrine->getRepository(Source::class)->findOne($glimpse->getSourceid());
         $roles =  $doctrine->getRepository(Role::class)->findChildren($gid);
+        dump($roles);
+        foreach($roles as &$role)
+        {
+         $actors =  $doctrine->getRepository(ActorRole::class)->getActors($role->getRoleId());
+         dump($actors);
+         $role->{"actors"}=$actors;
+        }
+    dump($roles);
         $nrole = new role();
         $nrole->setGlimpseref($gid);
         $roles[]=$nrole;
         $glimpse->{"source"}= $source->getTitle();
         return $this->render('glimpse/edit.html.twig', array(
-
             'glimpse' => $glimpse,
             'source'=>$source,
             'roles'=>$roles,
             'returnlink' => "/glimpse/show/".$gid,
             'typelist' =>['baptism','marriage', 'burial'],
         ));
-
     }
 
     public function  edit_role(ManagerRegistry $doctrine,$gid,$pref)
@@ -290,7 +297,7 @@ class GlimpseController extends AbstractController
             return $this->redirect("/glimpse/edit/".$gid);
 
         }
-dump($glimpse);
+        dump($glimpse);
         return $this->render('glimpse/edit.html.twig', array(
 
             'glimpse' => $glimpse,

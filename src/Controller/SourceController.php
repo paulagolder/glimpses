@@ -34,16 +34,10 @@ class SourceController extends AbstractController
         $source = new Source();
         $source->setSourceId(0);
         return $this->render('source/edit.html.twig', array(
-
             'source' => $source,
-            'returnlink' => "/source/all",
-
+            'returnlink' => "/source/showall",
             ));
-
     }
-
-
-
 
 
     public function  edit(ManagerRegistry $doctrine,$sid)
@@ -140,10 +134,18 @@ public function showone(ManagerRegistry $doctrine,$sid)
 
 public function showall(ManagerRegistry $doctrine)
 {
-    $request = $this->requestStack->getCurrentRequest();
-    $pfield = $request->query->get('filter');
     $pfield =   $this->lib->getCookieFilter('source');
-    $sources = $doctrine->getRepository(Source::class)->getAll();
+ dump($pfield);
+            if (is_null($pfield))
+            {
+                 $sources  = $doctrine->getRepository(Source::class)->findAll();
+            }
+            else
+            {
+                $filter = "%".$pfield."%";
+                 $sources  = $doctrine->getRepository(Source::class)->seek($filter);
+            }
+
     foreach($sources as $key=> &$source)
     {
      $stats =   $doctrine->getRepository(Glimpse::class)->Countglimpses($source->getSourceid());
@@ -159,6 +161,20 @@ public function showall(ManagerRegistry $doctrine)
         ]
         );
 }
+
+   public function setfilter(ManagerRegistry $doctrine)
+    {
+            $request = $this->requestStack->getCurrentRequest();
+            $pfield = $request->query->get('filter');
+            if (is_null($pfield))
+            {
+                $this->lib->clearCookieFilter("source");
+            }else
+            {
+               $this->lib->setCookieFilter('source',$pfield);
+            }
+            return $this->redirect("/source/showall/");
+    }
 
 
 

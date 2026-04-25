@@ -15,8 +15,8 @@
 {% block body %}
 <div id="glimpse" >
 
-
     <div class ="heading" >
+         <div class="title">Glimpse {{glimpse.glimpseid}}</div>
         <div class="returnbutton button1"> <a  href = "{{returnlink}}" >return </a> </div>
            <div class="returnbutton button1"> <a  href = "/glimpse/showsource/{{glimpse.sourceid}}" >Show All</a> </div>
         <div class="returnbutton button1"> <a  href = "/glimpse/new/X" >Add New Glimpse </a> </div>
@@ -91,10 +91,10 @@
 
                     <div class="row">
                         <div class="cell">
-                        <div class="row">
+                            <div class="row">
                                 <div class="returnbutton"> <a    href = "/glimpse/deleterole/{{glimpse.glimpseid}}/{{pid}}" >delete </a> </div>
                                 <div class="returnbutton">  <a  href = "/glimpse/editrole/{{glimpse.glimpseid}}/{{pid}}" >edit </a>  </div>
-                                </div>
+                           </div>
                         </div>
                         <div class="cell" >{{role.roleid}} </div>
                         <div class="cell">{{role.role}}</div>
@@ -103,18 +103,20 @@
                           <div class="cell">
                                 <div class="returnbutton"> <a    href = "/actor/newactor/{{glimpse.glimpseid}}/{{role.roleid}}" >New Actor</a> </div>
                         </div>
+                       <div class="cell">
+                          {% for anactor in role.actors %}
+                          <div class="returnbutton"><a href = "/actor/showone/{{anactor.actorid}}" > {{anactor.label }}</a></div>
+                          {% endfor %}
+                       </div>
                     </div>
                     {% else %}
-
                     <div class="row">
                         <div class="cell label" >
-
                         </div>
                         <div class="cell hidden" >
                             <input type="hidden" name="_role[{{pid}}]['ref']" value="{{role.roleid}}" />
                         </div>
                         <div class="cell" >
-
                             <input type="text" name="_role[{{pid}}]['role']" value="{{role.role}}" />
                         </div>
                         <div class="cell" >
@@ -123,14 +125,12 @@
                         <div class="cell" >
                             <input type="text" name="_role[{{pid}}]['predicates']" value="{{role.predicates}}" />
                         </div>
-
                     </div>
                     {% endif %}
                       {% endif %}
                     {% endfor %}
                 </div>
             </div>
-
             <button type="submit" id="submitbutton"   > enregistrer</button>
         </form>
     </div>

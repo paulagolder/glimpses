@@ -29,7 +29,7 @@ birth:
 census:
      format: " census on #date at #location "
      resident:
-       format: "#name was present at #location on #date "
+       format: "#resident was present at #location on #date "
        cardinality: 10
 
 burial:
@@ -99,6 +99,35 @@ will:
        format: " #tenant  of  #testator dated #date "
    official:
        format: " #official officiated at signing of the will of #testator dated #date "
+
+probate:
+  format: "probate of  #testator on #date at #location"
+  testator:
+    format: "probate of #testator dated #date "
+    cardinality: 1
+  beneficiary:
+    format: "#beneficiary  is beneficiary of #testator 's will  dated #date"
+    cardinality: 10
+  brother:
+    format: "#brother  id brother cited in  #testator 's will dated #date "
+    cardinality: 10
+  son:
+    format: "#son  is son cited in #testator 's will dated #date"
+    cardinality: 10
+  daughter:
+    format: "#daughter  is daughter cited in #testator 's will dated #date "
+    cardinality: 10
+  witness:
+    format: "will of #testator dated #date at #location "
+    cardinality: 2
+  executor:
+    format: " #executor  of the will of #testator dated #date "
+  tenants:
+    format: " #tenant  of  #testator dated #date "
+  official:
+    format: " #official officiated at signing of the will of #testator dated #date "
+
+
 note:
   format: "note on #date at #location"
   participant:

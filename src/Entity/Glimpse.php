@@ -10,7 +10,6 @@ use Doctrine\ORM\Mapping as ORM;
 class Glimpse
 {
 
-
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -33,25 +32,20 @@ class Glimpse
      */
     private $language;
 
-
     /**
      * @ORM\Column(type="string", length=200, nullable=true)
      */
     private $location;
-
 
     /**
      * @ORM\Column(type="string", length=12, nullable=true)
      */
     private $type;
 
-
-
     /**
      * @ORM\Column(type="string", length=12, nullable=true)
      */
     private $date;
-
 
     /**
      * @ORM\Column(type="string", length=12, nullable=true)
@@ -63,13 +57,10 @@ class Glimpse
      */
     private $sourceid;
 
-
-
     /**
      * @ORM\Column(type="string", length=12, nullable=true)
      */
     private $ref;
-
 
     /**
      * @ORM\Column(type="string", length=40, nullable=true)
@@ -81,9 +72,7 @@ class Glimpse
      */
     private $updatedt;
 
-
     public $roles;
-
 
     public function getGlimpseid(): ?int
     {
@@ -93,7 +82,6 @@ class Glimpse
     public function setGlimpseid(int $glimpseid): self
     {
         $this->glimpseid = $glimpseid;
-
         return $this;
     }
 
@@ -105,24 +93,19 @@ class Glimpse
     public function setSourceid( $sourceid): self
     {
         $this->sourceid = $sourceid;
-
         return $this;
     }
-
 
     public function getText(): ?string
     {
         return $this->text;
     }
 
-
     public function setText(string $text): self
     {
         $this->text = $text;
-
         return $this;
     }
-
 
     public function getLanguage(): ?string
     {
@@ -132,7 +115,6 @@ class Glimpse
     public function setLanguage(?string $lang): self
     {
         $this->language = $lang;
-
         return $this;
     }
 
@@ -141,54 +123,42 @@ class Glimpse
         return $this->location;
     }
 
-
     public function setLocation(string $location): self
     {
         $this->location = $location;
-
         return $this;
     }
-
-
 
     public function getType(): ?string
     {
         return $this->type;
     }
 
-
     public function setType(string $type): self
     {
         $this->type = $type;
-
         return $this;
     }
-
-
 
     public function getRef(): ?string
     {
         return $this->ref;
     }
 
-
     public function setRef(string $text): self
     {
         $this->ref = $text;
-
         return $this;
     }
-
 
     public function getDate(): ?string
     {
         return $this->date;
     }
 
-
     public function setDate(string $dt)
     {
-          dump($dt);
+        dump($dt);
         $this->datequalifier = null;
         if (!$dt)
         {
@@ -236,7 +206,6 @@ class Glimpse
         return $this->datequalifier;
     }
 
-
     public function setDateQualifier(string $type): self
     {
         $this->datequalifier = $type;
@@ -259,15 +228,11 @@ class Glimpse
         return $this->updatedt;
     }
 
-
-
     public function setUpdateDt(?\DateTimeInterface $updatedt): self
     {
         $this->updatedt = $updatedt;
-
         return $this;
     }
-
 
     public function setRoles($roles)
     {

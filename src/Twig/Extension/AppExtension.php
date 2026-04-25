@@ -10,7 +10,6 @@ use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Config\FileLocator;
 
 
-
 class AppExtension extends AbstractExtension
 {
     private  $templatelist=array();
@@ -42,6 +41,8 @@ class AppExtension extends AbstractExtension
             new TwigFunction('calAge', [$this, 'calcAge']),
             new TwigFunction('FormatRole',[$this, 'FormatRole'] ),
             new TwigFunction('FormatEvent',[$this, 'FormatEvent'] ),
+            new TwigFunction('FormatEventFull',[$this, 'FormatEventFull'] ),
+            new TwigFunction('FormatRoleFull',[$this, 'FormatRoleFull'] ),
         ];
     }
 
@@ -49,20 +50,22 @@ class AppExtension extends AbstractExtension
     {
     try{
         if( is_null($bdate)) return 0;
+        if(strlen($bdate)<1) return 0;
+        if(!is_numeric($bdate[0]))
+        {
+         $bdate= substr($bdate,1);
+        }
        $bdate2 = substr($bdate."-01-01",0,10);
        $gdate2 = substr($gdate."-01-01",0,10);
        $date1 = new \DateTime($bdate2);
        $date2 = new \DateTime($gdate2);
        $year1 =  (int)$date1->format('Y');
        $year2 = (int) $date2->format('Y');
-        return  $year2-$year1 ;
+       return  $year2-$year1 ;
         } catch (Exception $e) {
             return "****";
             }
-
     }
-
-
 
     public function getEventFormat($aglimpse,$templatelist)
     {
@@ -73,12 +76,9 @@ class AppExtension extends AbstractExtension
 
     public function FormatRole($roleref,$glimpse)
     {
-        dump($this->templatelist);
         $type= $glimpse->getType();
         $roles= $glimpse->roles;
         $role= $roles[$roleref]->getRole();
-        dump($type);
-        dump($role);
         $fmt =  $this->templatelist[$type][$role]["format"];
         $fmt = str_replace("#location", $glimpse->getLocation(), $fmt);
         $fmt = str_replace("#date", $glimpse->getDate(), $fmt);
@@ -107,4 +107,73 @@ class AppExtension extends AbstractExtension
         }
         return $fmt;
     }
+
+
+    public function FormatEventFull($glimpse,$rolekey)
+    {
+        $type= $glimpse->getType();
+        $roles= $glimpse->roles;
+        $fmt =  $this->templatelist[$type]["format"];
+        $fmt = str_replace("#location", $glimpse->getLocation(), $fmt);
+        $fmt = str_replace("#date", $glimpse->getDate(), $fmt);
+        $ps ="";
+        if(!is_null($roles))
+        {
+        foreach($roles as $key=>$arole)
+        {
+           $aname = $arole->getName();
+        if($key==$rolekey)
+        {
+          $aname = strtoupper($aname);
+        }
+            if (str_contains($fmt, "#".$arole->getRole()))
+            {
+               $fmt = str_replace("#".$arole->getRole(), $aname, $fmt);
+            }else
+            {
+               $ps .= " ".$arole->getRole().":". $aname;
+            }
+        }
+        $fmt .= $ps;
+        }
+        return $fmt;
+    }
+
+    public function FormatRoleFull($glimpse,$rolekey)
+    {
+        $type= $glimpse->getType();
+        $roles= $glimpse->roles;
+        if($roles==null ) return "==+==";
+        $roletype = $roles[$rolekey]->getRole();
+        $fmt =  $this->templatelist[$type][$roletype]["format"];
+        $fmt = str_replace("#location", $glimpse->getLocation(), $fmt);
+        $fmt = str_replace("#date", $glimpse->getDate(), $fmt);
+        if(!is_null($roles))
+        {
+          $arole = $roles[$rolekey];
+          $aname = $arole->getName();
+          $aname = strtoupper($aname);
+           if (str_contains($fmt, "#".$arole->getRole()))
+           {
+               $fmt = str_replace("#".$arole->getRole(), $aname, $fmt);
+           }
+        foreach($roles as $key=>$arole)
+        {
+           $aname = $arole->getName();
+           if($key!=$rolekey)
+           {
+            if (str_contains($fmt, "#".$arole->getRole()))
+            {
+               $fmt = str_replace("#".$arole->getRole(), $aname, $fmt);
+            }
+        }
+        }
+        }
+        return $fmt;
+    }
+
+
+
+
+
 }

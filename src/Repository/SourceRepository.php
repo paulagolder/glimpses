@@ -12,14 +12,6 @@ class SourceRepository extends EntityRepository
 {
 
 
-    public function xfindOne($sid)
-    {
-        $sql = "select g from App:Source g ";
-        $sql .= " where g.sourceid = ".$sid." ";
-        $query = $this->getEntityManager()->createQuery($sql);
-        $sources = $query->getOneOrNullResult();
-        return $sources[0];
-    }
 
     public function findOne($sid)
     {
@@ -51,13 +43,16 @@ class SourceRepository extends EntityRepository
     }
 
 
-        public function findbyLocation($location)
+    public function seek($location)
     {
         $sql = "select s from App:Source s ";
-        $sql .= " where s.region LIKE '%".$location."%' ";
+        $sql .= " where s.region LIKE '".$location."' ";
+        $sql .= " or s.title LIKE '".$location."' ";
         $query = $this->getEntityManager()->createQuery($sql);
         $sources = $query->getResult();
         return $sources;
     }
+
+
 }
 

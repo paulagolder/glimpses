@@ -90,6 +90,12 @@ source_all:
    path:  /source/showall
    controller:  App\Controller\SourceController::showall
 
+
+source_setfilter:
+     path: /source/setfilter/
+     controller: App\Controller\SourceController::setfilter
+
+
 source_new:
    path:  /source/new
    controller:  App\Controller\SourceController::new
@@ -126,16 +132,16 @@ actor_show_all:
     path: /actor/showall/
     controller:  App\Controller\ActorController::showall
 
-actor_show:
-    path: /actor/show/{aid}
-    controller:  App\Controller\ActorController::show
+actor_showone:
+    path: /actor/showone/{aid}
+    controller:  App\Controller\ActorController::showone
 
 actor_setfilter:
       path: /actor/setfilter/
       controller: App\Controller\ActorController::setfilter
 
 actor_clearfilter:
-      path: /actor/clearsearch/
+      path: /actor/clearfilter/
       controller: App\Controller\ActorController::clearfilter
 
 actor_new:
@@ -145,6 +151,10 @@ actor_new:
 actor_newrelationship:
     path: /actor/newrelationship/{aid}
     controller:  App\Controller\ActorController::newrelationship
+
+actor_newrelationshipwithglimpse:
+      path: /actor/newrelationshipwithglimpse/{aid}/{gid}
+      controller: App\Controller\ActorController::newrelationshipwithglimpse
 
 actor_process_newrelationship:
     path: /actor/process_newrelationship/{a1ref}
@@ -195,6 +205,11 @@ relation_show_all:
 relation_show_one:
     path: /relation/show/{rid}
     controller:  App\Controller\RelationController::showone
+
+
+relation_setfilter:
+      path: /relation/setfilter
+      controller: App\Controller\RelationController::setfilter
 
 relation_edit:
       path: /relation/edit/{rid}

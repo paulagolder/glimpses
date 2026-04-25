@@ -69,5 +69,19 @@ class RelationRepository extends EntityRepository
         $query->getResult();
     }
 
+
+    public function seek($filter)
+    {
+       // $sql = "select s from App:Relation s ";
+      //  $sql .= " where s.region LIKE '".$location."' ";
+      //  $sql .= " or s.title LIKE '".$location."' ";
+        $sql = "SELECT r FROM App:Relation r, App:Actor a1 , App:Actor a2 WHERE r.actor1ref = a1.actorid and r.actor2ref = a2.actorid  ";
+        $sql .= "and ( a1.surname LIKE '".$filter."' or a2.surname LIKE '".$filter."')";
+        dump($sql);
+        $query = $this->getEntityManager()->createQuery($sql);
+        $sources = $query->getResult();
+        return $sources;
+    }
+
 }
 

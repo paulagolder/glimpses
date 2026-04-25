@@ -8,7 +8,6 @@ body
 	padding: 0;
 	margin: 0;
     xbackground-repeat: no-repeat;
-   x background-size: 100% auto;
     background-color: #c4ccd2;
 }
 
@@ -68,19 +67,6 @@ div#right
 }
 
 
-
-@mixin vertical-align($position: relative) 
-{
-  position: $position;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-}
-
-
-
-
 .button
 {
   background: #e3e3e3;
@@ -96,6 +82,43 @@ div#right
   width: 150px; 
     
 }
+
+
+
+div.clearbutton
+{
+    background: #e3e3e3;
+    border: 1px solid #bbb;
+    border-radius: 3px;
+    -webkit-box-shadow: inset 0 0 1px 1px #f6f6f6;
+    box-shadow: inset 0 0 1px 1px #f6f6f6;
+    color: #333;
+    font: bold 12px/1 "helvetica neue", helvetica, arial, sans-serif;
+    padding: 8px 0 9px;
+    text-align: center;
+    text-shadow: 0 1px 0 #fff;
+    width: 50px;
+}
+
+a.clearbutton
+{
+    background: #e3e3e3;
+    border: 1px solid #bbb;
+    border-radius: 3px;
+    -webkit-box-shadow: inset 0 0 1px 1px #f6f6f6;
+    box-shadow: inset 0 0 1px 1px #f6f6f6;
+    color: #333;
+    font: bold 12px/1 "helvetica neue", helvetica, arial, sans-serif;
+    padding: 8px 0 9px;
+    text-align: center;
+    text-shadow: 0 1px 0 #fff;
+    width: 50px;
+}
+
+
+
+
+
 
 .button:hover 
 {
@@ -186,9 +209,7 @@ div#right div.frame
 	border-color: rgba(255, 255, 255, 0.5);
 	border-radius: 5px;
 	background-color: rgba(76, 76, 76, 0.2);
-	xmargin: 10px;
 	padding: 10px;
-	xpadding-top: 20px;
 }
 
 
@@ -239,7 +260,6 @@ div.returnbutton a
     padding: 4px;
     display: inline;
     border-radius: 7px;
-    border: 1;
     margin: 0 10px;
     background:#baf060;
     font-size: 12px;
@@ -257,14 +277,11 @@ a, a:visited ,a:link
    color:blue;
 }
 
-
  a:hover 
 {
    text-decoration: none;
    color: white;
 }
-
-
 
 div.row
 {
@@ -410,7 +427,6 @@ div.xrow div.field
 .tooltip .tooltiptext {
     visibility: hidden;
     width: 120px;
-   # background-color: black;
     color: #f00;
     text-align: center;
     padding: 5px 0;

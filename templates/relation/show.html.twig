@@ -16,17 +16,17 @@
 <div id="relation" >
     <div class ="heading" >
         <div class="title">Relationship</div>
-        <div class="returnbutton button1"> <a href = "/actor/showall" >return </a> </div>
+        <div class="returnbutton button1"> <a href = "/relation/edit/{{relation.relationid}}" >Edit</a> </div>
     </div>
     <div class="subheading row" >
     <div class= "title">{{actor1.label}} {{relation.relation}} {{actor2.label}}</div>
 </div>
- <div class="returnbutton button1"> <a href = "/relation/edit/{{relation.relationid}}" >Edit</a> </div>
+
 <div ></div>
 <div >
   <div class="actor">
         <div class="row">
-           <div class="returnbutton"> <a href = "/actor/show/{{relation.actor1ref}}" >show </a> </div>
+           <div class="returnbutton"> <a href = "/actor/showone/{{relation.actor1ref}}" >show </a> </div>
            {% if actor1 is defined %}
                {% if actor1 is not null %}
                 <div class= "field"> {{actor1.label}}</div>
@@ -37,7 +37,7 @@
         </div>
   <div class="actor">
         <div class="row">
-           <div class="returnbutton"> <a href = "/actor/show/{{relation.actor2ref}}" >show </a> </div>
+           <div class="returnbutton"> <a href = "/actor/showone/{{relation.actor2ref}}" >show </a> </div>
                 <div class= "field"> {{actor2.label}}</div>
                 <div class= "field">( {{actor2.specifier}} )</div>
             </div>
@@ -51,7 +51,7 @@
             <div class="">
                 {% for cid, clue in clues %}
                 <div class="row">
-                   <div class="returnbutton"> <a href = "/glimpse/show/{{clue.glimpseref}}" >View Glimpse </a></div>
+                   <div class="returnbutton"> <a href = "/glimpse/showone/{{clue.glimpseref}}" >View Glimpse </a></div>
                             <div class="cell">{{  FormatEvent(clue.glimpse)}}  </div>
 
    </div>
@@ -65,7 +65,7 @@
             <div class="list">
                 {% for rid, role in roles %}
                 <div class="row">
-                   <div class="returnbutton"> <a href = "/glimpse/show/{{role.glimpse.glimpseid}}" >View Glimpse </a></div>
+                   <div class="returnbutton"> <a href = "/glimpse/showone/{{role.glimpse.glimpseid}}" >View Glimpse </a></div>
 
                          <div class="cell"> {{role.glimpse.location}}  </div>
                          <div class="cell"> {{role.glimpse.type}}  </div>

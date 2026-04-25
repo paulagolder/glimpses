@@ -16,7 +16,7 @@
     <div class ="heading" >
         <div class="label">Actor:</div>
         <div class= "field">{{actor.surname}}, {{actor.forename}}</div>
-        <div class="returnbutton button1"> <a href = "/actor/show/{{actor.actorid}}" >return </a> </div>
+        <div class="returnbutton button1"> <a href = "/actor/showone/{{actor.actorid}}" >return </a> </div>
         <div class="returnbutton">  <a   href = "/actor/delete/{{actor.actorid}}" >delete </a> </div>
         <div class="returnbutton">  <a   href = "/actor/edit/{{actor.actorid}}" >edit </a> </div>
         <div class="returnbutton"><a  href = "/actor/new" >Add New actor </a> </div>
@@ -71,9 +71,10 @@
 
         </div>
         <div class="body">
+              {% dump(relations) %}
             {% for rid, relation in relations %}
             <div class="row">
-                {% dump(relation) %}
+
                 <div class="cell">{{relation.actor1ref}}  {{relation.relation}} {{relation.actor2ref}} </div>
 
             </div>
@@ -82,6 +83,52 @@
         <div class="subheading" >
             <div class="title">Make New Relationships</div>
         </div>
+        <div class="call">
+           <div class ="heading" >
+                  <div class="title">Glimpse {{glimpse.glimpseid}}</div>
+              </div>
+           <div class="glimpse">
+                      <div class="row">
+                      <div class="inputpair" >
+                          <div class="label">ID </div>
+                          <div class= "field"> {{glimpse.glimpseid}}</div>
+                          </div>
+                          <div class="inputpair" >
+                              <div class="label"> language </div>
+                              <div class= "field"> {{glimpse.language}}</div>
+                              </div>
+                              <div class="inputpair" >
+                              <div class="label"> sourceid </div>
+                              <div class= "field"> {{glimpse.sourceid}}</div>
+                              </div>
+                          </div>
+                          <div class="row">
+                      <div class="inputpair" >
+                              <div class="label"> location </div>
+                              <div class= "field"> {{glimpse.location}}</div>
+                          </div>
+                      <div class="inputpair" >
+                              <div class="label"> type </div>
+                              <div class= "field"> {{glimpse.type}} </div>
+                      </div>
+                          </div>
+                          <div class="row">
+                          <div class="inputpair" >
+                              <div class="label"> date </div>
+                              <div class= "field"> {{glimpse.date}} </div>
+                                  </div>
+                      <div class="inputpair" >
+                              <div class="label"> text </div>
+
+                              </div>
+                          </div>
+                          <div class="subheading" >
+                              <div class="title"> roles </div>
+                          </div>
+                      {% for role in glimpse.roles %}
+                      <div class= "field"> {{role.getRole()}}{{role.getName()}}{{role.getPredicatestr()}} </div>
+                      {% endfor %}
+         </div>
         <div class="actor inputform">
             <form action="/actor/process_newrelationship/{{actor.actorid}}" method="post" id="relationshipform"  >
                 <div class="row">

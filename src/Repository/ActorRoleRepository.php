@@ -37,6 +37,16 @@ class ActorRoleRepository extends EntityRepository
         return $aroles;
     }
 
+public function getActors($rid)
+    {
+      $sql = "select a from App:ActorRole g , App:Actor a  ";
+      $sql .= " where g.roleref = ".$rid." and g.actorref = a.actorid ";
+
+        $query = $this->getEntityManager()->createQuery($sql);
+        $actors = $query->getResult();
+        return $actors;
+    }
+
     public function findOne($aref,$rref)
     {
         $sql = "select g from App:ActorRole g ";
@@ -66,7 +76,7 @@ class ActorRoleRepository extends EntityRepository
       $query->getResult();
     }
 
-      public function findRoles($aid)
+      public function xfindRoles($aid)
     {
         $qb = $this->createQueryBuilder('ar');
         $qb->leftJoin('App:Role', 'r', 'WITH', ' ar.roleref = r.roleid ');
@@ -76,9 +86,11 @@ class ActorRoleRepository extends EntityRepository
         $qb->where ("  ar.actorref = :aid ");
         $qb->addOrderBy('g.date', 'ASC');
         $qb->setParameter('aid', $aid );
-         $roles= $qb->getQuery()->getResult();
+        $roles= $qb->getQuery()->getResult();
         $aroles = array();
         $i=0;
+        dump($qb);
+           dump($aroles);
         foreach( $roles as $key=>$content)
         {
           if($content)
@@ -109,5 +121,17 @@ class ActorRoleRepository extends EntityRepository
 
         return $aroles;
     }
+
+
+    public function findRoles($aid)
+       {
+           $sql = "SELECT  r FROM App:actorrole ar , App:Role r , App:Glimpse g where  ar.roleref = r.roleid  ";
+           $sql .=  " and  r.glimpseref = g.glimpseid  and   ar.actorref = ".$aid."  ORDER BY g.date ASC ";
+           dump($sql);
+           $query = $this->getEntityManager()->createQuery($sql);
+           $roles = $query->getResult();
+           dump($roles);
+           return $roles;
+       }
 }
 

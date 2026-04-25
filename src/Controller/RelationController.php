@@ -30,12 +30,19 @@ class RelationController extends AbstractController
 {
 
     private $requestStack ;
-    private $doctrine;
+       private $lib;
+       private $templates;
+       private $doctrine;
 
-    //    private  $templatelist=array();
-    //   private  $agelist=array();
+       public function __construct(private ManagerRegistry $adoctrine,MyLibrary $lib, Templates $templates,  RequestStack $request_stack, string $templatedir)
+       {
+           $this->requestStack = $request_stack;
+           $this->lib = $lib;
+           $this->templates = $templates;
+           $this->doctrine = $adoctrine;
+       }
 
-    public function __construct(private ManagerRegistry $adoctrine, RequestStack $request_stack, string $templatedir)
+   /* public function __construct(private ManagerRegistry $adoctrine, RequestStack $request_stack, string $templatedir)
     {
 
         // $ageyml = $templates->agelist; //fileLocator->locate('agelist3.yml', null, false);
@@ -43,11 +50,24 @@ class RelationController extends AbstractController
         $this->requestStack = $request_stack;
         $this->doctrine = $adoctrine;
 
-    }
+    }*/
 
     public function showAll()
     {
-        $relations = $this->doctrine->getRepository(Relation::class)->getAll();
+
+            $pfield =   $this->lib->getCookieFilter('relation');
+            if(is_numeric($pfield))
+            {
+              $relations = $doctrine->getRepository(Relation::class)->findOne($pfield);
+            }elseif (is_null($pfield))
+            {
+               $relations = $doctrine->getRepository(Relation::class)->getAll();
+            }
+            else
+            {
+              $filter = "%".$pfield."%";
+              $relations = $this->doctrine->getRepository(Relation::class)->seek($filter);
+            }
         dump($relations);
         foreach($relations as &$relation)
         {
@@ -59,7 +79,8 @@ class RelationController extends AbstractController
             'relation/showall.html.twig',
             [
             'relations'=>$relations,
-            'returnlink'=>"/actor/showall",
+            'filter'=>$pfield,
+            'returnlink'=>"/relation/showall",
             ]
         );
     }
@@ -177,5 +198,19 @@ class RelationController extends AbstractController
         return $this->redirect("/actor/editroles/".$aid);
     }
 
+
+    public function setfilter(ManagerRegistry $doctrine)
+    {
+            $request = $this->requestStack->getCurrentRequest();
+            $pfield = $request->query->get('filter');
+            if (is_null($pfield))
+            {
+                $this->lib->clearCookieFilter("relation");
+            }else
+            {
+               $this->lib->setCookieFilter('relation',$pfield);
+            }
+            return $this->redirect("/relation/showall/");
+    }
 
 }

@@ -4,6 +4,11 @@
      display:flex;
 }
 
+#actor div.heading div.label
+{
+    color:red;
+}
+
 #actor div.twocols div.actor
 {
      border:2px solid red;
@@ -16,10 +21,8 @@
 
 #actor div.row  div.inputpair
 {
-
     margin-right: 2em;
     display:flex;
-
 }
 
 div#actor input.title
@@ -67,50 +70,91 @@ div#actor textarea.url
     height:4em;
 }
 
-#actor   div.row
+
+
+div#actor form div.filterrow
+{
+    display: flex;
+    padding-top:0.5em;
+    padding-bottom: 0.5em;
+}
+
+div.cgrow
 {
     display:flex;
     margin-left: 1em;
 }
 
-#actor   div.row div.label
+div#actor div.row div.label
 {
-   width:4em;
+   width:6em;
    color:blue;
+    padding-left:0.5em;
 }
 
-#actor   div.row div
+div.cgrow div
 {
      padding: 2px;
 }
 
-#actor   div.row div.col1
+div.cgrow div.col1
 {
    width:2em;
 }
-#actor   div.row div.col2
+
+div#actor div.actorlist div.actor div.row div.col2
 {
-   width:2em;
+    width:3em;
+    text-align: right;
+    padding-right: 0.5em;
 }
-#actor   div.row div.col3
+
+ div#actor div.actorlist div.actor div.row div.col3
+ {
+     width:20em;
+     white-space: nowrap;
+     overflow: hidden;
+     text-overflow: ellipsis;
+
+ }
+ div.cgrow div.col2
+{
+   width:3em;
+   text-align: right;
+}
+
+div.cgrow div.col3
 {
       width:20em;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
 }
-#actor   div.row div.col4
+
+ div.cgrow div.col4
 {
    width:30em;
 }
-#actor   div.row div.col5
+
+div.cgrow div.col5
 {
    width:6em;
 }
 
-#actor   div.row div.cell.cmtext
+div.cgrow div.cell.cmtext
 {
     width:10em;
+}
+
+div.cgrow div.agecell
+{
+    width:10em;
+}
+
+ div.cgrow div.glimpsetext
+{
+    width:90%;
+    float:left;
 }
 
 
@@ -153,4 +197,10 @@ div#actor textarea.url
 #actorform div.field input.text
 {
     width: 40em;
+}
+
+
+span.red
+{
+        color: #ff0000;
 }

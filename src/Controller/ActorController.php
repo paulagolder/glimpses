@@ -19,6 +19,9 @@ use App\Entity\Glimpse;
 use App\Entity\Relation;
 use App\Entity\LifeEvent;
 
+use Doctrine\DBAL\DBALException;
+
+
 
 use Symfony\Component\Config\FileLocator;
 
@@ -36,6 +39,81 @@ class ActorController extends AbstractController
         $this->templates = $templates;
     }
 
+  public function showall(ManagerRegistry $doctrine)
+    {
+
+        $pfield =   $this->lib->getCookieFilter('actor');
+        if (is_null($pfield))
+        {
+            $actors = $doctrine->getRepository(Actor::class)->findAll();
+        }
+        else
+        {
+            $filter = "%".$pfield."%";
+            $actors = $doctrine->getRepository(Actor::class)->seek($filter);
+        }
+        return $this->render(
+            'actor/showall.html.twig',
+            [
+            'actors'=>$actors,
+            'filter'=>$pfield,
+            'returnlink'=>"returnlink",
+            ]
+        );
+    }
+
+    public function showone(ManagerRegistry $doctrine,$aid)
+    {
+               $actor = $doctrine->getRepository(Actor::class)->findOne($aid);
+               $allactors =  $doctrine->getRepository(Actor::class)->findAllIndexed();
+               $actorroles =  $doctrine->getRepository(ActorRole::class)->getRoles($aid);
+               $rolelist = array();
+               foreach ($actorroles as $actorrole)
+               {
+                 $roleid = $actorrole->getRoleref();
+                 $role = $doctrine->getRepository(Role::class)->getOne($roleid);
+                 $glimpse = $doctrine->getRepository(Glimpse::class)->findOne($role->getGlimpseref());
+                 $roles = $doctrine->getRepository(Role::class)->findChildren($role->getGlimpseRef());
+                 $glimpse->{"roles"} = $roles;
+                 $rolelist[$roleid]=$glimpse;
+               }
+               $lifeevents =  $doctrine->getRepository(LifeEvent::class)->findAllEvents($aid);
+               $relations =  $doctrine->getRepository(Relation::class)->findByActor($aid);
+               $nrole = new ActorRole();
+               $nrole->setActorref($aid);
+               $roles[]=$nrole;
+               return $this->render('actor/show.html.twig', array(
+                   'actor' => $actor,
+                   'roles'=>$rolelist,
+                   'lifeevents'=>$lifeevents,
+                   'relations'=>$relations,
+                   'actors'=>$allactors,
+                   'returnlink' => "/actor/showall/".$aid,
+                   'typelist' =>['baptism','marriage', 'burial'],
+               ));
+    }
+
+
+   public function setfilter(ManagerRegistry $doctrine)
+    {
+            $request = $this->requestStack->getCurrentRequest();
+            $pfield = $request->query->get('filter');
+            if (is_null($pfield))
+            {
+                $this->lib->clearCookieFilter("actor");
+            }else
+            {
+               $this->lib->setCookieFilter('actor',$pfield);
+            }
+            return $this->redirect("/actor/showall/");
+    }
+
+ public function clearfilter(ManagerRegistry $doctrine)
+    {
+            $pfield = "";
+            $this->lib->clearCookieFilter("actor");
+            return $this->redirect("/actor/showall/");
+    }
 
     public function  edit(ManagerRegistry $doctrine,$aid)
     {
@@ -65,67 +143,45 @@ class ActorController extends AbstractController
         {
             $gfilter = $actor->getSurname().", ".$actor->getForename();
         }
-        dump($gfilter);
-
         $lifeevents =  $doctrine->getRepository(LifeEvent::class)->findAllEvents($aid);
-        dump($lifeevents);
-
         $relations = $doctrine->getRepository(Relation::class)->findByActor($aid);
         foreach($relations as &$relation)
         {
             $relation->{"actor1"}= $em->getRepository(Actor::class)->findOne($relation->getActor1ref());
             $relation->{"actor2"}= $em->getRepository(Actor::class)->findOne($relation->getActor2ref());
         }
-
-
         $roles =  $doctrine->getRepository(ActorRole::class)->findRoles($aid);
-          dump($roles);
+         dump($roles);
         $froles = array();
-        foreach($roles as &$role)
+        foreach($roles as &$arole)
         {
-            dump($role);
-            $froles[$role->getRoleref()]=$role;
-            if( property_exists('role', '"glimpse"'))
-            {
-                $dates = $this->templates->getLifeEvents($aid,$role->glimpse->getType(),$role->{"role"},$role->glimpse->getDate());
-                dump($dates);
-                $this->templates->updateLifeEvents($lifeevents,$dates);
-                dump($lifeevents);
-            }
-            else
-            {
-                dump(" missing glimpse ".$role->getRoleRef());
-                   $arole =  $doctrine->getRepository(Role::class)->getOne($role->getRoleRef());
-                $gref =$arole->getGlimpseref();
-                 $glimpse = $doctrine->getRepository(Glimpse::class)->findOne($gref);
-                 dump($glimpse);
-
-            }
+             $gref =$arole->getGlimpseRef();
+             $glimpse = $doctrine->getRepository(Glimpse::class)->findOne($gref);
+             $broles = $doctrine->getRepository(Role::class)->findChildren($arole->getGlimpseRef());
+             $glimpse->{"roles"} = $broles;
+             $arole->{"glimpse"} = $glimpse;
+             $froles[$arole->getRoleId()]=$arole;
         }
         dump($froles);
-
         $sroles = $doctrine->getRepository(Role::class)->filter($gfilter);
-        $croles = array();
+        $cglimpses = array();
         dump($sroles);
-        foreach($sroles as &$srole)
+       foreach($sroles as &$srole)
         {
-
-            //if(! array_key_exists($srole->getRoleid(), $froles))
+           $key= $srole->getRoleId();
+            if(! array_key_exists($key, $cglimpses) && !array_key_exists($key,$froles))
             {
-                $srole->glimpse = $doctrine->getRepository(Glimpse::class)->findOne($srole->getGlimpseref());
-                dump($srole);
-                if(!is_null($srole->glimpse))
+                $glimpse = $doctrine->getRepository(Glimpse::class)->findOne($srole->getGlimpseRef());
+                if(!is_null($glimpse))
                 {
-                    $srole->glimpse->roles = $doctrine->getRepository(Role::class)->findChildren($srole->getGlimpseref());
-                    $croles[]=$srole;
+                  $roles = $doctrine->getRepository(Role::class)->findChildren($srole->getGlimpseRef());
+                  $glimpse->{"roles"} = $roles;
+                  $cglimpses[$key]=$glimpse;
                 }
-
             }
         }
-        dump($croles);
-
+        dump($cglimpses);
         $duplicates = $doctrine->getRepository(Actor::class)->findAllMatching($actor);
-
         return $this->render('actor/editroles.html.twig', array(
             'actor' => $actor,
             'actors'=>$actors,
@@ -133,7 +189,7 @@ class ActorController extends AbstractController
             'relations'=>$relations,
             'roles'=>$froles,
             'returnlink' => "/actor/show/".$aid,
-            'xroles' => $croles,
+            'cglimpses' => $cglimpses,
             'duplicates'=>$duplicates,
             'typelist' =>['baptism','marriage', 'burial', 'inventory', 'will'],
         ));
@@ -459,6 +515,26 @@ class ActorController extends AbstractController
         ));
     }
 
+
+    public function  newrelationshipwithglimpse(ManagerRegistry $doctrine,$aid,$gid)
+    {
+         $actor =  $doctrine->getRepository(Actor::class)->findOne($aid);
+                $actors =  $doctrine->getRepository(Actor::class)->findAll();
+                $relationships = ["father","mother","son","daughter","wife","husband", "sister", "brother","resident"];
+                $relations = $doctrine->getRepository(Relation::class)->findByActor($aid);
+                $glimpse = $doctrine->getRepository(Glimpse::class)->findOne($gid);
+                $glimpse->{"roles"} = $doctrine->getRepository(Role::class)->findChildren($gid);
+                dump($glimpse);
+                return $this->render('actor/newrelationship.html.twig', array(
+                    'actor' => $actor,
+                    'actors'=>$actors,
+                    'glimpse'=> $glimpse,
+                    'relations'=>$relations,
+                    'relationships'=>$relationships,
+                    'returnlink' => "/actor/show/".$aid,
+                ));
+    }
+
     public function  updatelifeevents(ManagerRegistry $doctrine,$aid)
     {
         $actor = $doctrine->getRepository(Actor::class)->findOne($aid);
@@ -486,78 +562,27 @@ class ActorController extends AbstractController
         return $this->redirect("/actor/editroles/".$aid);
     }
 
-
-    public function zzshowall(ManagerRegistry $doctrine)
-    {
-        $pfield =   $this->lib->getCookieFilter('actor');
-        $actors = $doctrine->getRepository(Actor::class)->findAll();
-        return $this->render(
-            'actor/showall.html.twig',
-            [
-            'actors'=>$actors,
-            'filter'=>$pfield,
-            'returnlink'=>"returnlink",
-            ]
-        );
-    }
-
-    public function clearfilter()
-    {
-        return $this->filter();
-    }
-
-     public function setfilter(ManagerRegistry $doctrine)
-    {
-            $request = $this->requestStack->getCurrentRequest();
-            $pfield = $request->query->get('filter');
-            if (is_null($pfield))
-            {
-                $this->lib->clearCookieFilter("actor");
-            }else
-            {
-               $this->lib->setCookieFilter('actor',$pfield);
-            }
-            return $this->redirect("/actor/showall/");
-    }
-
-    public function showall(ManagerRegistry $doctrine)
-    {
-
-        $pfield =   $this->lib->getCookieFilter('actor');
-        if (is_null($pfield))
-        {
-            $actors = $doctrine->getRepository(Actor::class)->findAll();
-        }
-        else
-        {
-            $filter = "%".$pfield."%";
-            $actors = $doctrine->getRepository(Actor::class)->seek($filter);
-        }
-        return $this->render(
-            'actor/showall.html.twig',
-            [
-            'actors'=>$actors,
-            'filter'=>$pfield,
-            'returnlink'=>"returnlink",
-            ]
-        );
-    }
-
     public function addrole(ManagerRegistry $doctrine,$aid, $rid)
     {
-
         $arole = new ActorRole();
         $arole->setActorref($aid);
         $arole->setRoleRef($rid);
+        dump($arole);
         $entityManager = $doctrine->getManager();
         $entityManager->persist($arole);
+        try {
         $entityManager->flush();
+        }
+        catch (DBALException $e) {
+            // ....
+        }
         return $this->redirect("/actor/editroles/".$aid);
     }
 
+
+
     public function deleterole(ManagerRegistry $doctrine,$aid, $rid)
     {
-
         $em = $doctrine->getManager();
         $ar = $doctrine->getRepository(ActorRole::class)->findone($aid, $rid);
         $em->remove($ar);
@@ -565,32 +590,5 @@ class ActorController extends AbstractController
         return $this->redirect("/actor/editroles/".$aid);
     }
 
-    public function filterf($filter)
-    {
-       // $filter = "Edward";
-        $roles = $this->getEntityManager()->getRepository(Actor::class)->filter($filter);
-        $qb = $this->createQueryBuilder('g');
-        $qb->select('g');
-        $qb->from('App:Role','r');
-        $qb->andwhere('  r.glimpseref = g.glimpseid  ');
-        $qb->andwhere('  r.name like :name  or r.predicates like :name ');
-        $qb->orwhere('  g.location like :name  ');
-        $qb->orderby(' g.date ');
-        $qb->setparameter( 'name', $filter);
-        dump($qb);
-        $qy= $qb->getQuery();
-             dump($qy);
-        $glimpses = $qy->getResult();
-        dump($glimpses);
-        $n=0;
-        //not happy with this but it works
-        foreach($glimpses as &$glimpse )
-        {
-        $roles = $this->getEntityManager()->getRepository(Role::class)->findChildren($glimpse->getGlimpseid());
-         $glimpse->{"role"} = $roles;
-        }
-         dump($glimpses);
-        return $glimpses;
-    }
 
 }

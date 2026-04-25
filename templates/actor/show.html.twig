@@ -15,10 +15,8 @@
 {% block body %}
 <div id="actor" >
 
-
     <div class ="heading" >
-        <div class="returnbutton button1"> <a href = "/actor/showall" >return </a> </div>
-        <div class="returnbutton">  <a   href = "/actor/delete/{{actor.actorid}}" >delete </a> </div>
+        <div class="returnbutton button1">  <a   href = "/actor/delete/{{actor.actorid}}" >delete </a> </div>
         <div class="returnbutton">  <a   href = "/actor/edit/{{actor.actorid}}" >edit </a> </div>
         <div class="returnbutton">  <a   href = "/actor/editroles/{{actor.actorid}}" >edit roles </a> </div>
         <div class="returnbutton"><a  href = "/actor/new" >Add New actor </a> </div>
@@ -80,23 +78,18 @@
             </div>
         </div>
         <div class="subheading" >
-            <div class="title">Relationship</div>
+            <div class="title">Relationships</div>
         </div>
         <div class="relationTable" >
             <div class="list">
                 {% for rid, relation in relations %}
                 <div class="row">
-                    {% dump(relation) %}
-
-                         <div class="returnbutton">  <a   href = "/relation/show/{{relation.relationid}}" >View</a> </div>
-
+                       <div class="returnbutton">  <a   href = "/relation/show/{{relation.relationid}}" >View</a> </div>
                        <div class="returnbutton">
-                      <a   href = "/actor/show/{{relation.actor1ref}}" >{{actors[relation.actor1ref].label}} </a>
+                      <a   href = "/actor/showone/{{relation.actor1ref}}" >{{actors[relation.actor1ref].label}} </a>
                      </div>
                     <div class="cell">  is {{relation.relation}} of </div>
-
-                         <div class="returnbutton">  <a   href = "/actor/show/{{relation.actor2ref}}" >{{actors[relation.actor2ref].label}}</a> </div>
-
+                         <div class="returnbutton">  <a   href = "/actor/showone/{{relation.actor2ref}}" >{{actors[relation.actor2ref].label}}</a> </div>
                      </div>
                     {% endfor %}
                 </div>
@@ -104,21 +97,17 @@
             <div class="subheading" >
                 <div class="title">Roles </div>
             </div>
-            {% dump roles %}
             <div class="roleTable" >
                 <div class="body">
-                    {% for pid, role in roles %}
-                    {% dump(role) %}
-                   {% if role.glimspse is defined  %}
-                     {% dump(role.glimpse) %}
+                    {% for pid, glimpse in roles %}
+                     {% dump(actor) %}
+                    {% dump(glimpse) %}
                     <div class="row">
-                    {% set formatedtext = FormatRole(role.roleref,role.glimpse) %}
+                    {% set formatedtext = FormatRoleFull(glimpse,pid) %}
                         <div class="cell" >{{formatedtext}}</div>
-                        <div class="cell" >  Age: {{calAge(actor.Birthdate,role.glimpse.date)}} </div>
-                         <div class="cell">{{role.predicates}} </div>
+                        <div class="cell" >  Age: {{calAge(actor.Birthdate,glimpse.date)}} </div>
+                       {#}  <div class="cell">{{glimpse.predicates}} </div>#}
                     </div>
-                   {% endif %}
-
                     {% endfor %}
                 </div>
             </div>
