@@ -72,6 +72,11 @@ class Glimpse
      */
     private $updatedt;
 
+     /**
+         * @ORM\Column(type="string", nullable=true)
+         */
+        private $image;
+
     public $roles;
 
     public function getGlimpseid(): ?int
