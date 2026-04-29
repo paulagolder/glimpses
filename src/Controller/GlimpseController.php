@@ -170,7 +170,7 @@ class GlimpseController extends AbstractController
             'glimpse' => $glimpse,
             'source'=>$source,
             'roles'=>$roles,
-            'returnlink' => "/glimpse/show/".$gid,
+            'returnlink' => "/glimpse/showone/".$gid,
             'typelist' =>['baptism','marriage', 'burial'],
         ));
     }
@@ -224,9 +224,7 @@ class GlimpseController extends AbstractController
         {
             $glimpse = new Glimpse();
             $sourceid = $this->lib->getCookieSource();
-            dump($sourceid);
             $source =   $doctrine->getRepository(Source::class)->findOne($sourceid);
-          //  $glimpse->setSource($source->getTitle());
             $glimpse->setLocation($source->getRegion());
             $glimpse->setSourceId($sourceid);
             $glimpse->setLanguage($source->getlanguage());
@@ -236,7 +234,6 @@ class GlimpseController extends AbstractController
         else
         {
             $glimpse = $doctrine->getRepository(Glimpse::class)->findOne($gid);
-
               $source =   $doctrine->getRepository(Source::class)->findOne($glimpse->getSourceid());
             $roles =  $doctrine->getRepository(Role::class)->findChildren($gid);
               $glimpse->{"source"} = $source->getTitle();
@@ -245,13 +242,13 @@ class GlimpseController extends AbstractController
         $request = $this->requestStack->getCurrentRequest();
         if ($request->getMethod() == 'POST')
         {
-
             $glimpse->setText($request->request->get('_text'));
             # $glimpse->setLanguage($request->request->get('_language'));
             $glimpse->setLocation($request->request->get('_location'));
             $glimpse->setType($request->request->get('_type'));
             $glimpse->setDate($request->request->get('_gdate'));
             $glimpse->setRef($request->request->get('_ref'));
+            $glimpse->setImage($request->request->get('_image'));
             $glimpse->setText($request->request->get('_text'));
             $glimpse->setContributor("paul");
             $now = new \DateTime();
@@ -260,11 +257,7 @@ class GlimpseController extends AbstractController
             $entityManager->persist($glimpse);
             $entityManager->flush();
             $gid = $glimpse->getGlimpseid();
-            dump($request->request->all()["_role"]);
             $rqroles=$request->request->all()["_role"];
-           // $roles = $rqroles[array_key_first($rqroles)];
-            dump($rqroles);
-         //   $par = $request->getParameter('_role');
             foreach($rqroles as $key=>$arole)
             {
                 $ref = $arole["'ref'"];
@@ -272,7 +265,6 @@ class GlimpseController extends AbstractController
                 {
                     $nrole = new role();
                     $nrole->setGlimpseref($gid);
-                    #$nrole->setText($arole["'text'"]);
                     $nrole->setRole(trim($arole["'role'"]));
                     $nrole->setName($arole["'name'"]);
                     $nrole->setPredicates($arole["'predicates'"]);
@@ -281,7 +273,6 @@ class GlimpseController extends AbstractController
                         $entityManager->persist($nrole);
                         $entityManager->flush();
                     }
-                      dump($nrole);
                 }else
                 {
                     $nrole = $roles[$key];
@@ -291,7 +282,6 @@ class GlimpseController extends AbstractController
                     $nrole->setPredicates($arole["'predicates'"]);
                     $entityManager->persist($nrole);
                     $entityManager->flush();
-                      dump($nrole);
                 }
             }
             return $this->redirect("/glimpse/edit/".$gid);
@@ -302,7 +292,7 @@ class GlimpseController extends AbstractController
 
             'glimpse' => $glimpse,
             'roles'=>$roles,
-            'returnlink' => "/glimpse/show/".$gid,
+            'returnlink' => "/glimpse/showone/".$gid,
             'typelist' =>['baptism','marriage', 'burial', 'will', 'note'],
         ));
 
@@ -317,29 +307,16 @@ class GlimpseController extends AbstractController
            $request = $this->requestStack->getCurrentRequest();
         if ($request->getMethod() == 'POST')
         {
-
-        dump($request);
-        dump($request->request->all()["_role"]);
         $rqroles=$request->request->all()["_role"];
         $rrole = $rqroles[$aref];
-        dump($rrole);
-       // $par = $request->getParameter('_role');
-
-
             $glimpse->setContributor("paul");
             $now = new \DateTime();
             $glimpse->setUpdateDt($now);
-
             $entityManager = $doctrine->getManager();
             $entityManager->persist($glimpse);
             $entityManager->flush();
-
-          //  $rrole = $request->$request->get('_role');
-            dump($rrole);
-            # $role->setText( $rrole[$aref]["'text'"]) ;
             $role->setRole($rrole["'role'"]);
             $role->setName($rrole["'name'"]);
-            dump($role);
             $entityManager->persist($role);
             $entityManager->flush();
             $preds =  $rrole["'predicates'"];
@@ -353,7 +330,7 @@ class GlimpseController extends AbstractController
 
             'glimpse' => $glimpse,
             'roles'=>$roles,
-            'returnlink' => "/glimpse/show/".$gid,
+            'returnlink' => "/glimpse/showone/".$gid,
         ));
 
     }
@@ -380,54 +357,9 @@ class GlimpseController extends AbstractController
         );
     }
 
-    public function xshowAll()
+    public function xclearfilter()
     {
-
-        $glimpses = $doctrine->getRepository(Glimpse::class)->findAll();
-        $filter =    $this->lib->getCookieFilter();
-        return $this->render(
-            'glimpse/showall.html.twig',
-            [
-            'filter'=>$filter,
-            'glimpses'=>$glimpses,
-            'returnlink'=>"returnlink",
-            ]
-        );
-    }
-
-    public function yshowall(ManagerRegistry $doctrine)
-    {
-
-        $pfield =   $this->lib->getCookieFilter();
-        if (!$pfield)
-        {
-            $glimpses = $doctrine->getRepository(Glimpse::class)->findAll();
-        }
-        else
-        {
-            $filter = $pfield;
-            $glimpses = $doctrine->getRepository(Glimpse::class)->filterf($filter);
-        }
-        foreach( $glimpses as &$glimpse)
-        {
-            $glimpse->{"roles"} =    $doctrine->getRepository(Role::class)->findChildren($glimpse->getGlimpseId());
-
-        }
-        return $this->render(
-            'glimpse/showall.html.twig',
-            [
-            'glimpses'=>$glimpses,
-            'filter'=>$pfield,
-            'returnlink'=>"returnlink",
-            ]
-        );
-    }
-
-    public function clearfilter()
-    {
-        //$this->lib->setCookieFilter("fred");
         return $this->filter();
-
     }
 
     public function showall(ManagerRegistry $doctrine)
@@ -440,7 +372,7 @@ class GlimpseController extends AbstractController
               $glimpses[] = $doctrine->getRepository(Glimpse::class)->findOne($pfield);
             }else
             {
-              $filter = "%".$pfield."%";
+              $filter = $pfield;
               $glimpses = $doctrine->getRepository(Glimpse::class)->filterf($filter);
             }
             dump($glimpses);
@@ -514,7 +446,7 @@ class GlimpseController extends AbstractController
               $glimpses[] = $doctrine->getRepository(Glimpse::class)->findOne($pfield);
             }else
             {
-              $filter = "%".$pfield."%";
+              $filter = $pfield;
               $glimpses = $doctrine->getRepository(Glimpse::class)->filterf($filter);
             }
             dump($glimpses);

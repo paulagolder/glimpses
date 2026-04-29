@@ -27,7 +27,6 @@ services:
     # please note that last definitions always *replace* previous ones
 
 
-
     App\Service\Templates:
         arguments:
            $templatedir : '%templatedir%'
@@ -35,7 +34,6 @@ services:
     Service_Templates:
         alias:  App\Service\Templates
         public: true
-
 
 
     App\Twig\Extension\AppExtension:

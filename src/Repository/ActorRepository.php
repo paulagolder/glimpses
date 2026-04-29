@@ -85,35 +85,36 @@ class ActorRepository extends EntityRepository
         $qb->getQuery()->execute();
     }
 
- /*  public function filterf($filter)
+
+ public function filterf($filterstr)
        {
            $qb = $this->createQueryBuilder('a');
            $qb->select();
-           $qb->where('  a.surname like :name  ');
+           $sql = "SELECT a FROM App\Entity\Actor a WHERE ";
+           $filterlist = explode(",",$filterstr);
+           $n=0;
+           foreach($filterlist as $filterpair)
+           {
+             $filter = explode("+",$filterpair);
+                      dump($filter);
+                      if($n>0) $sql .=" or ";
+                      if(count($filter)>1)
+                      {
+                         $namec ="%".$filter[0]."%".$filter[1]."%";
+                         $name1= "%".$filter[0]."%";
+                         $name2= "%".$filter[1]."%";
+                         $sql .= "  a.keywords like '{$namec}'  or ( a.surname like '{$name2}'  and a.forename like '{$name1}' )  ";
 
-            $qb->orwhere('  a. like :name  ');
-           $qb->setparameter( 'name', $filter);
-           dump($qb);
-           $qy= $qb->getQuery();
-                dump($qy);
-           $actors = $qy->getResult();
-           dump($actors);
-           return $actors;
-       }*/
-
-
- public function seek($filter)
-       {
-           $qb = $this->createQueryBuilder('a');
-           $qb->select();
-           $qb->where('  a.surname like :name  ');
-            $qb->orwhere('  a.keywords like :name  ');
-            $qb->orwhere('  a.forename like :name  ');
-           $qb->setparameter( 'name', $filter);
-           dump($qb);
-           $qy= $qb->getQuery();
-           dump($qy);
-           $actors = $qy->getResult();
+                      }else
+                      {
+                         $name1 ="%".$filter[0]."%";
+                         $sql .= "  a.keywords like '{$name1}'  or  a.surname like '{$name1}'  or a.forename like '{$name1}'   ";
+                      }
+             $n++;
+                  }
+           dump($sql);
+                 $query = $this->getEntityManager()->createQuery($sql);
+                  $actors = $query->getResult();
            dump($actors);
            return $actors;
        }

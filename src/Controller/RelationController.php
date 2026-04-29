@@ -55,18 +55,17 @@ class RelationController extends AbstractController
     public function showAll()
     {
 
-            $pfield =   $this->lib->getCookieFilter('relation');
-            if(is_numeric($pfield))
+            $filter =   $this->lib->getCookieFilter('relation');
+            if(is_numeric($filter))
             {
-              $relations = $doctrine->getRepository(Relation::class)->findOne($pfield);
-            }elseif (is_null($pfield))
+              $relations = $doctrine->getRepository(Relation::class)->findOne($filter);
+            }elseif (is_null($filter))
             {
                $relations = $doctrine->getRepository(Relation::class)->getAll();
             }
             else
             {
-              $filter = "%".$pfield."%";
-              $relations = $this->doctrine->getRepository(Relation::class)->seek($filter);
+              $relations = $this->doctrine->getRepository(Relation::class)->filterf($filter);
             }
         dump($relations);
         foreach($relations as &$relation)
@@ -79,7 +78,7 @@ class RelationController extends AbstractController
             'relation/showall.html.twig',
             [
             'relations'=>$relations,
-            'filter'=>$pfield,
+            'filter'=>$filter,
             'returnlink'=>"/relation/showall",
             ]
         );

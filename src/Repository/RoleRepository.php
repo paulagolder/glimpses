@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Role;
+use App\Entity\Glimpse;
 
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -35,7 +36,7 @@ class RoleRepository extends EntityRepository
 
     public function filter($keywords)
     {
-    dump($keywords);
+        dump($keywords);
         $kwarray = explode(",",$keywords);
         $qb = $this->createQueryBuilder('r');
         $i=0;
@@ -56,11 +57,6 @@ class RoleRepository extends EntityRepository
         }
         return $aroles;
 
-        /*
-         *    ->where("firstname LIKE ? AND surname LIKE ?")
-         - >setParameter(0, $user_input_1st_name) *
-         ->setParameter(1, $user_input_2nd_name);
-         */
     }
 
     public function getOne($rid)
@@ -121,6 +117,51 @@ class RoleRepository extends EntityRepository
         return $aroles;
     }
 
+
+     public function filterf($filterstring)
+    {
+        $filterlist = explode(",", $filterstring);
+        dump($filterlist);
+        $qb = $this->createQueryBuilder('r');
+        $qb->select('r');
+        $qb->from('App:Glimpse','g');
+        $qb->where('  r.glimpseref = g.glimpseid  ');
+        $clause = "";
+        foreach($filterlist as $filterpair)
+        {
+           $filter = explode("+",$filterpair);
+           dump($filter);
+           if(count($filter)>1)
+           {
+              $namefilter ="%".$filter[0]."%".$filter[1]."%";
+           }
+           else
+           {
+              $namefilter ="%".$filter[0]."%";
+           }
+           $clause .= " or  r.name like '".$namefilter."' or  r.predicates like '".$namefilter."' ";
+        }
+        dump($clause);
+        $clause = preg_replace( "/ or/"," ",$clause ,1);
+        dump($clause);
+        $qb->andwhere($clause);
+        $qb->orderby(' g.date ');
+       // $qb->setparameter( 'name', $namefilter);
+        dump($qb);
+        $qy= $qb->getQuery();
+        dump($qy);
+        $roles = $qy->getResult();
+        dump($roles);
+        $n=0;
+        $glimpses= array();
+        foreach($roles as &$arole )
+        {
+        $glimpse = $this->getEntityManager()->getRepository(Glimpse::class)->findOne($arole->getGlimpseRef());
+         $glimpses[$arole->getRoleid()] = $glimpse;
+        }
+         dump($glimpses);
+        return $glimpses;
+    }
 
 
 }

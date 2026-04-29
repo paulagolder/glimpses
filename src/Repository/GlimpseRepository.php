@@ -13,12 +13,17 @@ use Doctrine\ORM\Query\Expr\Join;
 
 use Doctrine\DBAL\DriverManager;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Service\MyLibrary;
 
 
 use Doctrine\DBAL\Driver\Connection;
 
 class GlimpseRepository extends EntityRepository
 {
+
+
+
+
 
     public function findOne($gid)
     {
@@ -90,21 +95,36 @@ class GlimpseRepository extends EntityRepository
 
     }
 
-    public function filterf($filter)
+    public function filterf($filterstring)
     {
-       // $filter = "Edward";
-        $roles = $this->getEntityManager()->getRepository(Role::class)->filter($filter);
+        $filterlist = explode(",", $filterstring);
+        dump($filterlist);
         $qb = $this->createQueryBuilder('g');
         $qb->select('g');
         $qb->from('App:Role','r');
         $qb->andwhere('  r.glimpseref = g.glimpseid  ');
-        $qb->andwhere('  r.name like :name  or r.predicates like :name ');
-        $qb->orwhere('  g.location like :name  ');
+        foreach($filterlist as $filterpair)
+        {
+           $filter = explode("+",$filterpair);
+           dump($filter);
+           if(count($filter)>1)
+           {
+           $namefilter ="%".$filter[0]."%".$filter[1]."%";
+           }else
+           {
+           $namefilter ="%".$filter[0]."%";
+           }
+            $qb->andwhere('  r.name like :name or  r.predicates like :name ');
+        }
+       /* $qb->orwhere('  g.location like :name  ');
+        $qb->orwhere('  r.name like :name ');
+        $qb->orwhere('  r.predicates like :name ');
+        $qb->orwhere('  g.location like :name  ');*/
         $qb->orderby(' g.date ');
-        $qb->setparameter( 'name', $filter);
+        $qb->setparameter( 'name', $namefilter);
         dump($qb);
         $qy= $qb->getQuery();
-             dump($qy);
+        dump($qy);
         $glimpses = $qy->getResult();
         dump($glimpses);
         $n=0;

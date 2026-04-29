@@ -21,7 +21,7 @@ glimpse_new:
 
 
 glimpse_show:
-    path: /glimpse/show/{gid}
+    path: /glimpse/showone/{gid}
     controller:  App\Controller\GlimpseController::show
 
 glimpse_show_all:

@@ -182,6 +182,16 @@ class MyLibrary
 
       return sprintf($pattern, $sanitizeLikeValue($search));
     }
+
+     static public function parseFilter($filterstring)
+     {
+        $filterlist = explode(",", $filterstring);
+
+         return $filterlist;
+     }
+
+
+
 }
 
 

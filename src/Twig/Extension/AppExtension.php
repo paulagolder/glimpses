@@ -23,6 +23,7 @@ class AppExtension extends AbstractExtension
         $this->templatelist =   Yaml::parseFile($gstructyml[0]);
         $ageyml = $fileLocator->locate('agelist3.yml', null, false);
         $this->agelist =   Yaml::parseFile($ageyml[0]);
+
     }
 
     public function getFilters(): array
@@ -43,7 +44,8 @@ class AppExtension extends AbstractExtension
             new TwigFunction('FormatEvent',[$this, 'FormatEvent'] ),
             new TwigFunction('FormatEventFull',[$this, 'FormatEventFull'] ),
             new TwigFunction('FormatRoleFull',[$this, 'FormatRoleFull'] ),
-        ];
+            new TwigFunction('ideLink',[$this,'idelink']),
+                ];
     }
 
     public function calcAge( $bdate, string $gdate)
@@ -57,10 +59,20 @@ class AppExtension extends AbstractExtension
         }
        $bdate2 = substr($bdate."-01-01",0,10);
        $gdate2 = substr($gdate."-01-01",0,10);
-       $date1 = new \DateTime($bdate2);
+       try{
+          $date1 = new \DateTime($bdate2);
+              $year1 =  (int)$date1->format('Y');
+       }catch(Exception $e)
+              {
+              return("=-=-=");
+              }
+          try{
        $date2 = new \DateTime($gdate2);
-       $year1 =  (int)$date1->format('Y');
-       $year2 = (int) $date2->format('Y');
+       }catch(Exception $e)
+       {
+       return("=-=-=");
+       }
+     $year2 = (int) $date2->format('Y');
        return  $year2-$year1 ;
         } catch (Exception $e) {
             return "****";
@@ -171,6 +183,16 @@ class AppExtension extends AbstractExtension
         }
         return $fmt;
     }
+
+// Source - https://stackoverflow.com/a/73573691
+// Posted by Thomas Landauer
+// Retrieved 2026-04-26, License - CC BY-SA 4.0
+
+public function ideLink(string $filepath, int $line=0): string
+{
+    return $this->fileLinkFormatter->format($this->kernel_project_dir . DIRECTORY_SEPARATOR . $filepath, $line);
+}
+
 
 
 

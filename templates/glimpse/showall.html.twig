@@ -29,7 +29,7 @@
      <div class= "glimpselist">
     {% for pid, glimpse in glimpses %}
     <div class= "glimpse row">
-            <div class="returnbutton" >  <a  href = "/glimpse/show/{{glimpse.glimpseid}}" >View </a> </div>
+            <div class="returnbutton" >  <a  href = "/glimpse/showone/{{glimpse.glimpseid}}" >View </a> </div>
             <div class= "field cloc"> {{glimpse.location}}</div>
             <div class= "field ctype"> {{glimpse.type}}</div>
             <div class= "field cdate"> {{glimpse.date}}</div>

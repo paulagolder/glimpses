@@ -125,48 +125,46 @@
     
 #glimpse    div.roleTable div.body div.row 
 {
-    
        display:table-row;
        width:auto;
-    
 }
 
 #glimpse    div.roleTable div.body div.row div.cell
 {
-    
-       xfloat:left;/*fix for  buggy browsers*/
         display:table-cell;
-        width:;
+        width: 3em;
         background-color:#ccc;
-    
 }
+
+
+#glimpseform div.roleTable div.body div.row div.cell div.row
+{
+    display:flex;
+}
+
+
 #glimpse    div.roleTable div.body div.row div.cell   div.col1
 {
-    
-       xfloat:left;/*fix for  buggy browsers*/
-       xdisplay:table-cell;
-       xwidth:;
-       xbackground-color:#ccc;
        display:flex;
-    
+       width:10em;
 }
+
+
 #glimpse  div.roleTable div.body div.row div.cell.label
 {
     width:2em;
-    
 }
 
 #glimpse  div.roleTable div.body div.row div.cell.hidden
 {
-    width:1em;
+    width: 1em;
+}
     
 
 
 #glimpse    div.roleTable div.body div.row div.predcell   
 {
-    
       column-span: all;
-    
 }
 
 #glimpse    div.roleTable div.row div.cell input.disabled {
@@ -178,40 +176,29 @@
 
     #glimpse    div.roleTable  div.body   div.row div.cell div.predtable 
 {
-    
         display:  table;
         width:auto;
         background-color:#eee;
         border:1px solid  #666666;
         border-spacing:5px;/*cellspacing:poor IE support for  this*/
-       /* border-collapse:separate;*/
-    
 }
     
     #glimpse    div.roleTable  div.body   div.row div.cell div.predtable div.predbody 
 {
-    
        display:  table-row-group;
        width:auto;
-    
 }
     
 #glimpse    div.roleTable  div.row div.cell div.predtable div.predbody div.predrow 
 {
-    
        display:table-row;
        width:auto;
-    
 }
 
 #glimpse    div.roleTable  div.row div.cell div.predtable div.predbody div.predrow div.predcell
 {
-    
-           
         display:table-cell;
-     
         background-color:#eee;
-    
 }
 
 
@@ -242,15 +229,8 @@ a.button3:hover{
 background-color:#4095c6;
 }
 
-@media all and (max-width:30em){
- a.button3{
-display:block;
-margin:0.2em auto;
- }
-} 
 
-
-table, {
+table {
   border: 1px solid black;
   width :100%;
 border-collapse:collapse; 
