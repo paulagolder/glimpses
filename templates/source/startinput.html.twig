@@ -4,7 +4,7 @@
 
 {% block stylesheets %}
 {{ parent() }}
-<link href="{{ asset('css/glimpse/edit.css') }}" rel="stylesheet" />
+<link href="{{ asset('css/source.css') }}" rel="stylesheet" />
 {% endblock %}
 
 {% block js %}
@@ -13,14 +13,14 @@
 {% endblock %}
 
 {% block body %}
-<div id="glimpse" >
+<div id="source" >
     
     
     <div class ="heading" >
         <div class="title" > Entering Data for </div>
         <div class="returnbutton  button1"> <a class="button" href = "/source/show/{{source.sourceid}}" >return </a> </div>
    </div>
-   <div class="form">
+   <div class="sourceform">
      <div class ="row" >
         <div class="label"> Source:  </div>
         <div class="field"> {{source.title}}  </div>

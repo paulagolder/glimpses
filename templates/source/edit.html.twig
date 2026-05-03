@@ -21,13 +21,13 @@
         <div class="returnbutton button1"> <a class="button" href = "{{returnlink}}" >Cancel </a> </div>
         <div class="returnbutton "> <a class="button" href = "/source/new" >Add New source </a> </div>
     </div>
-    <div class="source inputform"> 
+    <div class="inputform">
         <form action="/source/process_edit/{{source.sourceid}}" method="post" id="sourceform"  >
             <div class="row">
                 <div class="label">ID </div>
                 <div class= "field"> <input class="classid" type="text" name="_sourceid" value="{{source.sourceid}}" > </div>
                 
-                    <div class="label"> language </div>
+                    <div class="innerlabel"> language </div>
                     <div class= "field"> <input class="language" type="text" name="_language" value="{{source.language}}" /> </div>
                 </div>
                 <div class="row">

@@ -36,9 +36,6 @@ glimpse_view_source:
     path: /glimpse/showsource/{sourceid}
     controller:  App\Controller\GlimpseController::showsource
 
-
-
-
 glimpse_edit:
     path: /glimpse/edit/{gid}
     controller:  App\Controller\GlimpseController::edit
@@ -77,7 +74,7 @@ glimpse_filter:
    controller:  App\Controller\GlimpseController::filter
 
 glimpse_clearfilter:
-   path:  /glimpse/clearsearch/
+   path:  /glimpse/clearfilter/
    controller:  App\Controller\GlimpseController::clearfilter
 
 
@@ -85,26 +82,25 @@ actor_newactor:
    path:  /actor/newactor/{gid}/{rref}
    controller:  App\Controller\ActorController::newactor
 
-
 source_all:
    path:  /source/showall
    controller:  App\Controller\SourceController::showall
-
 
 source_setfilter:
      path: /source/setfilter/
      controller: App\Controller\SourceController::setfilter
 
+source_clearfilter:
+  path: /source/clearfilter/
+  controller: App\Controller\SourceController::clearfilter
 
 source_new:
    path:  /source/new
    controller:  App\Controller\SourceController::new
 
-
 source_process_edit:
     path: /source/process_edit/{sid}
     controller:  App\Controller\SourceController::process_edit
-
 
 source_edit:
     path: /source/edit/{sid}
@@ -114,11 +110,9 @@ source_delete:
     path: /source/delete/{sid}
     controller:  App\Controller\SourceController::delete
 
-
 source_show:
     path: /source/show/{sid}
     controller:  App\Controller\SourceController::showone
-
 
 source_startinput:
     path: /source/startinput/{sourceid}
@@ -210,6 +204,10 @@ relation_show_one:
 relation_setfilter:
       path: /relation/setfilter
       controller: App\Controller\RelationController::setfilter
+
+relation_clearfilter:
+        path: /relation/clearfilter/
+        controller: App\Controller\RelationController::clearfilter
 
 relation_edit:
       path: /relation/edit/{rid}

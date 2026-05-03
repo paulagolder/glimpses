@@ -1,98 +1,167 @@
 
 
-div#source input.title
-{ 
-    width:40em;
-      height:4em;
-}
 
-div#source textarea.title
-{ 
-    width:40em;
-      height:4em;
-}
-
-div#source input.id
-{ 
-    width:3em;
-}
-
-div#source input.language
-{ 
-    width:3em;
+#source   div.sourcelist
+{
+    overflow-y:scroll;
+    overflow-x:hidden;
+    height:38em;
+    width:90%;
 }
 
 
-div#source input.region
-{ 
-    width:10em;
+
+
+/*================================
+source inputform
+=================================== */
+#source div.inputform
+{
+    width: 36em;
+    margin-top:1em;
+}
+#sourceform
+{
+    background-color: silver;
+    width: 36em;
 }
 
-div#source input.period
-{ 
-    width:10em;
+#sourceform div.row
+{
+
+    border-bottom: 1px solid white;
 }
 
-div#source input.url
+#sourceform div.row div.label
+{
+    width:5em;
+}
+
+#sourceform div.row div.innerlabel
+{
+   width:5em;
+    padding-left:1em;
+}
+
+#sourceform div.row  div.title
 { 
     width:40em;
     height:4em;
 }
 
-div#source textarea.url
+#sourceform div.row div.field input.classid{}
+
+
+div#source div.inputform  textarea.title
+{ 
+    width:40em;
+      height:4em;
+}
+
+div#source div.inputform input.id
+{ 
+    width:3em;
+}
+
+div#source div.inputform input.language
+{ 
+    width:3em;
+}
+
+
+div#source div.inputform input.region
+{ 
+    width:10em;
+}
+
+div#source div.inputform input.period
+{ 
+    width:10em;
+}
+
+div#source div.inputform input.url
 { 
     width:40em;
     height:4em;
 }
 
-#source   div.row 
+div#source div.inputform  textarea.url
+{ 
+    width:40em;
+    height:4em;
+}
+
+/*================================
+sourcelist
+=================================== */
+
+#source > div.sourcelist > div.source > div.row
 {
     display:flex;
     margin-left : 1em;
+    background-color: silver;
+    padding: 5px;
+    width:500em;
 }
 
-#source   div.row div.label
+#source > div.sourcelist > div.source >   div.row div.col1
+{
+    width:2em;
+}
+
+#source > div.sourcelist > div.source > div.row > div.col2
+{
+    width:3em;
+    padding-right:5px;
+    text-align:right;
+}
+
+#source  > div.sourcelist > div.source >  div.row div.col3
+{
+    width:46em;
+    overflow-x: scroll;
+}
+
+#source > div.sourcelist > div.source >   div.row div.col4
+{
+    width:12em;
+    overflow-x: scroll;
+}
+
+#source  > div.sourcelist > div.source >  div.row div.col5
+{
+    width:6em;
+}
+
+
+/*================================
+sourceform
+=================================== */
+
+#source   div.sourceform
+{
+    background-color: silver;
+    width:36em;
+}
+
+#source  div.sourceform div.row
+{
+    display:flex;
+    margin-left : 1em;
+    background-color: silver;
+}
+
+#source  div.sourceform div.row div.label
 {
    width:6em;
    color:blue;
 }
 
-#source   div.row div
+#source  div.sourceform div.row div.field
 {
-     padding: 5px;
+    width:36em;
+    color:black;
 }
-
-#source   div.row div.col1
-{
-   width:2em;
-}
-#source   div.row div.col2
-{
-   width:2em;
-}
-#source   div.row div.col3
-{
-      width:30em;
-      xborder: 1px solid #CC33CC;
-      white-space: nowrap;
-      overflow: hidden;
-      o-text-overflow: ellipsis;
-      text-overflow: ellipsis;
-}
-#source   div.row div.col4
-{
-   width:12em;
-      xborder: 1px solid #CC33CC;
-      white-space: nowrap;
-      overflow: hidden;
-      o-text-overflow: ellipsis;
-      text-overflow: ellipsis;
-}
-#source   div.row div.col5
-{
-   width:6em;
-}
-
 
 
 #source   div.form 

@@ -42,15 +42,14 @@ class RelationController extends AbstractController
            $this->doctrine = $adoctrine;
        }
 
-   /* public function __construct(private ManagerRegistry $adoctrine, RequestStack $request_stack, string $templatedir)
+
+    public function clearfilter(ManagerRegistry $doctrine)
     {
+        $pfield = "";
+        $this->lib->clearCookieFilter("relation");
+        return $this->redirect("/relation/showall/");
+    }
 
-        // $ageyml = $templates->agelist; //fileLocator->locate('agelist3.yml', null, false);
-        // $this->agelist =    $templates->agelist;
-        $this->requestStack = $request_stack;
-        $this->doctrine = $adoctrine;
-
-    }*/
 
     public function showAll()
     {

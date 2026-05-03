@@ -43,15 +43,38 @@ class SourceRepository extends EntityRepository
     }
 
 
-    public function seek($location)
+  /*  public function seek($location)
     {
         $sql = "select s from App:Source s ";
-        $sql .= " where s.region LIKE '".$location."' ";
-        $sql .= " or s.title LIKE '".$location."' ";
+        $sql .= " where s.region LIKE '".$location."' where ";
+
         $query = $this->getEntityManager()->createQuery($sql);
         $sources = $query->getResult();
         return $sources;
-    }
+    }*/
+
+     public function filterf($filterstr)
+       {
+           $qb = $this->createQueryBuilder('a');
+           $qb->select();
+           $sql = "SELECT s FROM App\Entity\Source s WHERE ";
+           $filterlist = explode(",",$filterstr);
+           $n=0;
+           foreach($filterlist as $filter)
+           {
+                dump($filter);
+                if($n>0) $sql .=" or ";
+                $afilter= "%".$filter."%";
+                $sql .= "  s.title LIKE '".$afilter."' or s.region LIKE '".$afilter."' ";
+                $n++;
+           }
+           dump($sql);
+           $query = $this->getEntityManager()->createQuery($sql);
+           $sources = $query->getResult();
+           dump($sources);
+           return $sources;
+       }
+
 
 
 }

@@ -4,7 +4,7 @@
 
 {% block stylesheets %}
 {{ parent() }}
-<link href="{{ asset('css/glimpse/showall.css') }}" rel="stylesheet" />
+<link href="{{ asset('css/glimpse.css') }}" rel="stylesheet" />
 
 {% endblock %}
 
@@ -19,30 +19,34 @@
     <div class="heading">
       <div class="title">Glimpses</div>
     </div>
+
+<div class="filterform">
     <form  action="/glimpse/filter">
-  <div class="row">
+  <div class="filterrow">
    <div class="label"> Filter</div>
    <input type="text" name="filter" value="{{filter}}" >
    <input type="submit" value="action" >
+     <div class="clearbutton">   <a   href = "/glimpse/clearfilter" >Clear</a> </div>
+     <div class="count">(Count {{glimpses | length}} )</div>
    </div>
    </form>
+</div>
      <div class= "glimpselist">
     {% for pid, glimpse in glimpses %}
-    <div class= "glimpse row">
+    <div class= "row">
             <div class="returnbutton" >  <a  href = "/glimpse/showone/{{glimpse.glimpseid}}" >View </a> </div>
-            <div class= "field cloc"> {{glimpse.location}}</div>
-            <div class= "field ctype"> {{glimpse.type}}</div>
-            <div class= "field cdate"> {{glimpse.date}}</div>
+            <div class= "cloc"> {{glimpse.location}}</div>
+            <div class= "ctype"> {{glimpse.type}}</div>
+            <div class= "cdate"> {{glimpse.date}}</div>
          {#   {% if glimpse.text is not null and glimpse.text is not empty %}
             <div class= "field ctext"> {{glimpse.text}} </div>
             {% else %} #}
-              <div class= "field ctext">
-                             {% set formatedtext = FormatEvent(glimpse) %}
-                <div class="cell" >{{formatedtext}}</div>
+             {% set formatedtext = FormatEvent(glimpse) %}
+              <div class= "ctext">{{formatedtext}}</div>
             {#   {% for rid, role in glimpse.roles %}
                 {{role.role}}:{{role.name}}
                 {% endfor %} #}
-              </div>
+
           {#    {% endif %} #}
     </div>
     {% endfor %}

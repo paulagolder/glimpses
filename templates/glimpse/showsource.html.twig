@@ -4,7 +4,7 @@
 
 {% block stylesheets %}
 {{ parent() }}
-<link href="{{ asset('css/glimpse/showall.css') }}" rel="stylesheet" />
+<link href="{{ asset('css/glimpse.css') }}" rel="stylesheet" />
 
 {% endblock %}
 
@@ -15,25 +15,18 @@
 
 {% block body %}
 <div id="glimpse" >
-
     <div class="heading">
-
-      <div class="title"> Glimpses of </div>
+      <div class="title">Glimpses of </div>
          <div class="title"> {{source.title}} </div>
+         <div class="count">(Count={{glimpses | length}}) </div>
     </div>
       <div class ="heading" >
         <div class="returnbutton button1"> <a  href = "{{returnlink}}" >return </a> </div>
-        <div class="returnbutton button1"> <a  href = "/glimpse/new/X" >Add New Glimpse </a> </div>
-        {% for type in typelist %}
-        <div class="returnbutton button1"> <a  href = "/glimpse/new/{{type}}" >Add New {{type}} </a> </div>
-        {% endfor %}
+        <div class="returnbutton "> <a  href = "/source/startinput/{{source.sourceid}}" >Add New Glimpse </a> </div>
     </div>
-
      <div class= "glimpselist">
     {% for pid, glimpse in glimpses %}
-    <div class= "glimpse">
         <div class="row">
-
              <div class="returnbutton " ><a  href = "/glimpse/showone/{{glimpse.glimpseid}}" >View </a> </div>
             <div class= "field cref"> {{glimpse.ref}} </div>
             <div class= "field ctype"> {{glimpse.type}}</div>
@@ -57,9 +50,6 @@
              {#  {% endif %} #}
               {% endif %}
         </div>
-
-    </div>
-
     {% endfor %}
     </div>
 </div>

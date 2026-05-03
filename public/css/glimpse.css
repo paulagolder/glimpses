@@ -1,0 +1,394 @@
+#glimpse div.heading {
+    display: flex;
+}
+
+#glimpse   div.glimpselist
+{
+    overflow-y:scroll;
+    overflow-x:hidden;
+    height:38em;
+    width:90%;
+}
+
+
+/*===============================
+display glimpse
+==================================== */
+
+#glimpse div.glimpse {
+    margin-bottom: 30px;
+    background: silver;
+}
+
+#glimpse div.glimpse div.row
+{
+    background-color:silver;
+    border-bottom: 1px solid white;
+}
+
+/*===============================
+display glimpseform
+==================================== */
+
+#glimpse div.glimpseform {
+    background-color: silver;
+}
+
+
+#glimpse div.glimpseform  div.row {
+    display: flex;
+    margin-bottom: 2px;
+    background-color:silver;
+}
+
+#glimpse div.glimpseform  div.row div.label {
+    width: 10em;
+    color: blue;
+}
+
+#glimpse div.glimpseform  div.row div.inputpair {
+
+    margin-right: 2em;
+
+}
+
+#glimpse div.glimpseform  div.row div.inputpair div.label {
+    color: blue;
+
+}
+
+#glimpse div.glimpseform div.row div.inputpair div.field {
+
+}
+
+#glimpse div.glimpseform  div.inputpair.language div.field input {
+    width: 2em;
+}
+
+#glimpse div.glimpseform  div.inputpair.language {
+    width: 3em;
+}
+
+#glimpse div.glimpseform  div.inputpair.id div.field input {
+    width: 2em;
+}
+
+#glimpse div.glimpseform  div.inputpair.id {
+    width: 3em;
+}
+
+#glimpse div.glimpseform  div.inputpair.location div.field input {
+    width: 20em;
+}
+
+#glimpse div.glimpseform  div.inputpair.source div.field input {
+    width: 20em;
+}
+
+#glimpse div.glimpseform  div.inputpair.source textarea.title {
+    width: 40em;
+    height: 5em;
+}
+
+#glimpse div.glimpseform  div.inputpair.type div.field input {
+    width: 10em;
+}
+
+#glimpse div.glimpseform  div.inputpair.ref {
+    width: 2em;
+}
+
+#glimpse div.glimpseform  div.inputpair.datequalifier {
+    width: 2em;
+}
+
+#glimpse div.glimpseform  div.inputpair.ref div.field input {
+    width: 2em;
+}
+
+#glimpseform  div.inputpair.text div.field input {
+    width: 50em;
+}
+
+/*==========================================*/
+/*
+div#glimpse input.id {
+    width: 4em;
+}
+
+#glimpse div.heading {
+    display: flex;
+
+}
+
+
+
+
+#glimpse div.glimpse {
+    margin-bottom: 40px;
+}
+
+#glimpse div.row div.label {
+    color: blue;
+    width: 70px;
+}
+
+
+#glimpse div.heading {
+    display: flex;
+
+}
+
+
+#glimpse div.glimpse {
+    margin-bottom: 4px;
+}
+
+
+
+
+#glimpse div.row div.label {
+    color: blue;
+    padding: 2px;
+}
+
+#glimpse div.row div.field {
+    padding: 4px;
+    xborder: 1px solid #CC33CC;
+    white-space: nowrap;
+    overflow: hidden;
+    o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+}
+
+
+#glimpse div.row div.button {
+    width: 5em;
+}
+
+#glimpse div.row div.cid {
+    width: 2em;
+}
+
+#glimpse div.row div.cloc {
+    width: 7em;
+}
+
+#glimpse div.row div.cref {
+    width: 11em;
+}
+
+#glimpse div.row div.ctype {
+    width: 5em;
+}
+
+#glimpse div.row div.cdate {
+    width: 8em;
+}
+
+#glimpse div.row div.ctext {
+    width: 60em;
+}
+
+#glimpse div.row div.col7 {
+    width: 20em;
+}
+
+a.button3 {
+    display: inline-block;
+    padding: 0.1em 0.2em;
+    margin: 0 0.1em 0.1em 0;
+    border-radius: 1em;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: sans-serif;
+    font-weight: 100;
+    font-size: 15px;
+    color: #FFFFFF;
+    background-color: #4eb5f1;
+    text-align: center;
+    transition: all 0.2s;
+}
+
+a.button3:hover {
+    background-color: #4095c6;
+}*/
+/*===================================================
+glimpselist
+=====================================================*/
+
+
+#glimpse div.glimpselist {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 38em;
+    width: 90%;
+}
+
+
+#glimpse div.glimpselist  div.row
+{
+        display: flex;
+        margin: 1px;
+        background-color:silver;
+}
+
+
+#glimpse div.glimpselist div.returnbutton {
+    width: 4em;
+}
+
+#glimpse div.glimpselist div.cid {
+    width: 11em;
+}
+
+#glimpse div.glimpselist div.cloc {
+    width: 16em;
+}
+
+#glimpse div.glimpselist div.cref {
+    width: 11em;
+}
+
+#glimpse div.glimpselist div.ctype {
+    width: 7em;
+}
+
+#glimpse div.glimpselist div.cdate {
+    width: 8em;
+}
+
+#glimpse div.row div.ctext {
+    width: 60em;
+}
+
+#glimpse div.row div.col7 {
+    width: 20em;
+}
+
+
+/*===================================================
+edit role Table
+=====================================================*/
+
+#glimpse div.editroleTable
+{
+    table-layout: auto;
+    border-collapse: collapse;
+    margin: 2px;
+    font-size: 0.9em;
+    min-width: 3em;
+    background-color: silver;
+    color: black;
+    width: 90em;
+}
+
+#glimpse div.editroleTable div.row
+{
+    border-bottom: 2px solid #dddddd;
+    text-align: left;
+    display:flex;
+}
+
+#glimpse div.editroleTable div.row div {
+    min-width:3em;
+    border-right: 1px solid  #dddddd;
+}
+
+#glimpse div.editroleTable div.row div.col1
+{
+    width:9em;
+    display:flex;
+}
+
+#glimpse div.editroleTable div.body div.row div.col1 div.returnbutton
+{
+    border-right: 1px none  #dddddd;
+}
+
+#glimpse div.editroleTable div.row div.col2
+{
+    width:4em;
+    text-align: right;
+    padding-right:0.5em;
+}
+
+#glimpse div.editroleTable div.row div.col3
+{
+    width:10em;
+}
+
+#glimpse div.editroleTable div.row div.col4
+{
+    width:16em;
+}
+
+#glimpse div.editroleTable div.body div.row div.col4 input
+{
+    width:16em;
+}
+
+#glimpse div.editroleTable div.row div.col5
+{
+    width:33em;
+}
+
+#glimpse div.editroleTable div.body div.row div.col5 input
+{
+    width:31em;
+}
+#glimpse div.editroleTable div.row div.col6
+{
+    width:7em;
+}
+
+
+
+
+    /*=============================================
+    roletable
+    ============================*/
+
+#glimpse div.roleTable
+{
+    table-layout: auto;
+    border-collapse: collapse;
+    background-color: #eee;
+    border: 1px solid #666666;
+    border-spacing: 5px;
+}
+
+#glimpse div.roleTable  div.row
+{
+    width: auto;
+    background-color: #ccc;
+}
+
+#glimpse div.editroleTable div.row div
+{
+    min-width:3em;
+    border-right: 1px solid  #dddddd;
+}
+
+#glimpse div.roleTable  div.row div.col1
+{
+
+    width: 3em;
+}
+
+#glimpse div.roleTable  div.row div.col2
+{
+    width:4em;
+    text-align: right;
+    padding-right:0.5em;
+}
+
+#glimpse div.roleTable  div.row div.col3
+{
+    width: 10em;
+}
+
+#glimpse div.roleTable  div.row div.col4
+{
+    width: 16em;
+}

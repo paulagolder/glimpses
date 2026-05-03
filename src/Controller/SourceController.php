@@ -20,14 +20,12 @@ class SourceController extends AbstractController
     private $lib;
     private $templates;
 
-
     public function __construct( MyLibrary $lib, Templates $templates,  RequestStack $request_stack, string $templatedir)
     {
         $this->requestStack = $request_stack;
         $this->lib = $lib;
         $this->templates = $templates;
     }
-
 
     public function  new()
     {
@@ -39,20 +37,39 @@ class SourceController extends AbstractController
             ));
     }
 
-
     public function  edit(ManagerRegistry $doctrine,$sid)
     {
         $source = $doctrine->getRepository(Source::class)->findOne($sid);
-
         return $this->render('source/edit.html.twig', array(
             'source' => $source,
             'returnlink' => "/source/show/".$sid,
             ));
+    }
 
+    public function setfilter(ManagerRegistry $doctrine)
+    {
+        $request = $this->requestStack->getCurrentRequest();
+        $pfield = $request->query->get('filter');
+        if (is_null($pfield))
+        {
+            $this->lib->clearCookieFilter("source");
+        } else
+        {
+            $this->lib->setCookieFilter('source', $pfield);
+        }
+        return $this->redirect("/source/showall/");
     }
 
 
-       public function  selectinput(ManagerRegistry $doctrine,$location)
+    public function clearfilter(ManagerRegistry $doctrine)
+    {
+        $pfield = "";
+        $this->lib->clearCookieFilter("source");
+        return $this->redirect("/source/showall/");
+    }
+
+
+    public function  selectinput(ManagerRegistry $doctrine,$location)
     {
         $sources = $doctrine->getRepository(Source::class)->findbyLocation($location);
 
@@ -116,9 +133,6 @@ class SourceController extends AbstractController
 
     }
 
-
-
-
 public function showone(ManagerRegistry $doctrine,$sid)
 {
 
@@ -143,7 +157,7 @@ public function showall(ManagerRegistry $doctrine)
             else
             {
                 $filter = "%".$pfield."%";
-                 $sources  = $doctrine->getRepository(Source::class)->seek($filter);
+                 $sources  = $doctrine->getRepository(Source::class)->filterf($filter);
             }
 
     foreach($sources as $key=> &$source)
@@ -161,23 +175,5 @@ public function showall(ManagerRegistry $doctrine)
         ]
         );
 }
-
-   public function setfilter(ManagerRegistry $doctrine)
-    {
-            $request = $this->requestStack->getCurrentRequest();
-            $pfield = $request->query->get('filter');
-            if (is_null($pfield))
-            {
-                $this->lib->clearCookieFilter("source");
-            }else
-            {
-               $this->lib->setCookieFilter('source',$pfield);
-            }
-            return $this->redirect("/source/showall/");
-    }
-
-
-
-
 
 }

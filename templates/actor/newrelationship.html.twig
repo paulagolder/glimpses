@@ -14,7 +14,7 @@
 {% block body %}
 <div id="actor" >
     <div class ="heading" >
-        <div class="label">Actor:</div>
+        <div class="title">Actor:</div>
         <div class= "field">{{actor.surname}}, {{actor.forename}}</div>
         <div class="returnbutton button1"> <a href = "/actor/showone/{{actor.actorid}}" >return </a> </div>
         <div class="returnbutton">  <a   href = "/actor/delete/{{actor.actorid}}" >delete </a> </div>
@@ -22,8 +22,9 @@
         <div class="returnbutton"><a  href = "/actor/new" >Add New actor </a> </div>
     </div>
     {% dump(actor) %}
-    <div class="twocols">
-        <div class="actor">
+    {% dump(actors) %}
+     {% dump(actorsindexed) %}
+        <div class="actortable">
             <div class="row">
                 <div class="inputpair" >
                     <div class="label">ID </div>
@@ -61,87 +62,76 @@
                 </div>
             </div>
         </div>
-    </div>
-
-
-
-    <div class="relationTable" >
-        <div class="subheading" >
+   <div class ="heading" >
             <div class="title">Relationships</div>
+   </div>
 
-        </div>
+ <div class="relationTable" >
         <div class="body">
               {% dump(relations) %}
             {% for rid, relation in relations %}
             <div class="row">
-
-                <div class="cell">{{relation.actor1ref}}  {{relation.relation}} {{relation.actor2ref}} </div>
-
+                <div class="cell">{{actorsindexed[relation.actor1ref].getName()}}  {{relation.relation}} {{actorsindexed[relation.actor2ref].getName()}} </div>
             </div>
-                         {% endfor %}
+            {% endfor %}
         </div>
-        <div class="subheading" >
-            <div class="title">Make New Relationships</div>
-        </div>
-        <div class="call">
-           <div class ="heading" >
-                  <div class="title">Glimpse {{glimpse.glimpseid}}</div>
-              </div>
-           <div class="glimpse">
-                      <div class="row">
-                      <div class="inputpair" >
-                          <div class="label">ID </div>
-                          <div class= "field"> {{glimpse.glimpseid}}</div>
-                          </div>
-                          <div class="inputpair" >
-                              <div class="label"> language </div>
-                              <div class= "field"> {{glimpse.language}}</div>
-                              </div>
-                              <div class="inputpair" >
-                              <div class="label"> sourceid </div>
-                              <div class= "field"> {{glimpse.sourceid}}</div>
-                              </div>
-                          </div>
-                          <div class="row">
-                      <div class="inputpair" >
-                              <div class="label"> location </div>
-                              <div class= "field"> {{glimpse.location}}</div>
-                          </div>
-                      <div class="inputpair" >
-                              <div class="label"> type </div>
-                              <div class= "field"> {{glimpse.type}} </div>
-                      </div>
-                          </div>
-                          <div class="row">
-                          <div class="inputpair" >
-                              <div class="label"> date </div>
-                              <div class= "field"> {{glimpse.date}} </div>
-                                  </div>
-                      <div class="inputpair" >
-                              <div class="label"> text </div>
+    </div>
 
-                              </div>
-                          </div>
-                          <div class="subheading" >
-                              <div class="title"> roles </div>
-                          </div>
-                      {% for role in glimpse.roles %}
-                      <div class= "field"> {{role.getRole()}}{{role.getName()}}{{role.getPredicatestr()}} </div>
-                      {% endfor %}
-         </div>
-        <div class="actor inputform">
+    <div class ="heading" >
+            <div class="title">Glimpse </div>
+            <div>{{glimpse.glimpseid}}</div>
+   </div>
+  <div class="actortable">
+        <div class="row">
+              <div class="inputpair" >
+                  <div class="label"> type </div>
+                  <div class= "field"> {{glimpse.type}} </div>
+              </div>
+              <div class="inputpair" >
+                   <div class="label"> location </div>
+                    <div class= "longfield"> {{glimpse.location}}</div>
+              </div>
+        </div>
+        <div class="row">
+            <div class="inputpair" >
+                 <div class="label"> date </div>
+                 <div class= "field"> {{glimpse.date}} </div>
+            </div>
+            <div class="inputpair" >
+                  <div class="label"> text </div>
+                  <div class= "longfield"> {{glimpse.text}} </div>
+            </div>
+        </div>
+    </div>
+        <div class="subheading" >
+               <div class="title"> roles </div>
+        </div>
+       <div class="roleTable" >
+                             {% for role in glimpse.roles %}
+                             <div  class="row" >
+                                 <div class="col1" >  </div>
+                                 <div  class="col2"  > {{role.roleid}} </div>
+                                 <div  class="col3" >{{role.role}}</div>
+                                 <div  class="col4" >{{role.name}} </div>
+                                 <div  class="col5" >{{role.predicates}} </div>
+                             </div>
+                          {% endfor %}
+       </div>
+    <div class="subheading" >
+        <div class="title">Make New Relationships</div>
+    </div>
+        <div class="newrelationship">
             <form action="/actor/process_newrelationship/{{actor.actorid}}" method="post" id="relationshipform"  >
                 <div class="row">
-                       <div class="inputpair" >
+                       <div class="idpair" >
                     <div class="label">ID </div>
                     <div class= "field">{{actor.actorid}}</div>
                 </div>
-                <div class="inputpair" >
-
+                <div class="namepair" >
                         <div class="label">Name</div>
                         <div class= "field">{{actor.surname}}, {{actor.forename}}</div>
             </div>
-            <div class="inputpair" >
+            <div class="relnpair" >
                 <div class="label"> Relationship </div>
                 <select name="_relationship">
                     <option selected="selected">Choose one</option>
@@ -150,7 +140,7 @@
                    {% endfor %}
                     </select>
             </div>
-            <div class="inputpair" >
+            <div class="actor2pair" >
                 <div class="label"> of </div>
                 <select name="_actor2ref">
                     <option selected="selected">Choose Actor</option>
@@ -160,12 +150,9 @@
                 </select>
             </div>
         </div>
-
         <button type="submit" id="submitbutton"   > enregistrer</button>
     </form>
-        <div class="returnbutton">  <a   href = "/actor/newrelationship/{{actor.actorid}}" >Make</a> </div>
     </div>
-
 </div>
 {% endblock %}
 

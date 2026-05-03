@@ -4,7 +4,7 @@
 
 {% block stylesheets %}
 {{ parent() }}
-<link href="{{ asset('css/glimpse/edit.css') }}" rel="stylesheet" />
+<link href="{{ asset('css/glimpse.css') }}" rel="stylesheet" />
 {% endblock %}
 
 {% block js %}
@@ -22,7 +22,7 @@
         <div class="returnbutton">  <a   href = "/glimpse/edit/{{glimpse.glimpseid}}" >edit </a> </div>
         <div class="returnbutton"><a  href = "/source/startinput/{{glimpse.sourceid}}" >Add New Glimpse </a> </div>
     </div>
-    <div class="glimpse">
+    <div class="glimpseform">
             <div class="row">
             <div class="inputpair" >
                 <div class="label">ID </div>
@@ -80,37 +80,29 @@
                     <div class="title"> roles </div>
                 </div>
                 <div class="roleTable" >
-                    <div class="body">
                         {% for pid, role in roles %}
                         {%  if role.roleid>0 %}
-                        <div class="row">
-                            <div class="cell">
-                                <div class="subheading">
-                                </div>
-                            </div>
-                            <div class="cell" > {{role.roleid}} </div>
-                            <div class="cell">{{role.role}}</div>
-                            <div class="cell">{{role.name}} </div>
-                            <div class="cell">{{role.predicates}} </div>
+                        <div  class="row" >
+                            <div class="col1" >  </div>
+                            <div  class="col2"  > {{role.roleid}} </div>
+                            <div  class="col3" >{{role.role}}</div>
+                            <div  class="col4" >{{role.name}} </div>
+                            <div  class="col5" >{{role.predicates}} </div>
                         </div>
                         {% else %}
                         <div class="row">
-                            <div class="cell label" >
-                            </div>
-                            <div class="cell" >
+                            <div  class="col1" >              </div>
+                            <div class="col2" >
                                 <input type="hidden" name="_role[{{pid}}]['ref']" value="{{role.roleref}}" />
                             </div>
-                            <div class="cell" >{{role.role}} /div>
-                            <div class="cell" >{{role.name}}</div>
-                            <div class="cell" >{{role.predicates}}</div>
+                            <div  class="col3" >{{role.role}} </div>
+                            <div  class="col4" >{{role.name}}</div>
+                            <div   class="col5" >{{role.predicates}}</div>
                         </div>
                         {% endif %}
                         {% endfor %}
-                    </div>
                 </div>
-            </div>
-        </div>
-    </div>
+</div>
 {% endblock %}
 
 

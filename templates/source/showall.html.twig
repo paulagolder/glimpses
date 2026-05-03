@@ -6,7 +6,6 @@
 {% block stylesheets %}
 {{ parent() }}
 <link href="{{ asset('css/source.css') }}" rel="stylesheet" />
-
 {% endblock %}
 
 {% block js %}
@@ -17,21 +16,28 @@
 {% block body %}
 <div id="source" >
 
-    <div class="heading">
+      <div class="heading">
       <div class="title"> Sources</div>
        <div class='returnbutton  '>
-                   <a  href = "/source/new" >New Source</a>
-               </div>
+          <a  href = "/source/new" >New Source</a>
+       </div>
       </div>
+
+
+  <div class="filterform">
         <form  action="/source/setfilter">
-        <div class="row">
-         <div class="label"> Filter</div>
-         <input type="text" name="filter" value="{{filter}}" >
-         <input type="submit" value="action" >
+        <div class="filterrow">
+            <div class="label"> Filter</div>
+            <input type="text" name="filter" value="{{filter}}" />
+             <input type="submit" value="action" />
+            <div class="clearbutton">   <a   href = "/source/clearfilter" >Clear</a> </div>
+            <div  class="count"  >(Count={{sources | length}})</div>
          </div>
          </form>
+     </div>
 
-     <div class= "sourcelist">
+
+  <div class= "sourcelist">
     {% for source in sources %}
     <div class= "source">
         <div class="row ">
@@ -41,14 +47,12 @@
             <div class= "col3"> {{source.title}}</div>
             <div class= "col4"> {{source.region}}</div>
             <div class= "col5"> {{source.period}} </div>
-        </div>
-        </div>
-
-
+         </div>
+    </div>
     {% endfor %}
-       </div>
+  </div>
 
-</div>
+
 
 
 {% endblock %}

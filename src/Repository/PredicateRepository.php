@@ -3,15 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\Predicate;
-
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
-
 class PredicateRepository extends EntityRepository
 {
-
-
     public function findChildren($gid, $aref)
     {
         $sql = "select g from App:Predicate g ";

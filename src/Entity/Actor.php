@@ -111,7 +111,14 @@ class Actor
 
     public function getLabel(): ?string
     {
-        return $this->surname.", ".$this->forename." (".$this->birthdate."-".$this->deathdate.")";
+       $birthyear = substr($this->birthdate,0,4);
+       $deathyear = substr($this->deathdate,0,4);
+        return $this->surname.", ".$this->forename." (".$birthyear."-".$deathyear.")";
+    }
+
+    public function getName(): ?string
+    {
+        return $this->surname.", ".$this->forename;
     }
 
     public function setSurname(string $name): self

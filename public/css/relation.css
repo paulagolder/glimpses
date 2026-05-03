@@ -1,4 +1,14 @@
 
+#relation   div.relationlist
+{
+    overflow-y:scroll;
+    overflow-x:hidden;
+    height:38em;
+    width:90%;
+    background-color: #cbcbcb;
+}
+
+
 #relation div.twocols
 {
      display:flex;
@@ -6,12 +16,12 @@
 
 #relation div.twocols div.actor
 {
-     border:2 solid red;
+     border:2px solid red;
 }
 
 #relation div.twocols div.glimpses
 {
-     border:2 solid green;
+     border:2px solid green;
 }
 
 #relation div.row  div.inputpair
@@ -95,10 +105,8 @@ div#relation textarea.url
 #relation   div.row div.col3
 {
       width:20em;
-      xborder: 1px solid #CC33CC;
       white-space: nowrap;
       overflow: hidden;
-      o-text-overflow: ellipsis;
       text-overflow: ellipsis;
 }
 #relation   div.row div.col4

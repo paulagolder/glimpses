@@ -35,7 +35,6 @@ class ActorController extends AbstractController
 
     public function showall(ManagerRegistry $doctrine)
     {
-
         $filter = $this->lib->getCookieFilter('actor');
         if (is_null($filter))
         {
@@ -114,7 +113,7 @@ class ActorController extends AbstractController
     public function edit(ManagerRegistry $doctrine, $aid)
     {
         $actor = $doctrine->getRepository(Actor::class)->findOne($aid);
-        $roles = $doctrine->getRepository(ActorRole::class)->findRoles($aid);
+        $roles = $doctrine->getRepository(ActorRole::class)->getRoles($aid);
         $nrole = new ActorRole();
         $nrole->setActorref($aid);
         $roles[] = $nrole;
@@ -144,16 +143,16 @@ class ActorController extends AbstractController
             $relation->{"actor1"} = $em->getRepository(Actor::class)->findOne($relation->getActor1ref());
             $relation->{"actor2"} = $em->getRepository(Actor::class)->findOne($relation->getActor2ref());
         }
-        $roles = $doctrine->getRepository(ActorRole::class)->findRoles($aid);
-        dump($roles);
+        $aroles = $doctrine->getRepository(ActorRole::class)->getRoles($aid);
+        dump($aroles);
         $froles = array();
-        foreach ($roles as &$arole)
+        foreach ($aroles as &$arole)
         {
-            $gref = $arole->getGlimpseRef();
-            $glimpse = $doctrine->getRepository(Glimpse::class)->findOne($gref);
-            $broles = $doctrine->getRepository(Role::class)->findChildren($arole->getGlimpseRef());
+             $role= $doctrine->getRepository(Role::class)->getOne($arole->getRoleRef());
+            $glimpse = $doctrine->getRepository(Glimpse::class)->findOne( $role->getGlimpseRef());
+            $broles = $doctrine->getRepository(Role::class)->findChildren($role->getGlimpseRef());
             $glimpse->{"roles"} = $broles;
-            $froles[$arole->getRoleId()] = $glimpse;
+            $froles[$arole->getRoleRef()] = $glimpse;
         }
         dump($froles);
         $sroles = $doctrine->getRepository(Role::class)->filterf($gfilter);
@@ -333,7 +332,7 @@ class ActorController extends AbstractController
         } else
         {
             $actor = $doctrine->getRepository(Actor::class)->findOne($aid);
-            $actorroles = $doctrine->getRepository(ActorRole::class)->findRoles($aid);
+            $actorroles = $doctrine->getRepository(ActorRole::class)->getRoles($aid);
         }
 
         $request = $this->requestStack->getCurrentRequest();
@@ -495,6 +494,7 @@ class ActorController extends AbstractController
     {
         $actor = $doctrine->getRepository(Actor::class)->findOne($aid);
         $actors = $doctrine->getRepository(Actor::class)->findAll();
+        $actorsindexed = $doctrine->getRepository(Actor::class)->findAllIndexed();
         $relationships = ["father", "mother", "son", "daughter", "wife", "husband", "sister", "brother", "resident"];
         $relations = $doctrine->getRepository(Relation::class)->findByActor($aid);
         $glimpse = $doctrine->getRepository(Glimpse::class)->findOne($gid);
@@ -502,6 +502,7 @@ class ActorController extends AbstractController
         dump($glimpse);
         return $this->render('actor/newrelationship.html.twig', array(
                     'actor' => $actor,
+                    'actorsindexed' => $actorsindexed,
                     'actors' => $actors,
                     'glimpse' => $glimpse,
                     'relations' => $relations,

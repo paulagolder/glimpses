@@ -357,9 +357,12 @@ class GlimpseController extends AbstractController
         );
     }
 
-    public function xclearfilter()
+
+    public function clearfilter(ManagerRegistry $doctrine)
     {
-        return $this->filter();
+        $pfield = "";
+        $this->lib->clearCookieFilter("glimpse");
+        return $this->redirect("/glimpse/showall/");
     }
 
     public function showall(ManagerRegistry $doctrine)

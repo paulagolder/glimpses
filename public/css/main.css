@@ -10,8 +10,6 @@ body
     background-color: #c4ccd2;
 }
 
-
-
 div#page
 {
   min-height: 100vh;
@@ -31,7 +29,6 @@ div#footer
   color: #fff;
 }
 
-
 div#page div.mypage
 {
   display: flex;
@@ -39,14 +36,11 @@ div#page div.mypage
   color: #000; 
 }
 
-
 div#page div.mypageinner
 {
   display: flex;
   flex:1;
 }
-
-
 
 div#left
 {
@@ -65,6 +59,92 @@ div#right
 }
 
 
+/*==================================
+headings
+===================================*/
+
+div.heading
+{
+    display:flex;
+    align-items: center;
+    margin-top:10px;
+    margin-bottom:10px;
+    background-color: #bdbfc0;
+}
+
+div.heading div.title
+{
+    color:maroon;
+    font-size:1.2em;
+    margin-right: 1em;
+}
+
+div.heading div.label
+{
+    color:yellow;
+    font-size:1.2em;
+    margin-right: 1em;
+}
+
+div.subheading
+{
+    display:flex;
+    align-items: center;
+    margin-top:10px;
+    padding-bottom: 7px;
+    background-color: #d2d4d5;
+}
+
+div.subheading div.title
+{
+    color:maroon;
+    font-size:1.0em;
+    margin-right: 1em;
+}
+
+div.subheading div.label
+{
+    color:yellow;
+    font-size:1.0em;
+    margin-right: 1em;
+}
+
+
+
+/*==================================
+filterform
+===================================*/
+
+.filterform
+{
+    background-color: lightgrey;
+    width: 31em;
+}
+
+.filterform div.filterrow div.count
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.filterform form div.filterrow div.label
+{
+    width:4em;
+    color:blue;
+    padding:0.1em;
+    padding-left:0.2em;
+    font-size: 1.5em;
+}
+
+.filterform form div.filterrow
+{
+    display: flex;
+}
+
+
+
+
 .button
 {
   background: #e3e3e3;
@@ -81,18 +161,19 @@ div#right
     
 }
 
-
-
 div.clearbutton
 {
     background: #e3e3e3;
     border: 1px solid #bbb;
-    border-radius: 3px;
+    border-radius: 10px;
     -webkit-box-shadow: inset 0 0 1px 1px #f6f6f6;
     box-shadow: inset 0 0 1px 1px #f6f6f6;
     color: #333;
     font: bold 12px/1 "helvetica neue", helvetica, arial, sans-serif;
-    padding: 8px 0 9px;
+    padding-top: 12px ;
+
+    padding-left: 8px ;
+    padding-right: 8px ;
     text-align: center;
     text-shadow: 0 1px 0 #fff;
     width: 50px;
@@ -113,11 +194,6 @@ a.clearbutton
     width: 50px;
 }
 
-
-
-
-
-
 .button:hover 
 {
     background: #d9d9d9;
@@ -131,7 +207,30 @@ a.clearbutton
 {
     margin-left:auto;
 }
-    
+
+.subheading {
+    display: flex;
+}
+
+a.button3 {
+    display: inline-block;
+    padding: 0.1em 0.2em;
+    margin: 0 0.1em 0.1em 0;
+    border-radius: 1em;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: sans-serif;
+    font-weight: 100;
+    font-size: 15px;
+    color: #FFFFFF;
+    background-color: #4eb5f1;
+    text-align: center;
+    transition: all 0.2s;
+}
+
+a.button3:hover {
+    background-color: #4095c6;
+}
 
 a.editbutton,  a.editbutton:visited ,a.editbutton:link, a.editbutton:visited 
 {
@@ -160,10 +259,6 @@ a.editbutton
     box-sizing: content-box;
 }
 
-
-
-
-
 div.hidebar 
 {
     width: 100%;
@@ -178,14 +273,11 @@ div.hidebar  button
      border: 0 none green;
 }
 
-
 h1 
 {
     color: maroon;
     margin-left: 40px;
 } 
-
-
 
 div#page div.middle div.pageheading
 {
@@ -193,13 +285,11 @@ div#page div.middle div.pageheading
     color:maroon;
 }
 
-
 div.plus90
 {
     -webkit-transform:rotate(90deg); /* Chrome, Safari, Opera */
     transform:rotate(90deg); /* Standard syntax */
 }
-
 
 div#right div.frame
 {
@@ -209,7 +299,6 @@ div#right div.frame
 	background-color: rgba(76, 76, 76, 0.2);
 	padding: 10px;
 }
-
 
 div#right div.heading
 {
@@ -223,13 +312,10 @@ div#right div.heading
 div#right div.heading div.label
 {
     color:yellow;
-    
 }
 
-div#right div.heading div.title
-{
-    color:maroon;
-  
+div#right div.heading div.title {
+    color: maroon;
 }
 
 div#right div.subheading 
@@ -243,13 +329,11 @@ div#right div.subheading
 div#right div.subheading div.label
 {
     color:yellow;
-    
 }
 
 div#right div.subheading div.title
 {
     color:maroon;
-    
 }
 
 
@@ -300,64 +384,15 @@ div.row div.celldate
     padding-right:0.5em;
 }
 
-
-
-
-div.row:nth-child(2n+2)
+div.xrow:nth-child(2n+2)
 {
     background: rgba(0, 0, 80, 0.1);
-}
-    
-    
-    
-div.heading 
-{
-    display:flex;
-    align-items: center;
-    margin-top:10px;
-}
-  
-div.heading div.title
-{
-    color:maroon;
-    font-size:1.2em;
-    margin-right: 1em;
-}
-
-div.heading div.label
-{
-    color:yellow;
-    font-size:1.2em;
-    margin-right: 1em;
-}
-
-div.subheading 
-{
-    display:flex;
-    align-items: center;
-    margin-top:10px;
-    margin-bottom:5px;
-}
-  
-div.subheading div.title
-{
-    color:maroon;
-    font-size:1.0em;
-    margin-right: 1em;
-}
-
-div.subheading div.label
-{
-    color:yellow;
-    font-size:1.0em;
-    margin-right: 1em;
 }
 
 div.hidebar button
 {
     color:white;
 }
-
 
  div.refs 
 {
@@ -412,7 +447,6 @@ div.datarow div.label
     color:yellow;
      font-size:1em;
 }
-
 
 div.datarow div.data
 {
@@ -469,7 +503,7 @@ div.xrow div.field
     overflow: auto;
 }
 
-#source_list div.source div.row div.field
+#xxsource_list div.source div.row div.field
  {
   transform: translateY(+25%);
 }

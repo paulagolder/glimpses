@@ -1,206 +1,424 @@
 
+
+#actor   div.actorlist
+{
+    overflow-y:scroll;
+    overflow-x:hidden;
+    height:38em;
+    width:90%;
+}
+/*========================================
+twocols panel
+========================================== */
+
+
 #actor div.twocols
 {
-     display:flex;
+    display:flex;
 }
 
-#actor div.heading div.label
-{
-    color:red;
-}
+
 
 #actor div.twocols div.actor
 {
-     border:2px solid red;
+    border:2px solid red;
 }
 
 #actor div.twocols div.glimpses
 {
-     border:2px solid green;
+    border:2px solid green;
 }
 
-#actor div.row  div.inputpair
+/*========================================
+actor panel
+========================================== */
+
+#actor  div.actor div.row div.inputpair div.label{}
+#actor div.actortable div.row div.inputpair div.label{}
+
+#actor  div.actortable div.row  div.inputpair
 {
     margin-right: 2em;
     display:flex;
 }
 
-div#actor input.title
+#actor  div.actortable div.row div.inputpair div.label
 {
-    width:40em;
-      height:4em;
+    color: blue;
+    padding-left: 1em;
+    width: 5em;
 }
 
-div#actor textarea.title
+#actor div.actortable div.row div.inputpair div.field
 {
-    width:40em;
-      height:4em;
+    padding-left: 1em;
+    width: 8em;
 }
 
-div#actor input.id
+#actor  div.actortable div.row div.inputpair div.lonfield
 {
-    width:3em;
-}
-
-div#actor input.language
-{
-    width:3em;
+    padding-left: 1em;
+    width: 18em;
 }
 
 
-div#actor input.region
-{
-    width:10em;
-}
 
-div#actor input.period
-{
-    width:10em;
-}
-
-div#actor input.url
+div#actor div.actortable input.title
 {
     width:40em;
     height:4em;
 }
 
-div#actor textarea.url
+div#actor div.actortable textarea.title
+{
+    width:40em;
+    height:4em;
+}
+
+div#actor div.actortable input.id
+{
+    width:3em;
+}
+
+div#actor div.actortable input.language
+{
+    width:3em;
+}
+
+
+div#actor div.actortable input.region
+{
+    width:10em;
+}
+
+div#actor div.actortable input.period
+{
+    width:10em;
+}
+
+div#actor div.actortable input.url
+{
+    width:40em;
+    height:4em;
+}
+
+div#actor div.actortable textarea.url
 {
     width:40em;
     height:4em;
 }
 
 
+/*========================================
+actor edit table
+========================================== */
 
-div#actor form div.filterrow
+div#actor div.actorinputform form#actorform div.row div.label{}
+
+div#actor div.actorinputform div.row
 {
-    display: flex;
-    padding-top:0.5em;
-    padding-bottom: 0.5em;
+    background: rgba(0, 0, 80, 0.1);
 }
 
-div.cgrow
-{
-    display:flex;
-    margin-left: 1em;
-}
-
-div#actor div.row div.label
+div#actor div.actorinputform div.row div.label
 {
    width:6em;
    color:blue;
-    padding-left:0.5em;
+   padding-left:0.5em;
 }
 
-div.cgrow div
+div#actor div.actorinputform div.row div.field
+{
+    padding-left:0.5em;
+
+}
+
+
+
+/*========================================
+glimpses table
+========================================== */
+html body.sf-js-enabled div.cglimpsestable div.cgrow div.glimpsetext{}
+ div#actor div.glimpse div.row div.inputpair div.label{}
+#actor div.cglimpsestable div.row div.inputpair div.label{}
+#actor div.cglimpsestable div.row div.inputpair div.label{}
+
+
+div#actor div.cglimpsestable
+{
+
+}
+
+div#actor div.cglimpsestable div.row div
 {
      padding: 2px;
 }
 
-div.cgrow div.col1
+div#actor div.cglimpsestable div.row div.inputpair div.label
+{
+    padding: 2px;
+    color : blue;
+}
+
+
+div#actor div.cglimpsestable div.row div.col1
 {
    width:2em;
 }
 
-div#actor div.actorlist div.actor div.row div.col2
+div#actor div.cglimpsestable div.row div.col2
 {
     width:3em;
     text-align: right;
-    padding-right: 0.5em;
 }
 
- div#actor div.actorlist div.actor div.row div.col3
- {
-     width:20em;
-     white-space: nowrap;
-     overflow: hidden;
-     text-overflow: ellipsis;
-
- }
- div.cgrow div.col2
+div#actor div.cglimpsestable div.row div.col3
 {
-   width:3em;
-   text-align: right;
+    width:20em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-div.cgrow div.col3
+div#actor div.cglimpsestable div.row div.col4
 {
-      width:20em;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    width:30em;
 }
 
- div.cgrow div.col4
+div#actor div.cglimpsestable div.row div.col5
 {
-   width:30em;
+    width:6em;
 }
 
-div.cgrow div.col5
-{
-   width:6em;
-}
-
-div.cgrow div.cell.cmtext
+div#actor div.cglimpsestable div.row div.cell.cmtext
 {
     width:10em;
 }
 
-div.cgrow div.agecell
+div#actor div.cglimpsestable div.row div.agecell
 {
     width:10em;
 }
 
- div.cgrow div.glimpsetext
+div#actor div.cglimpsestable div.row div.glimpsetext
 {
     width:90%;
     float:left;
 }
 
 
-#actor   div.row div.id
+div#actor div.cglimpsestable div.row
 {
-    width:4em;
+    display:flex;
+    margin-left: 1em;
 }
 
- div.row div.id
+#actor div.cglimpsestable div.cgrow
 {
-    width:4em;
-}
-
-#actor   div.row div.cell.cstext
-{
-    width:4em;
+    display:flex;
+    margin-left: 1em;
 }
 
 
-#actor   div.row div.cell.cltext
-{
-    width:6em;
-}
 
-#actor   div.row div.cell.cint
-{
-    width:2em;
-}
-
-#actor   div.row div.cell.cdate
-{
-    width:6em;
-}
-
-#actor   div.form
-{
-   background-color:silver;
-}
-
-#actorform div.field input.text
-{
-    width: 40em;
-}
+        /*========================================
+        actor list
+        ========================================== */
 
 
-span.red
-{
+    div#actor div.actorlist div.actor div.row div.col2
+    {
+        width:3em;
+        text-align: right;
+        padding-right: 0.5em;
+    }
+
+    div#actor div.actorlist div.actor div.row div.col3
+    {
+        width:20em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+    }
+
+
+    #actor   div.row div.id
+    {
+        width:4em;
+    }
+
+    div.row div.id
+    {
+        width:4em;
+    }
+
+    #actor   div.row div.cell.cstext
+    {
+        width:4em;
+    }
+
+
+    #actor   div.row div.cell.cltext
+    {
+        width:6em;
+    }
+
+    #actor   div.row div.cell.cint
+    {
+        width:2em;
+    }
+
+    #actor   div.row div.cell.cdate
+    {
+        width:6em;
+    }
+
+    #actor   div.form
+    {
+        background-color:silver;
+    }
+
+    #actorform div.field input.text
+    {
+        width: 40em;
+    }
+
+
+    span.red
+    {
         color: #ff0000;
-}
+    }
+
+
+    div#actor div.actor div.eventTable
+    {
+
+    }
+
+    div#actor div.actor div.eventTable div.body div.row
+    {
+
+    }
+
+
+
+    div.actor div.eventTable div.body div.row div.col1
+    {
+        width:3em;
+    }
+    div.actor div.eventTable div.body div.row div.col2
+    {
+        width:3em;
+    }
+    div.actor div.eventTable div.body div.row div.col3
+    {
+        width:6em;
+    }
+    div.actor div.eventTable div.body div.row div.col4
+    {
+        width:6em;
+    }
+    div.actor div.eventTable div.body div.row div.col5
+    {
+        width:6em;
+    }
+
+    div.actor div.roleTable div.body div.row div.cell
+    {
+        padding-left:1em;
+    }
+
+    /*=============================================
+    roletable
+    ============================*/
+    html body.sf-js-enabled div.roleTable div.row{}
+    #actor div.roleTable
+    {
+        table-layout: auto;
+        background-color: #eee;
+        border: 1px solid #666666;
+        border-spacing: 5px;
+        border-collapse:separate;
+    }
+
+    #actor div.roleTable  div.row
+    {
+        width: auto;
+        background-color: #ccc;
+    }
+
+    #actor div.editroleTable div.row div
+    {
+        min-width:3em;
+        border-right: 1px solid  #dddddd;
+    }
+
+    #actor div.roleTable  div.row div.col1
+    {
+
+        width: 3em;
+    }
+
+    #actor div.roleTable  div.row div.col2
+    {
+        width:4em;
+        text-align: right;
+        padding-right:0.5em;
+    }
+
+    #actor div.roleTable  div.row div.col3
+    {
+        width: 10em;
+    }
+
+    #actor div.roleTable  div.row div.col4
+    {
+        width: 16em;
+    }
+
+    /*=============================================
+    newrelationship table
+     =================================================*/
+
+    #actor div.newrelationship  div.row div.label,div.field
+    {
+        padding-left:0.5em;
+    }
+
+    #actor div.newrelationship  div.row div.idpair div.label,div.field
+    {
+        width:3em;
+    }
+
+
+    #actor div.newrelationship  div.row div.namepair div.label , div.field
+    {
+        width:10em;
+    }
+
+    #actor div.newrelationship  div.row div.namepair div.xfield
+    {
+        width:10em;
+    }
+
+
+    #actor div.newrelationship  div.row div.relnpair div.label , div.field
+    {
+        width:10em;
+    }
+
+    #actor div.newrelationship  div.row div.relnpair div.xfield
+    {
+        width:10em;
+    }
+
+    #actor div.newrelationship  div.row div.actor2pair div.label, div.field
+    {
+        width:12em;
+    }
+
+    #actor div.newrelationship  div.row div.actor2pair div.xfield
+    {
+        width:10em;
+    }

@@ -13,19 +13,17 @@
 {% endblock %}
 
 {% block body %}
-<div id="actor" >
-
-    <div class ="heading" >
-        <div class="returnbutton button1">  <a   href = "/actor/delete/{{actor.actorid}}" >delete </a> </div>
-        <div class="returnbutton">  <a   href = "/actor/edit/{{actor.actorid}}" >edit </a> </div>
-        <div class="returnbutton">  <a   href = "/actor/editroles/{{actor.actorid}}" >edit roles </a> </div>
-        <div class="returnbutton"><a  href = "/actor/new" >Add New actor </a> </div>
-    </div>
-    <div class="actor">
-            <div class="heading" >
-            <div class="title">Actor </div>
-        </div>
-        <div class="row">
+   <div id="actor" >
+          <div class="subheading" >
+                 <div class="title">Actor </div>
+                 <div class="returnbutton button1">  <a   href = "/actor/delete/{{actor.actorid}}" >delete </a> </div>
+                 <div class="returnbutton">  <a   href = "/actor/edit/{{actor.actorid}}" >edit </a> </div>
+                 <div class="returnbutton">  <a   href = "/actor/editroles/{{actor.actorid}}" >edit roles </a> </div>
+                 <div class="returnbutton"><a  href = "/actor/new" >Add New actor </a> </div>
+               </div>
+       <div class="actor">
+         <div class="actortable">
+         <div class="row">
             <div class="inputpair" >
                 <div class="label">ID </div>
                 <div class= "field"> {{actor.actorid}}</div>
@@ -38,7 +36,7 @@
             </div>
             <div class="inputpair" >
                 <div class="label"> specifier </div>
-                <div class= "field"> {{actor.specifier}} </div>
+                <div class= "longfield"> {{actor.specifier}} </div>
             </div>
         </div>
         <div class="row">
@@ -59,9 +57,11 @@
 
             <div class="inputpair" >
                 <div class="label"> text </div>
-                <div class= "field"> {{actor.text}} </div>
+                <div class= "longfield"> {{actor.text}} </div>
             </div>
         </div>
+    </div>
+
         <div class="subheading" >
             <div class="title">Life Events </div>
         </div>
@@ -69,10 +69,10 @@
             <div class="body">
                 {% for eid, levent in lifeevents %}
                 <div class="row">
-                    <div class="cell"> {{levent.lifeeventid}}</div>
-                    <div class="cell">{{levent.eventtype}} </div>
-                    <div class="cell">{{levent.lowdate}} </div>
-                    <div class="cell">{{levent.highdate}} </div>
+                    <div class="col1"> {{levent.lifeeventid}}</div>
+                    <div class="col2">{{levent.eventtype}} </div>
+                    <div class="col3">{{levent.lowdate}} </div>
+                    <div class="col4">{{levent.highdate}} </div>
                 </div>
                 {% endfor %}
             </div>
@@ -98,14 +98,14 @@
                 <div class="title">Roles </div>
             </div>
             <div class="roleTable" >
-                <div class="body">
                     {% for pid, glimpse in roles %}
                      {% dump(actor) %}
                     {% dump(glimpse) %}
                     <div class="row">
+                         <div class="returnbutton">  <a   href = "/glimpse/showone/{{glimpse.glimpseid}}" >View</a> </div>
                     {% set formatedtext = FormatRoleFull(glimpse,pid) %}
-                        <div class="cell" >{{formatedtext}}</div>
-                        <div class="cell" >  Age: {{calAge(actor.Birthdate,glimpse.date)}} </div>
+                        <div class="text" >{{formatedtext}}</div>
+                        <div class="age" >  Age: {{calAge(actor.Birthdate,glimpse.date)}} </div>
                        {#}  <div class="cell">{{glimpse.predicates}} </div>#}
                     </div>
                     {% endfor %}

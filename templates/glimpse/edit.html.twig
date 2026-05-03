@@ -4,7 +4,7 @@
 
 {% block stylesheets %}
 {{ parent() }}
-<link href="{{ asset('css/glimpse/edit.css') }}" rel="stylesheet" />
+<link href="{{ asset('css/glimpse.css') }}" rel="stylesheet" />
 {% endblock %}
 
 {% block js %}
@@ -18,13 +18,11 @@
     <div class ="heading" >
          <div class="title">Glimpse {{glimpse.glimpseid}}</div>
         <div class="returnbutton button1"> <a  href = "{{returnlink}}" >return </a> </div>
-           <div class="returnbutton button1"> <a  href = "/glimpse/showsource/{{glimpse.sourceid}}" >Show All</a> </div>
-        <div class="returnbutton button1"> <a  href = "/glimpse/new/X" >Add New Glimpse </a> </div>
-        {% for type in typelist %}
-        <div class="returnbutton button1"> <a  href = "/glimpse/new/{{type}}" >Add New {{type}} </a> </div>
-        {% endfor %}
+           <div class="returnbutton"> <a  href = "/glimpse/showsource/{{glimpse.sourceid}}" >Show All</a> </div>
+        <div class="returnbutton"> <a  href = "/glimpse/new/X" >Add New Glimpse </a> </div>
     </div>
-    <div class="glimpse">
+
+    <div class="glimpseform">
         <form action="/glimpse/process_edit/{{glimpse.glimpseid}}" method="post"  id="glimpseform"  >
             <div class="row">
                 <div class="inputpair id">
@@ -83,30 +81,28 @@
                    <div class= "field"> <input class="image" type="text" name="_image" value="{{glimpse.image}}" /> </div>
              </div>
             </div>
+        </div>
             <div class="subheading" >
                 <div class="title"> roles </div>
             </div>
-            <div class="roleTable" >
-                <div class="body">
+            <div class="editroleTable" >
                     {% for pid, role in roles %}
                     {% if role.role != 'format' %}
                     {%  if role.roleid>0 %}
 
                     <div class="row">
-                        <div class="cell">
-                            <div class="row">
+                        <div class="col1">
                                 <div class="returnbutton"> <a    href = "/glimpse/deleterole/{{glimpse.glimpseid}}/{{pid}}" >delete </a> </div>
                                 <div class="returnbutton">  <a  href = "/glimpse/editrole/{{glimpse.glimpseid}}/{{pid}}" >edit </a>  </div>
-                           </div>
                         </div>
-                        <div class="cell" >{{role.roleid}} </div>
-                        <div class="cell">{{role.role}}</div>
-                        <div class="cell">{{role.name}}</div>
-                        <div class="cell">{{role.predicates}}</div>
-                          <div class="cell">
+                        <div class="col2" >{{role.roleid}} </div>
+                        <div class="col3">{{role.role}}</div>
+                        <div class="col4">{{role.name}}</div>
+                        <div class="col5">{{role.predicates}}</div>
+                          <div class="col6">
                                 <div class="returnbutton"> <a    href = "/actor/newactor/{{glimpse.glimpseid}}/{{role.roleid}}" >New Actor</a> </div>
                         </div>
-                       <div class="cell">
+                       <div class="col7">
                           {% for anactor in role.actors %}
                           <div class="returnbutton"><a href = "/actor/showone/{{anactor.actorid}}" > {{anactor.label }}</a></div>
                           {% endfor %}
@@ -114,26 +110,27 @@
                     </div>
                     {% else %}
                     <div class="row">
-                        <div class="cell label" >
+                        <div class="col1" >
                         </div>
-                        <div class="cell hidden" >
+                        <div class="col2" >
                             <input type="hidden" name="_role[{{pid}}]['ref']" value="{{role.roleid}}" />
                         </div>
-                        <div class="cell" >
+                        <div class="col3" >
                             <input type="text" name="_role[{{pid}}]['role']" value="{{role.role}}" />
                         </div>
-                        <div class="cell" >
+                        <div class="col4" >
                             <input type="text" name="_role[{{pid}}]['name']" value="{{role.name}}" />
                         </div>
-                        <div class="cell" >
+                        <div class="col5" >
                             <input type="text" name="_role[{{pid}}]['predicates']" value="{{role.predicates}}" />
                         </div>
+                        <div class="col6"> </div>
+                         <div class="col7"> </div>
                     </div>
                     {% endif %}
                       {% endif %}
                     {% endfor %}
                 </div>
-            </div>
             <button type="submit" id="submitbutton"   > enregistrer</button>
         </form>
     </div>

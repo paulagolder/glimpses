@@ -22,8 +22,9 @@
         <div class="returnbutton"><a  href = "/actor/new" >Add New actor </a> </div>
     </div>
     {% dump(actor) %}
-    <div class="twocols">
+
         <div class="actor">
+             <div class="actortable">
             <div class="row">
                 <div class="inputpair" >
                     <div class="label">ID </div>
@@ -117,11 +118,11 @@
                 {% endfor %}
             </div>
         </div>
-    </div>
+      <div class="subheading" >
+                <div class="title">Roles</div>
+            </div>
     <div class="roleTable" >
-        <div class="subheading" >
-            <div class="title">Roles</div>
-        </div>
+
         <div class="body">
             {% dump(roles) %}
             {% for pid, arole in roles %}
@@ -141,13 +142,14 @@
             </div>
             {% endfor %}
         </div>
-    </div>
+</div>
 
-    <div class= "cglimpsestable">
+
         <div class="subheading" >
             <div class="title">Candidate Glimspes </div>
         </div>
-        <div class="cgbody">
+     <div class= "cglimpsestable">
+
             {% for pid, cglimpse in cglimpses %}
                {%  set   age= calAge(actor.Birthdate,cglimpse.date) %}
                {%   if (age > -10) and ( age <110 ) %}
@@ -161,7 +163,6 @@
         {% endif %}
             {% endfor %}
         </div>
-    </div>
 </div>
 {% endblock %}
 
