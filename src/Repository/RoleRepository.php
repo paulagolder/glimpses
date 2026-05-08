@@ -88,7 +88,7 @@ class RoleRepository extends EntityRepository
     }
 
 
-    public function getRelationClues($actor1,$actor2)
+    public function xgetRelationClues($actor1,$actor2)
     {
         $kw1 = $actor1->getSurname();
         $fn1 = $actor1->getForename();
@@ -156,8 +156,8 @@ class RoleRepository extends EntityRepository
         $glimpses= array();
         foreach($roles as &$arole )
         {
-        $glimpse = $this->getEntityManager()->getRepository(Glimpse::class)->findOne($arole->getGlimpseRef());
-         $glimpses[$arole->getRoleid()] = $glimpse;
+          $glimpse = $this->getEntityManager()->getRepository(Glimpse::class)->getOne($arole->getGlimpseRef());
+          $glimpses[$arole->getRoleid()] = $glimpse;
         }
          dump($glimpses);
         return $glimpses;

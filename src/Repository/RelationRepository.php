@@ -3,27 +3,21 @@
 namespace App\Repository;
 
 use App\Entity\Relation;
-
-
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
-
 class RelationRepository extends EntityRepository
 {
-
 
   public function getAll()
   {
     $qb = $this->createQueryBuilder('r');
     $qy = $qb->getQuery();
     $rns = $qy->getResult();
-    dump($rns);
     foreach( $rns as $key=>$Relation)
     {
       $aRelations[$Relation->getRelationId()]= $Relation;
     }
-
     return $aRelations;
   }
 
@@ -34,12 +28,8 @@ class RelationRepository extends EntityRepository
     $qb->setParameter("rid",$rid);
     $qy = $qb->getQuery();
      $rln =  $qy->getOneOrNullResult();
-    dump($rln);
-
     return $rln;
   }
-
-
 
   public function findByActor($aid)
   {
@@ -49,22 +39,18 @@ class RelationRepository extends EntityRepository
     $qb->setParameter("aid",$aid);
     $qy = $qb->getQuery();
     $rns = $qy->getResult();
-    dump($rns);
     $Relations = array();
     foreach( $rns as $key=>$Relation)
     {
       $Relations[$Relation->getRelationId()]= $Relation;
     }
-        return $Relations;
+    return $Relations;
   }
 
-
-    public function delete($gid,$aref,$pref)
+   public function delete($rid)
     {
         $sql = "delete from App:Relation g ";
-        $sql .= " where g.glimpseid = ".$gid." ";
-        $sql .= " and g.roleref = ".$aref." ";
-          $sql .= " and g.Relationref = ".$pref." ";
+        $sql .= " where g.relationid = ".$rid." ";
         $query = $this->getEntityManager()->createQuery($sql);
         $query->getResult();
     }
@@ -94,7 +80,7 @@ class RelationRepository extends EntityRepository
     }
 
 
-     public function xfilterf($filterstring)
+ /*    public function xfilterf($filterstring)
     {
         $filterlist = explode(",", $filterstring);
         dump($filterlist);
@@ -116,10 +102,10 @@ class RelationRepository extends EntityRepository
             }
             $qb->andwhere('  r.name like :name or  r.predicates like :name ');
         }
-       /* $qb->orwhere('  g.location like :name  ');
+        $qb->orwhere('  g.location like :name  ');
         $qb->orwhere('  r.name like :name ');
         $qb->orwhere('  r.predicates like :name ');
-        $qb->orwhere('  g.location like :name  ');*/
+        $qb->orwhere('  g.location like :name  ');
         $qb->orderby(' g.date ');
         $qb->setparameter( 'name', $namefilter);
         dump($qb);
@@ -136,7 +122,7 @@ class RelationRepository extends EntityRepository
         }
          dump($glimpses);
         return $glimpses;
-    }
+    }*/
 
 
 }

@@ -57,15 +57,15 @@ class ActorController extends AbstractController
     {
         $actor = $doctrine->getRepository(Actor::class)->findOne($aid);
         $allactors = $doctrine->getRepository(Actor::class)->findAllIndexed();
-        $actorroles = $doctrine->getRepository(ActorRole::class)->getRoles($aid);
+        $actorroles = $doctrine->getRepository(ActorRole::class)->getActorRoles($aid);
         $rolelist = array();
         dump($actorroles);
+        dump($allactors);
         foreach ($actorroles as $actorrole)
         {
             $roleid = $actorrole->getRoleref();
             $role = $doctrine->getRepository(Role::class)->getOne($roleid);
-            dump($role);
-            $glimpse = $doctrine->getRepository(Glimpse::class)->findOne($role->getGlimpseref());
+            $glimpse = $doctrine->getRepository(Glimpse::class)->getOne($role->getGlimpseref());
             if($glimpse != null)
             {
             $roles = $doctrine->getRepository(Role::class)->findChildren($role->getGlimpseRef());
@@ -74,6 +74,7 @@ class ActorController extends AbstractController
             }
         }
         $lifeevents = $doctrine->getRepository(LifeEvent::class)->findAllEvents($aid);
+        dump($lifeevents);
         $relations = $doctrine->getRepository(Relation::class)->findByActor($aid);
         $nrole = new ActorRole();
         $nrole->setActorref($aid);
@@ -143,13 +144,13 @@ class ActorController extends AbstractController
             $relation->{"actor1"} = $em->getRepository(Actor::class)->findOne($relation->getActor1ref());
             $relation->{"actor2"} = $em->getRepository(Actor::class)->findOne($relation->getActor2ref());
         }
-        $aroles = $doctrine->getRepository(ActorRole::class)->getRoles($aid);
+        $aroles = $doctrine->getRepository(ActorRole::class)->getActorRoles($aid);
         dump($aroles);
         $froles = array();
         foreach ($aroles as &$arole)
         {
-             $role= $doctrine->getRepository(Role::class)->getOne($arole->getRoleRef());
-            $glimpse = $doctrine->getRepository(Glimpse::class)->findOne( $role->getGlimpseRef());
+            $role= $doctrine->getRepository(Role::class)->getOne($arole->getRoleRef());
+            $glimpse = $doctrine->getRepository(Glimpse::class)->getOne( $role->getGlimpseRef());
             $broles = $doctrine->getRepository(Role::class)->findChildren($role->getGlimpseRef());
             $glimpse->{"roles"} = $broles;
             $froles[$arole->getRoleRef()] = $glimpse;
@@ -162,7 +163,7 @@ class ActorController extends AbstractController
            // $key = $srole->getRoleId();
             if (!array_key_exists($key, $cglimpses) && !array_key_exists($key, $froles))
             {
-                $glimpse = $doctrine->getRepository(Glimpse::class)->findOne($srole->getGlimpseId());
+                $glimpse = $doctrine->getRepository(Glimpse::class)->getOne($srole->getGlimpseId());
                 if (!is_null($glimpse))
                 {
                     $roles = $doctrine->getRepository(Role::class)->findChildren($srole->getGlimpseId());
@@ -191,16 +192,13 @@ class ActorController extends AbstractController
         $actor = new Actor();
         $actor->setSurname("name...");
         $actor->setForename("forename...");
-
         $actor->setContributor("paul");
         $now = new \DateTime();
         $actor->setUpdateDt($now);
-
         $entityManager = $doctrine->getManager();
         $entityManager->persist($actor);
         $entityManager->flush();
         $aid = $actor->getActorid();
-
         return $this->render('actor/edit.html.twig', array(
                     'actor' => $actor,
                     'returnlink' => "/actor/show/" . $aid,
@@ -215,25 +213,39 @@ class ActorController extends AbstractController
         $names = explode(" ", $role->getName() . "  ?");
         $actor->setForename($names[0]);
         $actor->setSurname($names[1]);
-
         $specifier = $role->getRole() . " " . $glimpse->getDate() . " " . $role->getPredicatestr();
-
         $actor->setContributor("paul");
         $now = new \DateTime();
         $actor->setUpdateDt($now);
         $actor->setSpecifier($specifier);
-        $entityManager = $doctrine->getManager();
-        $entityManager->persist($actor);
-        dump($actor);
-        $entityManager->flush();
-        $aid = $actor->getActorid();
+        $oaid =  $doctrine->getRepository(Actor::class)->exists($actor);
+         $entityManager = $doctrine->getManager();
+        if($oaid)
+        {
+          dump("++duplicate++".$oaid);
+          $aid =$oaid;
+        }else
+        {
+          $entityManager->persist($actor);
+          $entityManager->flush();
+          $aid = $actor->getActorid();
+        }
+    dump($aid);
+    dump($rref);
+        $actorrole =  $doctrine->getRepository(ActorRole::class)->findOne($aid,$rref);
+        if($actorrole)
+        {
 
-        dump($actor);
-
-        return $this->render('actor/edit.html.twig', array(
-                    'actor' => $actor,
-                    'returnlink' => "/actor/show/" . $aid,
-        ));
+        }
+        else
+        {
+           $actorrole = new ActorRole();
+           $actorrole->setActorref($aid);
+           $actorrole->setRoleRef($rref);
+           $entityManager->persist($actorrole);
+           $entityManager->flush();
+        }
+        return $this->redirect("/glimpse/edit/".$gid);
     }
 
     public function newrelationship(ManagerRegistry $doctrine, $aid)
@@ -294,8 +306,17 @@ class ActorController extends AbstractController
         $actor2 = $doctrine->getRepository(Actor::class)->findOne($daid);
         $lifeevents1 = $doctrine->getRepository(LifeEvent::class)->findAllEvents($aid);
         $lifeevents2 = $doctrine->getRepository(LifeEvent::class)->findAllEvents($daid);
-        $roles1 = $doctrine->getRepository(ActorRole::class)->findRoles($aid);
-        $roles2 = $doctrine->getRepository(ActorRole::class)->findRoles($daid);
+        $roles1 = $doctrine->getRepository(ActorRole::class)->getRoles($aid);
+        $roles2 = $doctrine->getRepository(ActorRole::class)->getRoles($daid);
+        dump($roles1);
+        foreach($roles1 as &$role)
+        {
+           $aglimpse = $doctrine->getRepository(Glimpse::class)->getOne($role->getGlimpseRef());
+           $aglimpse->{"roles"} = $doctrine->getRepository(Role::class)->findChildren($aglimpse->getGlimpseId());
+           $role->{"glimpse"} = $aglimpse;
+        }
+
+        dump($roles1);
         //   LifeEvent::merge($lifeevents1,$lifeevents2 );
         //    return $this->redirect("/actor/editroles/".$aid);
         // $lifeevents1 =  $doctrine->getRepository(LifeEvent::class)->findAllEvents($aid);
@@ -476,6 +497,8 @@ class ActorController extends AbstractController
             $reln->setRelation($relation);
             $actor2 = $request->request->get('_actor2ref');
             $reln->setActor2ref($actor2);
+            $clues = $request->request->get('_relationclue');
+            $reln->setClues($clues);
             $entityManager = $doctrine->getManager();
             $entityManager->persist($reln);
             $entityManager->flush();
@@ -496,8 +519,11 @@ class ActorController extends AbstractController
         $actors = $doctrine->getRepository(Actor::class)->findAll();
         $actorsindexed = $doctrine->getRepository(Actor::class)->findAllIndexed();
         $relationships = ["father", "mother", "son", "daughter", "wife", "husband", "sister", "brother", "resident"];
+        $eventtypes =["birth","marriage","resident","death","burial","grant_of_probate"];
+        $lifeevents = $doctrine->getRepository(LifeEvent::class)->findAllEvents($aid);
+        dump($lifeevents);
         $relations = $doctrine->getRepository(Relation::class)->findByActor($aid);
-        $glimpse = $doctrine->getRepository(Glimpse::class)->findOne($gid);
+        $glimpse = $doctrine->getRepository(Glimpse::class)->getOne($gid);
         $glimpse->{"roles"} = $doctrine->getRepository(Role::class)->findChildren($gid);
         dump($glimpse);
         return $this->render('actor/newrelationship.html.twig', array(
@@ -506,7 +532,9 @@ class ActorController extends AbstractController
                     'actors' => $actors,
                     'glimpse' => $glimpse,
                     'relations' => $relations,
+                     'lifeevents' => $lifeevents,
                     'relationships' => $relationships,
+                    'eventtypes' => $eventtypes,
                     'returnlink' => "/actor/show/" . $aid,
         ));
     }
@@ -545,6 +573,39 @@ class ActorController extends AbstractController
         return $this->redirect("/actor/editroles/" . $aid);
     }
 
+  public function process_newevent(ManagerRegistry $doctrine, $a1ref)
+    {
+
+        $actor1 = $doctrine->getRepository(Actor::class)->findOne($a1ref);
+        $reln = new LifeEvent($a1ref,"");
+        $request = $this->requestStack->getCurrentRequest();
+        if ($request->getMethod() == 'POST')
+        {
+            $reln->setActorRef($a1ref);
+            $glimpseid = $request->request->get('_eventclue');
+            $roleid = $request->request->get('_selrole');
+            $glimpse = $doctrine->getRepository(Glimpse::class)->getOne($glimpseid);
+            $reln->setEventtype($glimpse->getType());
+            $reln->setDate($glimpse->getDate());
+            $reln->setLocation($glimpse->getLocation());
+            $role =  $doctrine->getRepository(Role::class)->getOne($roleid);
+             $reln->setRole($role->getRole().":".$role->getName());
+             $reln->setclues($glimpseid);
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($reln);
+            $entityManager->flush();
+
+            dump($reln);
+            return $this->redirect("/actor/editroles/" . $a1ref);
+        }
+        return $this->render('actor/edit.html.twig', array(
+                    'actor' => $actor,
+                    'roles' => $roles,
+                    'returnlink' => "/actor/show/" . $gid,
+        ));
+    }
+
+
     public function addrole(ManagerRegistry $doctrine, $aid, $rid)
     {
         $arole = new ActorRole();
@@ -569,6 +630,20 @@ class ActorController extends AbstractController
         $ar = $doctrine->getRepository(ActorRole::class)->findone($aid, $rid);
         $em->remove($ar);
         $em->flush();
+        return $this->redirect("/actor/editroles/" . $aid);
+    }
+
+    public function deleteevent(ManagerRegistry $doctrine, $leid)
+    {
+        $le = $doctrine->getRepository(LifeEvent::class)->getone($leid);
+        $ar = $doctrine->getRepository(LifeEvent::class)->delete($leid);
+        return $this->redirect("/actor/editroles/" . $le->getActorref());
+    }
+
+    public function deleterelation(ManagerRegistry $doctrine,$aid, $rid)
+    {
+        $reln = $doctrine->getRepository(Relation::class)->getone($rid);
+        $ar = $doctrine->getRepository(Relation::class)->delete($rid);
         return $this->redirect("/actor/editroles/" . $aid);
     }
 }

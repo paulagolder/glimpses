@@ -15,6 +15,16 @@ use Doctrine\DBAL\Driver\Connection;
 class LifeEventRepository extends EntityRepository
 {
 
+    public function getOne($leid)
+    {
+        $sql = "select l from App:Lifeevent  l";
+        $sql .= ' where  l.lifeeventid ='. $leid  ;
+        $query = $this->getEntityManager()->createQuery($sql);
+        $events = $query->getResult();
+        if(count($events)>0) return $events[0];
+        else return null;
+    }
+
     public function findEvent($aid,$type)
     {
         $sql = "select l from App:Lifeevent  l";
@@ -35,6 +45,20 @@ class LifeEventRepository extends EntityRepository
         $eventarray = array();
         foreach($events as $event)
         {
+            $eventarray[$event->getLifeEventId()]=$event;
+        }
+        return $eventarray;
+    }
+
+    public function findbyActor($aid)
+    {
+        $sql = "select l from App:Lifeevent  l";
+        $sql .= ' where  l.actorref ='. $aid  ;
+        $query = $this->getEntityManager()->createQuery($sql);
+        $events = $query->getResult();
+        $eventarray = array();
+        foreach($events as $event)
+        {
             $eventarray[$event->getEventtype()]=$event;
         }
         return $eventarray;
@@ -44,6 +68,14 @@ class LifeEventRepository extends EntityRepository
     {
         $sql = "delete from App:Lifeevent  l";
         $sql .= ' where  l.actorref ='. $aid  ;
+        $query = $this->getEntityManager()->createQuery($sql);
+        $query->getResult();
+    }
+
+    public function delete($leid)
+    {
+        $sql = "delete from App:Lifeevent  l";
+        $sql .= ' where  l.lifeeventid ='. $leid  ;
         $query = $this->getEntityManager()->createQuery($sql);
         $query->getResult();
     }
@@ -76,8 +108,6 @@ class LifeEventRepository extends EntityRepository
         }
         return $aroles;
     }
-
-
 
     public function saveLifeEvents( $lifeevents  )
     {

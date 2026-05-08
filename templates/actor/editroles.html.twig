@@ -14,7 +14,7 @@
 {% block body %}
 <div id="actor" >
     <div class ="heading" >
-        <div class="label">Actor:</div>
+        <div class="title">Actor:</div>
         <div class= "field">{{actor.surname}}, {{actor.forename}}</div>
         <div class="returnbutton button1"> <a href = "/actor/showone/{{actor.actorid}}" >return </a> </div>
         <div class="returnbutton">  <a   href = "/actor/delete/{{actor.actorid}}" >delete </a> </div>
@@ -38,7 +38,7 @@
                 </div>
                 <div class="inputpair" >
                     <div class="label"> specifier </div>
-                    <div class= "field"> {{actor.specifier}} </div>
+                    <div class= "labelfield"> {{actor.specifier}} </div>
                 </div>
             </div>
             <div class="row">
@@ -58,33 +58,17 @@
             <div class="row">
                 <div class="inputpair" >
                     <div class="label"> text </div>
-                    <div class= "field"> {{actor.text}} </div>
+                    <div class= "longfield"> {{actor.text}} </div>
                 </div>
             </div>
         </div>
   </div>
 
-    <div class="eventTable" >
-        <div class="subheading" >
-            <div class="title"> Life Events </div>
-            <div class="returnbutton">  <a   href = "/actor/updatelifeevents/{{actor.actorid}}" >Update</a> </div>
-        </div>
-        <div class="body">
-            {% for eid, levent in lifeevents %}
-            <div class="row">
-                <div class="cellid"> {{levent.lifeeventid}}</div>
-                <div class="cellid">{{levent.eventtype}} </div>
-                <div class="celldate">{{levent.lowdate}}- </div>
-                <div class="celldate">{{levent.highdate}} </div>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
 
-    <div class="eventTable" >
         <div class="subheading" >
             <div class="title"> Matches? </div>
         </div>
+    <div class="matchTable" >
         <div class="body">
             {% for aid, anactor in duplicates %}
                 {%  if( anactor.actorid != actor.actorid ) %}
@@ -99,22 +83,55 @@
         </div>
     </div>
 
-    <div class="relationTable" >
+
+        <div class="subheading" >
+            <div class="title"> Life Events </div>
+            <div class="returnbutton">  <a   href = "/actor/newevent/{{actor.actorid}}" >New Event</a> </div>
+        </div>
+     <div class="eventTable" >
+        <div class="body">
+              {% for eid, levent in lifeevents %}
+                            <div class="row">
+                                   <div class="returnbutton">  <a   href = "/actor/deleteevent/{{levent.lifeeventid}}" >delete</a> </div>
+                                 <div class="date">{{levent.lowdate}} </div>
+                                {% if(levent.middate != levent.lowdate )  %}
+                                    <div class="date">{{levent.middate}} </div>
+                                {% endif %}
+                               {% if(levent.middate != levent.highdate )  %}
+                                <div class="date">{{levent.highdate}} </div>
+                                 {% endif %}
+                                 <div class="type">{{levent.eventtype}} </div>
+                                 <div class="date">{{levent.role}} </div>
+                                {% set cluelist = levent.clues|split(',') %}
+
+                                 {% for clue in cluelist %}
+                                 <div class="returnbutton" ><a   href = "/glimpse/showone/{{clue}}" >Clue_{{clue}}</a> </div>
+                                    {% endfor %}
+
+                            </div>
+             {% endfor %}
+        </div>
+    </div>
+
         <div class="subheading" >
             <div class="title">Relationships</div>
                 <div class="returnbutton">  <a   href = "/actor/newrelationship/{{actor.actorid}}" >New Relationship</a> </div>
         </div>
-         {% dump(relations) %}
+
+    <div class="relationTable" >
         <div class="body">
             {% for rid, relation in relations %}
-                       <div class="row">
-                         <div class="returnbutton">  <a   href = "/relation/show/{{relation.relationid}}" >View</a> </div>
-                       <div class="returnbutton">
-                      <a   href = "/actor/showone/{{relation.actor1ref}}" >{{actors[relation.actor1ref].label}} </a>
-                     </div>
-                    <div class="cell">  is {{relation.relation}} of </div>
-                    <div class="returnbutton">  <a   href = "/actor/showone/{{relation.actor2ref}}" >{{actors[relation.actor2ref].label}}</a> </div>
-                   </div>
+
+                <div class="row">
+                      <div class="returnbutton">  <a   href = "/actor/deleterelation/{{actor.actorid}}/{{rid}}" >delete</a> </div>
+                               <div class="actor">{{actors[relation.actor1ref].getName()}} </div>
+                               <div class="relation">is {{relation.relation}} of </div>
+                              <div class="actor">{{actors[relation.actor2ref].getName()}} </div>
+                                  {% set cluelist = relation.clues|split(',') %}
+                           {% for clue in cluelist %}
+                              <div class="returnbutton" ><a   href = "/glimpse/showone/{{clue}}" >Clue_{{clue}}</a> </div>
+                           {% endfor %}
+                           </div>
                 {% endfor %}
             </div>
         </div>
@@ -122,7 +139,6 @@
                 <div class="title">Roles</div>
             </div>
     <div class="roleTable" >
-
         <div class="body">
             {% dump(roles) %}
             {% for pid, arole in roles %}
@@ -130,7 +146,6 @@
                 <div class="returnbutton">  <a   href = "/actor/deleterole/{{actor.actorid}}/{{pid}}" >remove </a> </div>
                 <div class="returnbutton">  <a   href = "/glimpse/showone/{{arole.glimpseid}}" >view </a> </div>
                  <div class="returnbutton">  <a   href = "/actor/newrelationshipwithglimpse/{{actor.actorid}}/{{arole.glimpseid}}" >Make Reln </a> </div>
-                <div class= "cellid"> {{pid}}</div>
                   {% set formatedtext = FormatRoleFull(arole,pid) %}
                 <div class="cell" >{{formatedtext}}</div>
                {% if(actor.Birthdate != null) %}

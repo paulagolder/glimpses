@@ -25,31 +25,40 @@ class LifeEvent
      */
     private $actorref;
 
-
-
-
     /**
      * @ORM\Column(type="text", nullable=true)
      */
     private $eventtype;
-
 
     /**
      * @ORM\Column(type="string", length=12, nullable=true)
      */
     private $lowdate;
 
-
     /**
      * @ORM\Column(type="string", length=12, nullable=true)
      */
     public $highdate ;
 
-
     /**
      * @ORM\Column(type="string", length=12, nullable=true)
      */
     public $middate ;
+
+        /**
+         * @ORM\Column(type="text", nullable=true)
+         */
+    private $location;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+    */
+        private $role;
+
+             /**
+              * @ORM\Column(type="text", nullable=true)
+              */
+    private $clues;
 
 
     public function __construct($actorref,$type)
@@ -133,6 +142,18 @@ class LifeEvent
         return $this->middate ;
     }
 
+    public function getDate(): ?string
+    {
+        return $this->middate ;
+    }
+
+    public function setDate($text): self
+    {
+        $this->lowdate = $text;
+        $this->highdate = $text;
+        $this->middate = $text;
+        return $this;
+    }
 
     public function setmiddate($text): self
     {
@@ -140,6 +161,39 @@ class LifeEvent
         return $this;
     }
 
+    public function setlocation($text): self
+    {
+        $this->location = $text;
+        return $this;
+    }
+
+     public function getlocation(): ?string
+    {
+        return  $this->location ;
+    }
+
+  public function setClues($text): self
+    {
+        $this->clues = $text;
+        return $this;
+    }
+
+     public function getClues(): ?string
+    {
+        return  $this->clues ;
+    }
+
+
+  public function setRole($text): self
+    {
+        $this->role = $text;
+        return $this;
+    }
+
+     public function getRole(): ?string
+    {
+        return  $this->role ;
+    }
 
     public static  function merge(&$lifeevents,$newlifeevents)
     {

@@ -4,37 +4,27 @@ namespace App\Repository;
 
 use App\Entity\Glimpse;
 use App\Entity\Role;
-
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Query\Expr\Join;
-
 use Doctrine\DBAL\DriverManager;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Service\MyLibrary;
-
-
 use Doctrine\DBAL\Driver\Connection;
 
 class GlimpseRepository extends EntityRepository
 {
 
-
-
-
-
-    public function findOne($gid)
+    public function getOne($gid)
     {
         $qb = $this->createQueryBuilder('g');
         $qb->where("g.glimpseid = :gid ");
         $qb->setParameter( "gid", $gid);
         $glimpse = $qb->getQuery()->getOneOrNullResult();
-
         return $glimpse;
     }
-
 
     public function findAll()
     {
@@ -44,14 +34,12 @@ class GlimpseRepository extends EntityRepository
         return $glimpses;
     }
 
-
     public function delete($gid)
     {
         $sql = "delete from App:Glimpse g ";
         $sql .= " where g.glimpseid = ".$gid." ";
         $query = $this->getEntityManager()->createQuery($sql);
         $query->getResult();
-
     }
 
     public function viewregion($region)
@@ -62,7 +50,6 @@ class GlimpseRepository extends EntityRepository
         $glimpses = $query->getResult();
         return $glimpses;
     }
-
 
     public function viewsource($sourceid)
     {
@@ -92,7 +79,6 @@ class GlimpseRepository extends EntityRepository
         $result = $stmt->executeQuery();
         dump($results);
         return $results;
-
     }
 
     public function filterf($filterstring)

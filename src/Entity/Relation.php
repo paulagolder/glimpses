@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Entity;
-
+use App\Entity\Actor;
+use Doctrine\ORM\EntityRepository;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -94,9 +95,52 @@ class Relation
     }
 
 
+
     public function setClues(string $text): self
     {
         $this->clues = $text;
+        return $this;
+    }
+
+    public function removeClue(string $text): self
+    {
+        $cluelist = explode(",",$this->clues);
+        $newcluelist="";
+        $first = true;
+        foreach($cluelist as $clue)
+        {
+          if($clue != $text)
+          {
+             $newcluelist .= $clue;
+          }
+          if(!$first) $newcluelist .= ", ";
+          $first = false;
+        }
+        $this->clues = $newcluelist;
+        return $this;
+    }
+
+
+    public function addClue(string $text): self
+    {
+        $cluelist = explode(",",$this->clues);
+        dump($cluelist);
+        dump($text);
+        $newcluelist="";
+        $first = true;
+        foreach($cluelist as $clue)
+        {
+           dump($clue);
+          if($clue != $text && $clue != " ")
+          {
+             if(!$first) $newcluelist .= ",";
+             $newcluelist .= $clue;
+            $first = false;
+          }
+        }
+        if(!$first) $newcluelist .= ",".$text;
+        else $newcluelist = $text;
+        $this->clues = $newcluelist;
         return $this;
     }
 
@@ -109,6 +153,14 @@ class Relation
     public function getConfidence(): int
     {
         return $this->confidence;
+    }
+
+    public function makeLabel(): ?string
+    {
+       $actor1= $this->doctrine->getRepository(Actor::class)->findOne($Actor1ref);
+       $actor2= $this->doctrine->getRepository(Actor::class)->findOne($Actor2ref);
+
+        return " relation label";
     }
 
 

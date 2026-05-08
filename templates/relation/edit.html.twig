@@ -1,4 +1,4 @@
-{# templates/relation/show.html.twig #}
+{# templates/relation/edit.html.twig #}
 
 {% extends 'base.html.twig' %}
 
@@ -16,21 +16,22 @@
 <div id="relation" >
     <div class ="heading" >
         <div class="title">Relationship</div>
-        <div class="title">{{relation.relationid}}</div>
+          <div class="title">{{relation.relationid}}</div>
         <div class="returnbutton button1"> <a href = "/relation/edit/{{relation.relationid}}" >Edit</a> </div>
+         <div class="returnbutton "> <a href = "/relation/delete/{{relation.relationid}}" >Delete</a> </div>
     </div>
-    <div class="subheading row" >
-        {% if actor1.label is defined  %}
-        {% set actor1label = actor1.label %}
-        {% else %}
-         {% set actor1label = "Missing actor" %}
-         {% endif %}
-          {% if actor2.label is defined  %}
-                 {% set actor2label = actor2.label %}
-                 {% else %}
-                  {% set actor2label = "Missing actor" %}
-                  {% endif %}
-    <div class= "title">{{actor1label}} {{relation.relation}} {{actor2label}}</div>
+      <div class="subheading row" >
+            {% if actor1.label is defined  %}
+            {% set actor1label = actor1.label %}
+            {% else %}
+             {% set actor1label = "Missing actor" %}
+             {% endif %}
+              {% if actor2.label is defined  %}
+                     {% set actor2label = actor2.label %}
+                     {% else %}
+                      {% set actor2label = "Missing actor" %}
+                      {% endif %}
+        <div class= "title">{{actor1label}} {{relation.relation}} {{actor2label}}</div>
 </div>
 
 <div ></div>
@@ -49,11 +50,11 @@
   <div class="actor">
         <div class="row">
            <div class="returnbutton"> <a href = "/actor/showone/{{relation.actor2ref}}" >show </a> </div>
-            {% if actor2 is defined %}
-               {% if actor2 is not null %}
+                 {% if actor2 is defined %}
+                          {% if actor2 is not null %}
                 <div class= "field"> {{actor2.label}}</div>
                 <div class= "field">( {{actor2.specifier}} )</div>
-                        {% endif %}
+                 {% endif %}
                                {% endif %}
             </div>
         </div>
@@ -66,6 +67,7 @@
             <div class="">
                 {% for gid, glimpse in clues %}
                 <div class="row">
+                     <div class="returnbutton"> <a href = "/relation/removeclue/{{relation.relationid}}/{{gid}}" >Remove Clue </a></div>
                    <div class="returnbutton"> <a href = "/glimpse/showone/{{gid}}" >View Glimpse </a></div>
                             <div class="cell">{{  FormatEvent(glimpse)}}  </div>
 
@@ -78,16 +80,14 @@
         </div>
 {% dump  roles %}
             <div class="list">
-                {% for gid, role in roles %}
+                {% for rid, role in roles %}
                 <div class="row">
-
                          {% if role.glimpse is defined %}
                           <div class="returnbutton"> <a href = "/glimpse/showone/{{role.glimpse.glimpseid}}" >View Glimpse </a></div>
                          <div class="text">{{  FormatRole(role.roleid,role.glimpse)    }}</div>
                           <div class="returnbutton"> <a href = "/relation/addclue/{{relation.relationid}}/{{role.glimpseref}}" >Add to clues </a></div>
                           {% endif %}
-
-   </div>
+                   </div>
                     {% endfor %}
 </div>
 

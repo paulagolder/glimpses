@@ -84,13 +84,24 @@
             <div class="list">
                 {% for rid, relation in relations %}
                 <div class="row">
-                       <div class="returnbutton">  <a   href = "/relation/show/{{relation.relationid}}" >View</a> </div>
-                       <div class="returnbutton">
-                      <a   href = "/actor/showone/{{relation.actor1ref}}" >{{actors[relation.actor1ref].label}} </a>
-                     </div>
-                    <div class="cell">  is {{relation.relation}} of </div>
-                         <div class="returnbutton">  <a   href = "/actor/showone/{{relation.actor2ref}}" >{{actors[relation.actor2ref].label}}</a> </div>
-                     </div>
+                   <div class="returnbutton">  <a   href = "/relation/show/{{relation.relationid}}" >View</a> </div>
+                   <div class="returnbutton">
+                     <a   href = "/actor/showone/{{relation.actor1ref}}" >{{actors[relation.actor1ref].label}} </a>
+                   </div>
+                   <div class="cell">  is {{relation.relation}} of </div>
+                  {% if actors[relation.actor2ref] is defined %}
+                   <div class="returnbutton">  <a   href = "/actor/showone/{{relation.actor2ref}}" >{{actors[relation.actor2ref].label}}</a> </div>
+                   <div class="cell">  Clues </div>
+                   {% dump(relation.clues) %}
+                   {% set clues = relation.Clues |split(",") %}
+                   {% dump(clues) %}
+                   {% for aclue in clues %}
+                   <div class="returnbutton">  <a   href = "/glimpse/showone/{{aclue}}" >Clue {{aclue}}</a> </div>
+                   {% endfor %}
+                   {% else %}
+                    <div class="cell"> Actor {{relation.actor2ref}} not found </div>
+                   {% endif %}
+              </div>
                     {% endfor %}
                 </div>
             </div>
@@ -106,7 +117,7 @@
                     {% set formatedtext = FormatRoleFull(glimpse,pid) %}
                         <div class="text" >{{formatedtext}}</div>
                         <div class="age" >  Age: {{calAge(actor.Birthdate,glimpse.date)}} </div>
-                       {#}  <div class="cell">{{glimpse.predicates}} </div>#}
+                       {#  <div class="cell">{{glimpse.predicates}} </div>#}
                     </div>
                     {% endfor %}
                 </div>

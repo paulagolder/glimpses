@@ -35,78 +35,97 @@ display glimpseform
 }
 
 
-#glimpse div.glimpseform  div.row {
+#glimpse div.glimpseform  div.row
+{
     display: flex;
     margin-bottom: 2px;
     background-color:silver;
 }
 
-#glimpse div.glimpseform  div.row div.label {
-    width: 10em;
+#glimpse div.glimpseform  div.row div.label
+{
+    width: 7em;
     color: blue;
 }
 
-#glimpse div.glimpseform  div.row div.inputpair {
+#glimpse div.glimpseform  div.row div.inputpair.text
+{
+    display:flex;
+}
 
+#glimpse div.glimpseform  div.row div.inputpair
+{
     margin-right: 2em;
-
 }
 
-#glimpse div.glimpseform  div.row div.inputpair div.label {
+#glimpse div.glimpseform  div.row div.inputpair div.label
+{
     color: blue;
+}
+
+#glimpse div.glimpseform div.row div.inputpair div.field
+{
 
 }
 
-#glimpse div.glimpseform div.row div.inputpair div.field {
-
-}
-
-#glimpse div.glimpseform  div.inputpair.language div.field input {
+#glimpse div.glimpseform  div.inputpair.language div.field input
+{
     width: 2em;
 }
 
-#glimpse div.glimpseform  div.inputpair.language {
+#glimpse div.glimpseform  div.inputpair.language
+{
     width: 3em;
 }
 
-#glimpse div.glimpseform  div.inputpair.id div.field input {
+#glimpse div.glimpseform  div.inputpair.id div.field input
+{
     width: 2em;
 }
 
-#glimpse div.glimpseform  div.inputpair.id {
+#glimpse div.glimpseform  div.inputpair.id
+{
     width: 3em;
 }
 
-#glimpse div.glimpseform  div.inputpair.location div.field input {
+#glimpse div.glimpseform  div.inputpair.location div.field input
+{
     width: 20em;
 }
 
-#glimpse div.glimpseform  div.inputpair.source div.field input {
+#glimpse div.glimpseform  div.inputpair.source div.field input
+{
     width: 20em;
 }
 
-#glimpse div.glimpseform  div.inputpair.source textarea.title {
+#glimpse div.glimpseform  div.inputpair.source textarea.title
+{
     width: 40em;
     height: 5em;
 }
 
-#glimpse div.glimpseform  div.inputpair.type div.field input {
+#glimpse div.glimpseform  div.inputpair.type div.field input
+{
     width: 10em;
 }
 
-#glimpse div.glimpseform  div.inputpair.ref {
+#glimpse div.glimpseform  div.inputpair.ref
+{
     width: 2em;
 }
 
-#glimpse div.glimpseform  div.inputpair.datequalifier {
+#glimpse div.glimpseform  div.inputpair.datequalifier
+{
     width: 2em;
 }
 
-#glimpse div.glimpseform  div.inputpair.ref div.field input {
+#glimpse div.glimpseform  div.inputpair.ref div.field input
+{
     width: 2em;
 }
 
-#glimpseform  div.inputpair.text div.field input {
+#glimpseform  div.inputpair.text div.field input
+{
     width: 50em;
 }
 
@@ -354,7 +373,6 @@ edit role Table
     table-layout: auto;
     border-collapse: collapse;
     background-color: #eee;
-    border: 1px solid #666666;
     border-spacing: 5px;
 }
 

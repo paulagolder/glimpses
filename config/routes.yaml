@@ -14,11 +14,9 @@ glimpse_start:
     path: /glimpses
     controller:  App\Controller\SourceController::showall
 
-
 glimpse_new:
     path: /glimpse/new/{type}
     controller:  App\Controller\GlimpseController::new
-
 
 glimpse_show:
     path: /glimpse/showone/{gid}
@@ -48,26 +46,21 @@ glimpse_process_edit:
     path: /glimpse/process_edit/{gid}
     controller:  App\Controller\GlimpseController::process_edit
 
-
 glimpse_delete_role:
    path: /glimpse/deleterole/{gid}/{pref}
    controller:  App\Controller\GlimpseController::delete_role
-
 
 glimpse_edit_role:
    path: /glimpse/editrole/{gid}/{pref}
    controller:  App\Controller\GlimpseController::edit_role
 
-
 glimpse_process_edit_role:
    path: /glimpse/process_editrole/{gid}/{aref}
    controller:  App\Controller\GlimpseController::process_editrole
 
-
 glimpse_delete_predicate:
    path:  /glimpse/role/deletepredicate/{gid}/{aref}/{pref}
    controller:  App\Controller\GlimpseController::delete_predicate
-
 
 glimpse_filter:
    path:  /glimpse/filter/
@@ -154,6 +147,10 @@ actor_process_newrelationship:
     path: /actor/process_newrelationship/{a1ref}
     controller:  App\Controller\ActorController::process_newrelationship
 
+actor_process_newevent:
+      path: /actor/process_newevent/{a1ref}
+      controller: App\Controller\ActorController::process_newevent
+
 actor_edit:
     path: /actor/edit/{aid}
     controller:  App\Controller\ActorController::edit
@@ -179,6 +176,18 @@ actor_addrole:
 actor_deleterole:
     path: /actor/deleterole/{aid}/{rid}
     controller:  App\Controller\ActorController::deleterole
+
+actor_deleteevent:
+      path: /actor/deleteevent/{leid}
+      controller: App\Controller\ActorController::deleteevent
+
+actor_neweevent:
+        path: /actor/newevent/{aid}
+        controller: App\Controller\ActorController::newevent
+
+actor_deleterelation:
+  path: /actor/deleterelation/{aid}/{rid}
+  controller: App\Controller\ActorController::deleterelation
 
 actor_updatelifeevents:
     path: actor/updatelifeevents/{aid}
@@ -213,7 +222,15 @@ relation_edit:
       path: /relation/edit/{rid}
       controller: App\Controller\RelationController::edit
 
+relation_delete:
+        path: /relation/delete/{rid}
+        controller: App\Controller\RelationController::delete
+
 relation_addclue:
     path: /relation/addclue/{rid}/{gref}
     controller:  App\Controller\RelationController::addclue
+
+relation_removeclue:
+      path: /relation/removeclue/{rid}/{gref}
+      controller: App\Controller\RelationController::removeclue
 

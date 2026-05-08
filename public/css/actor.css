@@ -55,10 +55,10 @@ actor panel
     width: 8em;
 }
 
-#actor  div.actortable div.row div.inputpair div.lonfield
+#actor  div.actortable div.row div.inputpair div.longfield
 {
     padding-left: 1em;
-    width: 18em;
+    width: 34em;
 }
 
 
@@ -133,7 +133,45 @@ div#actor div.actorinputform div.row div.field
 
 }
 
+/*========================================
+Lifeevent table
+========================================== */
 
+div#actor div.eventTable div.body div.row
+{
+    padding-left:1em;
+}
+
+div#actor div.eventTable div.body div.row div
+{
+    padding-right:1em;
+}
+
+#actor div.eventTable div.body div.row div.type
+{
+    font-style:italic;
+    color:blue;
+}
+
+/*========================================
+relationship table
+========================================== */
+
+#actor div.relationTable div.body div.row div
+{
+    padding-right:1em;
+}
+
+#actor div.relationTable div.body div.row
+{
+    padding-left:1em;
+}
+
+#actor div.relationTable div.body div.row div.relation
+{
+    font-style:italic;
+    color:blue;
+}
 
 /*========================================
 glimpses table
@@ -160,6 +198,10 @@ div#actor div.cglimpsestable div.row div.inputpair div.label
     color : blue;
 }
 
+#actor div.cglimpsestable div.cgrow div.agecell
+{
+    padding-left:1em;
+}
 
 div#actor div.cglimpsestable div.row div.col1
 {
@@ -337,7 +379,6 @@ div#actor div.cglimpsestable div.row
     {
         table-layout: auto;
         background-color: #eee;
-        border: 1px solid #666666;
         border-spacing: 5px;
         border-collapse:separate;
     }
@@ -377,6 +418,10 @@ div#actor div.cglimpsestable div.row
         width: 16em;
     }
 
+
+
+
+
     /*=============================================
     newrelationship table
      =================================================*/
@@ -386,11 +431,15 @@ div#actor div.cglimpsestable div.row
         padding-left:0.5em;
     }
 
-    #actor div.newrelationship  div.row div.idpair div.label,div.field
+    #actor div.newrelationship  div.row div.idpair div
     {
-        width:3em;
+        width:2em;
     }
 
+#actor div.newrelationship  div.row  div.label
+{
+    color:blue;
+}
 
     #actor div.newrelationship  div.row div.namepair div.label , div.field
     {
@@ -422,3 +471,57 @@ div#actor div.cglimpsestable div.row
     {
         width:10em;
     }
+
+
+/*=============================================
+ newevent  table
+=================================================*/
+
+#actor div.newevent   div.row div.label,div.field
+{
+    padding-left:0.5em;
+}
+
+#actor div.newevent   div.row div.idpair div
+{
+    width:2em;
+}
+
+#actor div.newevent   div.row  div.label
+{
+    color:blue;
+}
+
+#actor div.newevent   div.row div.namepair div.label , div.field
+{
+    width:10em;
+}
+
+#actor div.newevent   div.row div.namepair div.xfield
+{
+    width:10em;
+}
+
+
+#actor div.newevent   div.row div.relnpair div.label , div.field
+{
+    width:10em;
+}
+
+#actor div.newevent   div.row div.relnpair div.xfield
+{
+    width:10em;
+}
+
+#actor div.newevent   div.row div.actor2pair div.label, div.field
+{
+    width:12em;
+}
+
+#actor div.newevent   div.row div.actor2pair div.xfield
+{
+    width:10em;
+}
+
+
+#actor div.newevent div.row div.idpair div.label{}

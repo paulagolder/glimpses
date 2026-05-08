@@ -46,6 +46,7 @@ burial:
    official: 0
    husband:
       format: "#husband of #defunct at buried on #date  #location "
+
 death:
    format: "#defunct buried on #date at #location"
    defunct:
@@ -58,6 +59,7 @@ death:
      format: " mother of #defunct  buried on #date at #location"
      cardinality: 1
    official: 0
+
 marriage:
    format: "wedding between #groom and #bride on #date at #location"
    bride:
@@ -73,6 +75,7 @@ marriage:
       cardinality: 2
    official:
      format: " #official was official at wedding between #groom and #bride on #date at #location"
+
 will:
    format: "last testement of  #testator on #date at #location"
    testator:
@@ -82,13 +85,16 @@ will:
       format: "#beneficiary  is beneficiary of #testator 's will  dated #date"
       cardinality: 10
    brother:
-      format: "#brother  id brother cited in  #testator 's will dated #date "
+      format: "#brother  is brother cited in  #testator 's will dated #date "
       cardinality: 10
    son:
       format: "#son  is son cited in #testator 's will dated #date"
       cardinality: 10
+   wife:
+        format: "#daughter  is daughter cited in #testator 's will dated #date "
+        cardinality: 10
    daughter:
-      format: "#daughter  is daughter cited in #testator 's will dated #date "
+      format: "#wife  is spouse cited in #testator 's will dated #date "
       cardinality: 10
    witness:
        format: "will of #testator dated #date at #location "

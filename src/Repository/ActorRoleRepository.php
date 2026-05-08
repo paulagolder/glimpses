@@ -37,7 +37,7 @@ class ActorRoleRepository extends EntityRepository
         return $aroles;
     }
 
-public function getActors($rid)
+    public function getActors($rid)
     {
       $sql = "select a from App:ActorRole g , App:Actor a  ";
       $sql .= " where g.roleref = ".$rid." and g.actorref = a.actorid ";
@@ -54,8 +54,8 @@ public function getActors($rid)
         $sql .= " and g.roleref = ".$rref." ";
         $query = $this->getEntityManager()->createQuery($sql);
         $roles = $query->getResult();
-
-        return $roles[0];
+        dump($roles);
+        return $roles;
     }
 
     public function delete($aref,$rref)
@@ -111,9 +111,7 @@ public function getActors($rid)
           if( "App\Entity\Glimpse" == $contentname )
           {
             $arole->{"glimpse"}=  $content;
-              $arole->{"glimpse"}->{"roles"}=   $this->getEntityManager()->getRepository(Role::class)->findChildren($gref);
-
-
+            $arole->{"glimpse"}->{"roles"}=   $this->getEntityManager()->getRepository(Role::class)->findChildren($gref);
           }
           }
           $aroles[$i]= $arole;
@@ -123,15 +121,33 @@ public function getActors($rid)
     }
 
 
-    public function getRoles($aid)
+       public function getRoles($aid)
        {
-           $sql = "SELECT  ar FROM App:actorrole ar , App:Role r , App:Glimpse g where  ar.roleref = r.roleid  ";
+           $sql = "SELECT  r FROM App:actorrole ar , App:Role r , App:Glimpse g where  ar.roleref = r.roleid  ";
            $sql .=  " and  r.glimpseref = g.glimpseid  and   ar.actorref = ".$aid."  ORDER BY g.date ASC ";
-           dump($sql);
            $query = $this->getEntityManager()->createQuery($sql);
            $roles = $query->getResult();
-           dump($roles);
            return $roles;
+       }
+
+       public function getActorRoles($aid)
+       {
+              $sql = "SELECT  ar FROM App:actorrole ar , App:Role r , App:Glimpse g where  ar.roleref = r.roleid  ";
+              $sql .=  " and  r.glimpseref = g.glimpseid  and   ar.actorref = ".$aid."  ORDER BY g.date ASC ";
+              $query = $this->getEntityManager()->createQuery($sql);
+              $aroles = $query->getResult();
+              return $aroles;
+       }
+
+
+
+       public function getRelationRoles($aid1,$aid2)
+       {
+              $sql = "SELECT  ar FROM App:actorrole ar , App:Role r , App:Glimpse g where  ar.roleref = r.roleid  ";
+              $sql .=  " and  r.glimpseref = g.glimpseid  and  ( ar.actorref = ".$aid1." or ar.actorref = ".$aid2.") ORDER BY g.date ASC ";
+              $query = $this->getEntityManager()->createQuery($sql);
+              $roles = $query->getResult();
+              return $roles;
        }
 }
 

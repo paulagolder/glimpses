@@ -38,7 +38,7 @@
                 </div>
                 <div class="inputpair" >
                     <div class="label"> specifier </div>
-                    <div class= "field"> {{actor.specifier}} </div>
+                    <div class= "longfield"> {{actor.specifier}} </div>
                 </div>
             </div>
             <div class="row">
@@ -58,30 +58,53 @@
             <div class="row">
                 <div class="inputpair" >
                     <div class="label"> text </div>
-                    <div class= "field"> {{actor.text}} </div>
+                    <div class= "longfield"> {{actor.text}} </div>
                 </div>
             </div>
         </div>
-   <div class ="heading" >
-            <div class="title">Relationships</div>
-   </div>
 
+ <div class ="heading" >
+    <div class="title">Relationships</div>
+ </div>
  <div class="relationTable" >
         <div class="body">
               {% dump(relations) %}
             {% for rid, relation in relations %}
             <div class="row">
-                <div class="cell">{{actorsindexed[relation.actor1ref].getName()}}  {{relation.relation}} {{actorsindexed[relation.actor2ref].getName()}} </div>
+                <div class="actor">{{actorsindexed[relation.actor1ref].getName()}} </div>
+                <div class="relation">{{relation.relation}} </div>
+               <div class="actor">{{actorsindexed[relation.actor2ref].getName()}} </div>
             </div>
             {% endfor %}
         </div>
-    </div>
+ </div>
 
-    <div class ="heading" >
-            <div class="title">Glimpse </div>
-            <div>{{glimpse.glimpseid}}</div>
-   </div>
-  <div class="actortable">
+ <div class="subheading" >
+     <div class="title">Life Events </div>
+ </div>
+ <div class="eventTable" >
+            <div class="body">
+                {% for eid, levent in lifeevents %}
+                <div class="row">
+                    <div class="type">{{levent.eventtype}} </div>
+                     <div class="date">{{levent.lowdate}} </div>
+                    {% if(levent.middate != levent.lowdate )  %}
+                        <div class="date">{{levent.middate}} </div>
+                    {% endif %}
+                   {% if(levent.middate != levent.highdate )  %}
+                    <div class="date">{{levent.highdate}} </div>
+                     {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+ </div>
+
+
+ <div class ="heading" >
+      <div class="title">Glimpse </div>
+      <div>{{glimpse.glimpseid}}</div>
+ </div>
+ <div class="actortable">
         <div class="row">
               <div class="inputpair" >
                   <div class="label"> type </div>
@@ -149,7 +172,37 @@
                     {% endfor %}
                 </select>
             </div>
+          <div class="cluepair" >
+             <div class="label">Glimpse Clues </div>
+             <div class= "field"> <input class="cellid" type="text" name="_relationclue" value="{{glimpse.glimpseid}}" /> </div>
+          </div>
         </div>
+        <button type="submit" id="submitbutton"   > enregistrer</button>
+    </form>
+    </div>
+ <div class="subheading" >
+        <div class="title">Make New Event</div>
+    </div>
+        <div class="newevent">
+            <form action="/actor/process_newevent/{{actor.actorid}}" method="post" id="eventform"  >
+                <div class="row">
+              <div class="selrole" >
+                                <div class="label"> Choose Role</div>
+                                <select name="_selrole">
+                                    <option selected="selected"></option>
+                                    {% for  arole in glimpse.roles  %}
+                                    <option value='{{arole.roleid}}'>{{arole.role}}, {{arole.name}}: ({{arole.predicates}})</option>
+                                    {% endfor %}
+                                </select>
+                 </div>
+                 <div class="glimpsetext" >
+                                    <div class="label">Glimpse</div>
+                                    <div class= "longfield">{{FormatEvent(glimpse)}}</div>
+
+                  <div class= "field"> <input class="cellid" type="hidden"  name="_eventclue" value="{{glimpse.glimpseid}}" /> </div>
+             </div>
+            </div>
+           </div>
         <button type="submit" id="submitbutton"   > enregistrer</button>
     </form>
     </div>

@@ -88,6 +88,7 @@ class AppExtension extends AbstractExtension
 
     public function FormatRole($roleref,$glimpse)
     {
+        dump($glimpse);
         $type= $glimpse->getType();
         $roles= $glimpse->roles;
         $role= $roles[$roleref]->getRole();
@@ -105,6 +106,7 @@ class AppExtension extends AbstractExtension
 
     public function FormatEvent($glimpse)
     {
+        if($glimpse == null) return "++null++";
         $type= $glimpse->getType();
         $roles= $glimpse->roles;
         $fmt =  $this->templatelist[$type]["format"];

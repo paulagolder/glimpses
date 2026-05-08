@@ -55,10 +55,9 @@ class ActorRepository extends EntityRepository
     public function findAllMatching($actor)
     {
         $qb = $this->createQueryBuilder('g');
-        $qb -> where(" g.forename = :afname ");
-        $qb->setParameter('afname', $actor->getForename());
-        $qb ->andwhere(" g.surname = :asname ");
-        $qb->setParameter('asname', $actor->getSurname());
+        $qb -> where(" concat( g.forename,'+',g.surname) = :name1 ");
+        $qb->setParameter('name1', $actor->getForename()."+".$actor->getSurname());
+
         $qy = $qb->getQuery();
           $actors = $qy->getResult();
         return $actors;
@@ -75,6 +74,23 @@ class ActorRepository extends EntityRepository
         $actors = $qy->getResult();
         return $actors;
     }
+
+    public function exists($anactor)
+    {
+    dump($anactor);
+        $qb = $this->createQueryBuilder('g');
+        $qb -> where(" g.surname = :surname ");
+        $qb->setParameter('surname', $anactor->getSurname());
+        $qb -> andwhere(" g.forename = :forename ");
+        $qb->setParameter('forename', $anactor->getForename());
+        $qb -> andwhere(" g.specifier = :specifier ");
+        $qb->setParameter('specifier', $anactor->getSpecifier());
+        $qy = $qb->getQuery();
+        $actors = $qy->getResult();
+        if(count($actors)<1)return null;
+        else return  $actors[0]->getActorId();
+    }
+
 
     public function delete($aid)
     {

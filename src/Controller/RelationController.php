@@ -90,39 +90,48 @@ class RelationController extends AbstractController
         $relation = $doctrine->getRepository(Relation::class)->getOne($rid);
         $actor1 = $doctrine->getRepository(Actor::class)->findOne($relation->getActor1ref());
         $actor2 = $doctrine->getRepository(Actor::class)->findOne($relation->getActor2ref());
-
-        dump($actor1);
-        dump($actor2);
-
-        $clues = $doctrine->getRepository(RelationClue::class)->findClues($rid);
-        $cluelist=array();
-        foreach($clues as $clue)
-        {
-            $clue->{"glimpse"} =  $doctrine->getRepository(Glimpse::class)->findOne($clue->getGlimpseRef());
-              $clue->{"glimpse"}->{"roles"} =  $doctrine->getRepository(Role::class)->findChildren($clue->getGlimpseRef());
-            $cluelist[]=$clue->getGlimpseRef();
-        }
+        $clues = explode(",",trim($relation->getClues()));
         dump($clues);
-        $allroles = $doctrine->getRepository(Role::class)->getRelationClues($actor1,$actor2);
-        $glimpses = array();
-        $roles = array();
-        foreach($allroles as &$role)
+        $cluelist = array();
+         foreach($clues as $clue)
         {
-            if((!in_array($role->getGlimpseref(), $cluelist, true)))
+          if($clue != null && $clue != "")
+          {
+            $aglimpse =  $doctrine->getRepository(Glimpse::class)->getOne($clue);
+            if($aglimpse != null)
             {
-                $roles[$role->getGlimpseref()]=$role;
-                $role->{"glimpse"}=$doctrine->getRepository(Glimpse::class)->findOne($role->getGlimpseref());
-                $glimpses[$role->getGlimpseref()] =  $doctrine->getRepository(Glimpse::class)->findOne($role->getGlimpseref());
-            }
+            $roles= $doctrine->getRepository(Role::class)->findChildren($clue);
+            $aglimpse->roles = $roles;
+             $cluelist[$clue] =  $aglimpse;
+             }
+          }
+
         }
-        dump($roles);
+    dump($cluelist);
+        $allrolerefs = $doctrine->getRepository(ActorRole::class)->getRelationRoles($relation->getActor1ref(),$relation->getActor2ref());
+        $glimpses = array();
+         dump($allrolerefs);
+               foreach($allrolerefs as $roleref)
+               {
+                   $arole =  $doctrine->getRepository(Role::class)->getOne($roleref->getRoleRef());
+                   if((!in_array($arole->getGlimpseRef(), $cluelist, true)))
+                   {
+                       $gref = $arole->getGlimpseref();
+                       $aglimpse = $doctrine->getRepository(Glimpse::class)->getOne($gref);
+                       $allroles =   $doctrine->getRepository(Role::class)->findChildren($gref);
+                       $aglimpse->roles = $allroles;
+                       $arole->{"glimpse"}=$aglimpse;
+                       $roles[$gref]=$arole;
+                   }
+               }
+           dump($roles);
         return $this->render(
             'relation/show.html.twig',
             [
             'relation'=>$relation,
             'actor1'=>$actor1,
             'actor2'=>$actor2,
-            'clues'=>$clues,
+            'clues'=>$cluelist,
             'roles'=>$roles,
             'returnlink'=>"/relation/showall",
             ]
@@ -138,36 +147,51 @@ class RelationController extends AbstractController
 
         dump($actor1);
         dump($actor2);
+        dump("+".$relation->getClues()."+");
+        $clues = explode(",",trim($relation->getClues()));
+        $cluelist = array();
+             foreach($clues as $clue)
+                {
+                if($clue != null && $clue != "")
+                {
 
-        $clues = $doctrine->getRepository(RelationClue::class)->findClues($rid);
-        $cluelist=array();
-        foreach($clues as $clue)
-        {
-            $clue->{"glimpse"} =  $doctrine->getRepository(Glimpse::class)->findOne($clue->getGlimpseRef());
-              $clue->{"glimpse"}->{"roles"} =  $doctrine->getRepository(Role::class)->findChildren($clue->getGlimpseRef());
-            $cluelist[]=$clue->getGlimpseRef();
-        }
-        dump($clues);
-        $allroles = $doctrine->getRepository(Role::class)->getRelationClues($actor1,$actor2);
+                         $aglimpse =  $doctrine->getRepository(Glimpse::class)->getOne($clue);
+                                  if($aglimpse != null)
+                                  {
+                                  $roles= $doctrine->getRepository(Role::class)->findChildren($clue);
+                                  $aglimpse->roles = $roles;
+                                   $cluelist[$clue] =  $aglimpse;
+                                   }
+                }
+            }
+                dump($cluelist);
+                dump(count($cluelist));
+
+        $allrolerefs = $doctrine->getRepository(ActorRole::class)->getRelationRoles($relation->getActor1ref(),$relation->getActor2ref());
         $glimpses = array();
         $roles = array();
-        foreach($allroles as &$role)
+        dump($allrolerefs);
+        foreach($allrolerefs as $roleref)
         {
-            if((!in_array($role->getGlimpseref(), $cluelist, true)))
+            $arole =  $doctrine->getRepository(Role::class)->getOne($roleref->getRoleRef());
+            if((!in_array($arole->getGlimpseRef(), $cluelist, true)))
             {
-                $roles[$role->getGlimpseref()]=$role;
-                $role->{"glimpse"}=$doctrine->getRepository(Glimpse::class)->findOne($role->getGlimpseref());
-                $glimpses[$role->getGlimpseref()] =  $doctrine->getRepository(Glimpse::class)->findOne($role->getGlimpseref());
+                   $gref = $arole->getGlimpseref();
+                                       $aglimpse = $doctrine->getRepository(Glimpse::class)->getOne($gref);
+                                       $allroles =   $doctrine->getRepository(Role::class)->findChildren($gref);
+                                       $aglimpse->roles = $allroles;
+                                       $arole->{"glimpse"}=$aglimpse;
+                                       $roles[$gref]=$arole;
             }
         }
         dump($roles);
         return $this->render(
-            'relation/show.html.twig',
+            'relation/edit.html.twig',
             [
             'relation'=>$relation,
             'actor1'=>$actor1,
             'actor2'=>$actor2,
-            'clues'=>$clues,
+            'clues'=>$cluelist,
             'roles'=>$roles,
             'returnlink'=>"/relation/showall",
             ]
@@ -176,15 +200,28 @@ class RelationController extends AbstractController
 
     public function addclue(ManagerRegistry $doctrine,$rid, $gref)
     {
-
-        $aclue = new RelationClue();
-        $aclue->setRelationRef($rid);
-        $aclue->setGlimpseRef($gref);
+        $relation = $doctrine->getRepository(Relation::class)->getOne($rid);
+        dump($relation);
+          dump($gref);
+        $relation->addclue($gref);
+              dump($relation);
         $entityManager = $doctrine->getManager();
-        $entityManager->persist($aclue);
+   //     $entityManager->persist($relation);
         $entityManager->flush();
-        return $this->redirect("/relation/show/".$rid);
+        return $this->redirect("/relation/edit/".$rid);
     }
+
+
+     public function removeclue(ManagerRegistry $doctrine,$rid, $gref)
+    {
+        $relation = $doctrine->getRepository(Relation::class)->getOne($rid);
+        $relation->removeclue($gref);
+        $entityManager = $doctrine->getManager();
+       // $entityManager->persist($relation);
+        $entityManager->flush();
+        return $this->redirect("/relation/edit/".$rid);
+    }
+
 
     public function deleterole(ManagerRegistry $doctrine,$aid, $rid)
     {
@@ -196,6 +233,15 @@ class RelationController extends AbstractController
         return $this->redirect("/actor/editroles/".$aid);
     }
 
+    public function delete(ManagerRegistry $doctrine, $rid)
+    {
+
+        $em = $doctrine->getManager();
+        $relation = $doctrine->getRepository(Relation::class)->getOne($rid);
+        $em->remove($relation);
+        $em->flush();
+        return $this->redirect("/actor/showall/");
+    }
 
     public function setfilter(ManagerRegistry $doctrine)
     {

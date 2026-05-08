@@ -13,7 +13,7 @@ class SourceRepository extends EntityRepository
 
 
 
-    public function findOne($sid)
+    public function getOne($sid)
     {
         $qb = $this->createQueryBuilder('s');
          $qb->where("  s.sourceid = :sid ");

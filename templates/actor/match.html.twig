@@ -65,7 +65,6 @@
                             <div class="cell" > {{event.eventtype}} </div>
                             <div class="cell" > {{event.lowdate}} </div>
                             <div class="cell" > {{event.highdate}} </div>
-
                         </div>
                         {% if event.eventtype =="birth" %}
                         {% set birthdate = event.lowdate %}
@@ -73,17 +72,18 @@
                         {% endfor %}
                     </div>
                 </div>
+              {% dump(roles1) %}
                 <div class="roleTable" >
                     <div class="body">
                         {% for pid, role in roles1 %}
+                        {% dump(role) %}
                         <div class="row">
                             <div class="cell">
                                 <div class="subheading">
                                 </div>
                             </div>
                             {% set age = calAge(actor1.Birthdate,role.glimpse.date) %}
-
-                            {% set formatedtext = FormatRole(role.roleref, role.glimpse) %}
+                            {% set formatedtext = FormatRole(role.roleid, role.glimpse) %}
                             <div class="cell" >{{formatedtext}} age: {{age}}</div>
                         </div>
 
@@ -150,7 +150,7 @@
                                 </div>
                             </div>
                             {% set age = calAge(actor2.Birthdate,role.glimpse.date) %}
-                            {% set formatedtext = FormatRole(role.roleref, role.glimpse) %}
+                            {% set formatedtext = FormatRole(role.roleid, role.glimpse) %}
                             <div class="cell" >{{formatedtext}} age: {{age}}</div>
                         </div>
 

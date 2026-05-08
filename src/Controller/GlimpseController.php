@@ -151,8 +151,8 @@ class GlimpseController extends AbstractController
 
     public function  edit(ManagerRegistry $doctrine,$gid)
     {
-        $glimpse = $doctrine->getRepository(Glimpse::class)->findOne($gid);
-        $source =  $doctrine->getRepository(Source::class)->findOne($glimpse->getSourceid());
+        $glimpse = $doctrine->getRepository(Glimpse::class)->getOne($gid);
+        $source =  $doctrine->getRepository(Source::class)->getOne($glimpse->getSourceid());
         $roles =  $doctrine->getRepository(Role::class)->findChildren($gid);
         dump($roles);
         foreach($roles as &$role)
@@ -339,10 +339,10 @@ class GlimpseController extends AbstractController
     public function show(ManagerRegistry $doctrine,$gid)
     {
 
-        $glimpse = $doctrine->getRepository(Glimpse::class)->findOne($gid);
+        $glimpse = $doctrine->getRepository(Glimpse::class)->getOne($gid);
         $roles =  $doctrine->getRepository(Role::class)->findChildren($gid);
         if($glimpse != null)
-           $source =   $doctrine->getRepository(Source::class)->findOne($glimpse->getSourceid());
+           $source =   $doctrine->getRepository(Source::class)->getOne($glimpse->getSourceid());
         else
             $source ="";
 
