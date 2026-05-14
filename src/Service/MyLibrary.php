@@ -1,28 +1,33 @@
 <?php
 
-// src/Service/MyLibrary.php
-
 namespace App\Service;
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\RequestStack;
-
-
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\Yaml\Yaml;
 
 class MyLibrary
 {
-
-
+     private  $templatelist=array();
+     private  $agelist=array();
      private $requestStack ;
 
-    public function __construct(  RequestStack $request_stack)
+    public function __construct(  RequestStack $request_stack,$templatedir)
     {
         $this->requestStack = $request_stack;
+        $configDirectories = [$templatedir];
+        $fileLocator = new FileLocator($configDirectories);
+        $gstructyml = $fileLocator->locate('glimpsetypes.yml', null, false);
+        $this->templatelist =   Yaml::parseFile($gstructyml[0]);
+        $ageyml = $fileLocator->locate('agelist3.yml', null, false);
+        $this->agelist =   Yaml::parseFile($ageyml[0]);
     }
 
-     public function getCookieRegion()
+    public function getCookieRegion()
     {
      $request = new Request();
      $cookies = $request->cookies;
@@ -33,8 +38,8 @@ class MyLibrary
 
     public function getCookieFilter($type)
     {
-     $request = $this->requestStack->getCurrentRequest();
-
+   //  $request = $this->requestStack->getCurrentRequest();
+     $request = new Request();
      $cookies = $request->cookies;
      $reg="";
      if ($cookies->has($type.'_filter'))
@@ -47,7 +52,6 @@ class MyLibrary
 
     public function setCookieSource($sourceid)
     {
-
        $cookie = new Cookie
        (
             'glimpses_source',    // Cookie name.
@@ -55,21 +59,18 @@ class MyLibrary
            time() + ( 24 * 60 * 60)  // Expires 1 day .
         );
         $res = new Response();
-        $res->headers->setCookie( $cookie );
+        $res->headers->setCookie($cookie);
         $res->send();
-        dump($cookie);
     }
 
-      public function getCookieSource()
+    public function getCookieSource()
     {
-
      $request = new Request();
      $cookies = $request->cookies;
      $reg = $_COOKIE["glimpses_source"];
       if($reg) return $reg;
       else return 0 ;
     }
-
 
     public function setCookieRegion($region)
     {
@@ -137,10 +138,7 @@ class MyLibrary
           $dfdate = strtotime($date);
           return strftime('%A %d %B %G', $dfdate);
        }
-
     }
-
-
 
     protected function makeLikeParam($search, $pattern = '%%%s%%')
     {
@@ -190,9 +188,22 @@ class MyLibrary
          return $filterlist;
      }
 
-
-
+    public function FormatEvent($glimpse)
+    {
+    dump($this->templatelist);
+        if($glimpse == null) return "++null++";
+        $type= $glimpse->getType();
+        $roles= $glimpse->roles;
+        $fmt =  $this->templatelist[$type]["format"];
+        $fmt = str_replace("#location", $glimpse->getLocation(), $fmt);
+        $fmt = str_replace("#date", $glimpse->getDate(), $fmt);
+        if(!is_null($roles))
+        {
+          foreach($roles as $key=>$arole)
+          {
+              $fmt = str_replace("#".$arole->getRole(), $arole->getName(), $fmt);
+          }
+        }
+        return $fmt;
+    }
 }
-
-
-

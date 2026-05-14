@@ -38,6 +38,10 @@ class Relation
      **/
     private $actor2ref;
 
+       /**
+         * @ORM\Column(type="text", nullable=true)
+         */
+   private $date;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -92,6 +96,19 @@ class Relation
     public function getClues(): ?string
     {
         return $this->clues;
+    }
+
+
+
+    public function setDate(string $text): self
+    {
+        $this->date = $text;
+        return $this;
+    }
+
+   public function getDate(): ?string
+    {
+        return $this->date;
     }
 
 
@@ -157,8 +174,8 @@ class Relation
 
     public function makeLabel(): ?string
     {
-       $actor1= $this->doctrine->getRepository(Actor::class)->findOne($Actor1ref);
-       $actor2= $this->doctrine->getRepository(Actor::class)->findOne($Actor2ref);
+       $actor1= $this->doctrine->getRepository(Actor::class)->getOne($Actor1ref);
+       $actor2= $this->doctrine->getRepository(Actor::class)->getOne($Actor2ref);
 
         return " relation label";
     }

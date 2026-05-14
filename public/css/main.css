@@ -58,6 +58,35 @@ div#right
   padding: 10px;  
 }
 
+div.heading div.actorname
+{
+   font-style:italic;
+    color: #e53174;
+
+}
+
+div.row div.actorname
+{
+    font-style:italic;
+    color: #e53174;
+
+}
+
+div.actorbutton a
+{
+    padding: 4px;
+    display: inline;
+    border-radius: 7px;
+    margin: 0 10px;
+    background: #f4cbd7;
+    font-size: 12px;
+    line-height: 15px;
+    color: #e53174;
+    width: auto;
+    height: auto;
+    box-sizing: content-box;
+    text-decoration : none;
+}
 
 /*==================================
 headings

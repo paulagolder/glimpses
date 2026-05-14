@@ -201,6 +201,10 @@ actor_compare:
    path: /actor/compare/{aid}/{daid}
    controller:  App\Controller\ActorController::compare
 
+actor_maketree:
+     path: /actor/maketree/{aid}
+     controller: App\Controller\ActorController::maketree
+
 relation_show_all:
     path: /relation/showall/
     controller:  App\Controller\RelationController::showall

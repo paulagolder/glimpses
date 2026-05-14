@@ -15,7 +15,7 @@ class AppExtension extends AbstractExtension
     private  $templatelist=array();
     private  $agelist=array();
 
-    public function __construct($templatedir)
+    public function __construct(string $templatedir)
     {
         $configDirectories = [$templatedir];
         $fileLocator = new FileLocator($configDirectories);
@@ -23,18 +23,9 @@ class AppExtension extends AbstractExtension
         $this->templatelist =   Yaml::parseFile($gstructyml[0]);
         $ageyml = $fileLocator->locate('agelist3.yml', null, false);
         $this->agelist =   Yaml::parseFile($ageyml[0]);
-
     }
 
-    public function getFilters(): array
-    {
-        return [
-            // If your filter generates SAFE HTML, you should add a third
-            // parameter: ['is_safe' => ['html']]
-            // Reference: https://twig.symfony.com/doc/3.x/advanced.html#automatic-escaping
-           // new TwigFilter('filter_name', [AppExtensionRuntime::class, 'doSomething']),
-        ];
-    }
+
 
     public function getFunctions(): array
     {
@@ -88,7 +79,6 @@ class AppExtension extends AbstractExtension
 
     public function FormatRole($roleref,$glimpse)
     {
-        dump($glimpse);
         $type= $glimpse->getType();
         $roles= $glimpse->roles;
         $role= $roles[$roleref]->getRole();
@@ -121,7 +111,6 @@ class AppExtension extends AbstractExtension
         }
         return $fmt;
     }
-
 
     public function FormatEventFull($glimpse,$rolekey)
     {

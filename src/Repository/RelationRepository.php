@@ -31,11 +31,28 @@ class RelationRepository extends EntityRepository
     return $rln;
   }
 
+ public function findbyKey($a1id,$rid,$a2id)
+  {
+    $qb = $this->createQueryBuilder('r');
+    $qb->where(" r.relation = :rid");
+    $qb->setParameter("rid",$rid);
+    $qb->andwhere(" r.actor1ref = :a1id");
+    $qb->setParameter("a1id",$a1id);
+    $qb->andwhere(" r.actor2ref = :a2id");
+    $qb->setParameter("a2id",$a2id);
+    $qy = $qb->getQuery();
+    $rln =  $qy->getOneOrNullResult();
+    return $rln;
+  }
+
+
+
   public function findByActor($aid)
   {
     $qb = $this->createQueryBuilder('r');
     $qb->where(" r.actor1ref = :aid");
     $qb->orwhere(" r.actor2ref = :aid");
+    $qb->orderby(' r.date ');
     $qb->setParameter("aid",$aid);
     $qy = $qb->getQuery();
     $rns = $qy->getResult();
@@ -117,7 +134,7 @@ class RelationRepository extends EntityRepository
         //not happy with this but it works
         foreach($roles as &$arole )
         {
-        $glimpse = $this->getEntityManager()->getRepository(Glimpse::class)->findOne($arole->getGlimpseRef());
+        $glimpse = $this->getEntityManager()->getRepository(Glimpse::class)->getOne($arole->getGlimpseRef());
          $glimpses[$arole->getRoleid()] = $glimpse;
         }
          dump($glimpses);

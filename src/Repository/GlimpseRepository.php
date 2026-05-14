@@ -70,7 +70,6 @@ class GlimpseRepository extends EntityRepository
 
     public function filter($filter)
     {
-
         $conn = $this->getEntityManager()->getConnection();
         $sql = "select g from App:Glimpse g  where  LOCATE( 'Coker' , g.location  ) > 0 ";
     //    $query = $this->getEntityManager()->createQuery($sql);
@@ -83,56 +82,63 @@ class GlimpseRepository extends EntityRepository
 
     public function filterf($filterstring)
     {
+       $conn = $this->getEntityManager()->getConnection();
         $filterlist = explode(",", $filterstring);
-        dump($filterlist);
-        $qb = $this->createQueryBuilder('g');
-        $qb->select('g');
-        $qb->from('App:Role','r');
-        $qb->andwhere('  r.glimpseref = g.glimpseid  ');
+        $sql = "select g from App:Glimpse g , App:Role r where  g.glimpseid = r.glimpseref and ( ";
+        $n =0;
         foreach($filterlist as $filterpair)
         {
            $filter = explode("+",$filterpair);
-           dump($filter);
            if(count($filter)>1)
            {
-           $namefilter ="%".$filter[0]."%".$filter[1]."%";
+             $namefilter ="%".$filter[0]."%".$filter[1]."%";
            }else
            {
-           $namefilter ="%".$filter[0]."%";
+             $namefilter ="%".$filter[0]."%";
            }
-            $qb->andwhere('  r.name like :name or  r.predicates like :name ');
+           if($n >0 ) $sql .= " or ";
+           $sql .= "  r.name like '".$namefilter."' or  r.predicates like '".$namefilter."'" ;
+           $n++;
         }
-       /* $qb->orwhere('  g.location like :name  ');
-        $qb->orwhere('  r.name like :name ');
-        $qb->orwhere('  r.predicates like :name ');
-        $qb->orwhere('  g.location like :name  ');*/
-        $qb->orderby(' g.date ');
-        $qb->setparameter( 'name', $namefilter);
-        dump($qb);
-        $qy= $qb->getQuery();
-        dump($qy);
-        $glimpses = $qy->getResult();
-        dump($glimpses);
+   /* $sql .="   r.name like '".$namefilter."'  )";*/
+        $sql .= ") order by  g.date ";
+        $query = $this->getEntityManager()->createQuery($sql);
+        $glimpses = $query->getResult();
         $n=0;
-        //not happy with this but it works
+
         foreach($glimpses as &$glimpse )
         {
-        $roles = $this->getEntityManager()->getRepository(Role::class)->findChildren($glimpse->getGlimpseid());
-         $glimpse->{"role"} = $roles;
+           $roles = $this->getEntityManager()->getRepository(Role::class)->findChildren($glimpse->getGlimpseid());
+           $glimpse->{"role"} = $roles;
         }
-         dump($glimpses);
         return $glimpses;
     }
+
+    public function findDuplicates($glimpse1)
+    {
+       $conn = $this->getEntityManager()->getConnection();
+         dump($glimpse1);
+        $sql = "select g from App:Glimpse g  where  g.type = '".$glimpse1->getType()."' and  g.date = '".$glimpse1->getDate()."' ";
+        $query = $this->getEntityManager()->createQuery($sql);
+        $glimpses = $query->getResult();
+        $n=0;
+        foreach($glimpses as &$glimpse )
+        {
+           $roles = $this->getEntityManager()->getRepository(Role::class)->findChildren($glimpse->getGlimpseid());
+           $glimpse->{"role"} = $roles;
+        }
+        return $glimpses;
+    }
+
 
     public function Countglimpses($sourceid)
     {
         $sql = "select  min(g.date),max(g.date),count(g) from App:Glimpse as g ";
         $sql .= " where g.sourceid = $sourceid  group by g.sourceid";
-
         $query = $this->getEntityManager()->createQuery($sql);
         $results = $query->getResult();
         if($results)
-           return $results[0];
+        return $results[0];
         else return [0,0,0,0];
     }
 

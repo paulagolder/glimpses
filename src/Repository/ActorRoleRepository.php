@@ -22,7 +22,7 @@ use Doctrine\DBAL\Driver\Connection;
 class ActorRoleRepository extends EntityRepository
 {
 
-    public function xgetRoles($aid)
+    public function getRolesIndexed($aid)
     {
       $sql = "select g from App:ActorRole g ";
       $sql .= " where g.actorref = ".$aid." ";
@@ -129,6 +129,14 @@ class ActorRoleRepository extends EntityRepository
            $roles = $query->getResult();
            return $roles;
        }
+
+       public function getActorIds($rid)
+          {
+              $sql = "SELECT  ar.actorref FROM App:actorrole ar where  ar.roleref =  ".$rid;
+              $query = $this->getEntityManager()->createQuery($sql);
+              $actorids = $query->getResult();
+              return $actorids;
+          }
 
        public function getActorRoles($aid)
        {

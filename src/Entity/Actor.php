@@ -48,6 +48,11 @@ class Actor
      */
     private $deathdate;
 
+     /**
+         * @ORM\Column(type="string", length="10",nullable=true)
+         */
+        private $gender;
+
     /**
      * @ORM\Column(type="string", length=40, nullable=true)
      */
@@ -166,6 +171,18 @@ class Actor
         return $text;
     }
 
+    public function getGender(): ?string
+    {
+        return $this->gender;
+    }
+
+    public function setGender(string $text): self
+    {
+        if( substr($text,0,1) == "f" or substr($text,0,1) == "F" )
+           $this->gender = "female";
+        else $this->gender= "male";
+        return $this;
+    }
 
     public function getContributor(): ?string
     {

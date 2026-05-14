@@ -14,20 +14,14 @@
 {% block body %}
 <div id="glimpse" >
     <div class ="heading" >
-    <div class="label">Actor</div>
+    <div class="title">Glimpse {{glimpse.glimpseid}}</div>
     <div class="field">
         <div class="returnbutton button1"> <a  href = "{{returnlink}}" >return </a> </div>
     </div>
 </div>
     <div class="glimpse">
-        <form action="/glimpse/process_editrole/{{glimpse.glimpseid}}/{{activerole}}" method="post" >
-            <div class="row">
-                <div class="label">ID </div>
-                <div class= "field">{{glimpse.glimpseid}}</div>
-                </div>
+       <div class="glimpseform">
                 <div class="row">
-                    <div class="label"> language </div>
-                    <div class= "field">{{glimpse.language}}</div>
                     <div class="label"> location </div>
                     <div class= "field">{{glimpse.location}}</div>
                     <div class="label"> type </div>
@@ -40,8 +34,10 @@
                     <div class= "field">{{glimpse.text}}</div>
                 </div>
                 <div class="subheading" >
-                    <div class="label"> roles </div>
+                    <div class="title"> roles </div>
                 </div>
+            </div>
+             <form action="/glimpse/process_editrole/{{glimpse.glimpseid}}/{{activerole}}" method="post" >
                 <table class="roleTable" >
                     <col class="col1" />
                     <col class="col2" />
@@ -69,6 +65,14 @@
                         <td class="cell" >
                             <input type="text" name="_role[{{pid}}]['predicates']" value="{{role.predicates}}" />
                         </td>
+                      <td class="cell" >
+                                                                        <select name="_actor2ref">
+                                                                            <option selected="selected">Choose Actor</option>
+                                                                            {% for  actor in actors %}
+                                                                            <option value='{{actor.actorid}}'>{{actor.surname}}, {{actor.forename}}: {{actor.birthdate}}({{actor.specifier}})</option>
+                                                                            {% endfor %}
+                                                                        </select>
+                                                           </td>
                     </tr>
                     <tr class="row">
                         <td class="cell label" >
@@ -90,6 +94,8 @@
                                         <td class="cell" >
                                         <input type="text" name="_role[{{pid}}]['predicate'][{{predid}}]['object']" value="{{role.predicates[predid].object}}" />
                                         </td>
+
+
                                     </tr>
                                 {% endfor %}
                             </table>

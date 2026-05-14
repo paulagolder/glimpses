@@ -42,7 +42,7 @@ class ActorRepository extends EntityRepository
         return $indexedactors;
     }
 
-    public function findOne($aid)
+    public function getOne($aid)
     {
         $qb = $this->createQueryBuilder('g');
         $qb -> where(" g.actorid = :aid ");
@@ -128,6 +128,7 @@ class ActorRepository extends EntityRepository
                       }
              $n++;
                   }
+              $sql .= " order  by  a.surname , a.forename " ;
            dump($sql);
                  $query = $this->getEntityManager()->createQuery($sql);
                   $actors = $query->getResult();

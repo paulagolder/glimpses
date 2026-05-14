@@ -20,7 +20,6 @@ class Templates
   private  $templatelist=array();
   private  $agelist=array();
 
-
   public function __construct(string $templatedir)
   {
     $configDirectories = [$templatedir];
@@ -175,24 +174,21 @@ class Templates
           if($nhdate<$hdate) $lifeevents[$eventtype]->setHighDate($alifeevent->getHighdate());
     }
       dump($lifeevents);
-
   }
-
 
    public function updateLifeEvents(&$learray,$lifeevents)
    {
-     foreach($lifeevents as $key=>$lifeevent)
-     {
-       if(!array_key_exists($key,$learray))
-       {
-          $learray[$key] = new LifeEvent($lifeevent->getActorref(),$key);
-       }
-       else
-       {
-         $learray[$key] = $lifeevent;
+      foreach($lifeevents as $key=>$lifeevent)
+      {
+          if(!array_key_exists($key,$learray))
+          {
+             $learray[$key] = new LifeEvent($lifeevent->getActorref(),$key);
+          }
+          else
+          {
+            $learray[$key] = $lifeevent;
+          }
       }
-    }
-
     }
 
 }

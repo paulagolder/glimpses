@@ -100,6 +100,20 @@
                         {% endif %}
                         {% endfor %}
                 </div>
+                <div class="subheading" >
+                                <div class="title"> Possible duplicates </div>
+                </div>
+                {% for dup in duplicates %}
+                 {% if glimpse.glimpseid != dup.glimpseid %}
+                 <div class="duplicatestable">
+                    <div class="row" >
+                        <div class="returnbutton">  <a   href = "/glimpse/showone/{{dup.glimpseid}}" >View</a> </div>
+                        <div class="label" >{{dup.glimpseid}}   </div>
+                        <div class="text">{{ FormatEvent(dup)}}   </div>
+                     </div>
+                     </div>
+                   {% endif %}
+                {% endfor %}
 </div>
 {% endblock %}
 

@@ -53,11 +53,16 @@ class LifeEvent
     /**
      * @ORM\Column(type="text", nullable=true)
     */
-        private $role;
+    private $role;
 
-             /**
-              * @ORM\Column(type="text", nullable=true)
-              */
+    /**
+     * @ORM\Column(type="text", nullable=true)
+    */
+    private $subject;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+    */
     private $clues;
 
 
@@ -184,7 +189,7 @@ class LifeEvent
     }
 
 
-  public function setRole($text): self
+    public function setRole($text): self
     {
         $this->role = $text;
         return $this;
@@ -193,6 +198,17 @@ class LifeEvent
      public function getRole(): ?string
     {
         return  $this->role ;
+    }
+
+    public function setSubject($text): self
+    {
+        $this->subject = $text;
+        return $this;
+    }
+
+     public function getSubject(): ?string
+    {
+        return  $this->subject ;
     }
 
     public static  function merge(&$lifeevents,$newlifeevents)

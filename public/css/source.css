@@ -17,13 +17,13 @@ source inputform
 =================================== */
 #source div.inputform
 {
-    width: 36em;
+    width: 42em;
     margin-top:1em;
 }
 #sourceform
 {
     background-color: silver;
-    width: 36em;
+    width: 40em;
 }
 
 #sourceform div.row
@@ -34,7 +34,7 @@ source inputform
 
 #sourceform div.row div.label
 {
-    width:5em;
+    width:9em;
 }
 
 #sourceform div.row div.innerlabel
@@ -49,8 +49,11 @@ source inputform
     height:4em;
 }
 
-#sourceform div.row div.field input.classid{}
 
+#sourceform div.row div.field input.glimpsetypes
+{
+    width:36em;
+}
 
 div#source div.inputform  textarea.title
 { 
@@ -90,6 +93,8 @@ div#source div.inputform  textarea.url
     width:40em;
     height:4em;
 }
+
+
 
 /*================================
 sourcelist

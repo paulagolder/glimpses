@@ -349,12 +349,12 @@ edit role Table
 
 #glimpse div.editroleTable div.row div.col5
 {
-    width:33em;
+    width:16em;
 }
 
 #glimpse div.editroleTable div.body div.row div.col5 input
 {
-    width:31em;
+    width:16em;
 }
 #glimpse div.editroleTable div.row div.col6
 {
@@ -362,11 +362,9 @@ edit role Table
 }
 
 
-
-
-    /*=============================================
+/*=============================================
     roletable
-    ============================*/
+============================*/
 
 #glimpse div.roleTable
 {
@@ -409,4 +407,20 @@ edit role Table
 #glimpse div.roleTable  div.row div.col4
 {
     width: 16em;
+}
+
+
+/*=============================================
+duplicate table
+============================*/
+
+
+#glimpse div.duplicatestable div.row div.text
+{
+    padding-left:0.5em;
+}
+
+#glimpse div.duplicatestable div.row div.label
+{
+    width:2em;
 }

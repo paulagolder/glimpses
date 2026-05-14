@@ -12,6 +12,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use App\Service\Templates;
 
 use App\Entity\Source;
+use App\Entity\Actor;
 use App\Entity\Glimpse;
 use App\Entity\Role;
 use App\Entity\ActorRole;
@@ -32,6 +33,143 @@ class GlimpseController extends AbstractController
         $this->templatesrc = $templates;
         $this->requestStack = $request_stack;
         $this->lib = $lib;
+    }
+
+
+    public function show(ManagerRegistry $doctrine,$gid)
+    {
+
+        $glimpse = $doctrine->getRepository(Glimpse::class)->getOne($gid);
+        $roles =  $doctrine->getRepository(Role::class)->findChildren($gid);
+        if($glimpse != null)
+           $source =   $doctrine->getRepository(Source::class)->getOne($glimpse->getSourceid());
+        else
+            $source ="";
+        $duplicates = $doctrine->getRepository(Glimpse::class)->findDuplicates($glimpse);
+        foreach($duplicates as &$dup)
+        {
+         $dup->{"roles"} = $doctrine->getRepository(Role::class)->findChildren($dup->getGlimpseId());
+
+        }
+        return $this->render(
+            'glimpse/show.html.twig',
+            [
+            'glimpse'=>$glimpse,
+            'roles'=>$roles,
+            'source'=>$source,
+            'duplicates'=>$duplicates,
+            'returnlink'=>"returnlink",
+            ]
+        );
+    }
+
+
+    public function clearfilter(ManagerRegistry $doctrine)
+    {
+        $pfield = "";
+        $this->lib->clearCookieFilter("glimpse");
+        return $this->redirect("/glimpse/showall/");
+    }
+
+    public function showall(ManagerRegistry $doctrine)
+    {
+            $pfield =   $this->lib->getCookieFilter('glimpse');
+            dump($pfield);
+            if(is_numeric($pfield))
+            {
+              $glimpses[] = $doctrine->getRepository(Glimpse::class)->getOne($pfield);
+            }else
+            {
+              $filter = $pfield;
+              $glimpses = $doctrine->getRepository(Glimpse::class)->filterf($filter);
+            }
+            dump($glimpses);
+
+        foreach($glimpses as &$glimpse)
+        {
+              $glimpse->{"roles"} =  $doctrine->getRepository(Role::class)->findChildren($glimpse->getGlimpseId());
+        }
+        return $this->render(
+            'glimpse/showall.html.twig',
+            [
+            'glimpses'=>$glimpses,
+            'filter'=>$pfield,
+            'returnlink'=>"returnlink",
+            ]
+        );
+    }
+
+    public function showregion(ManagerRegistry $doctrine,$region)
+    {
+
+        $glimpses = $doctrine->getRepository(Glimpse::class)->viewregion($region);
+
+        return $this->render(
+            'glimpse/showregion.html.twig',
+            [
+            'region'=>$region,
+            'glimpses'=>$glimpses,
+            'returnlink'=>"returnlink",
+            ]
+        );
+    }
+
+    public function showsource(ManagerRegistry $doctrine,$sourceid)
+    {
+        $source = $doctrine->getRepository(Source::class)->getOne($sourceid);
+        $glimpses = $doctrine->getRepository(Glimpse::class)->viewsource($sourceid);
+        $typelist = $this->templatesrc->getTypes();
+        return $this->render('glimpse/showsource.html.twig',
+            [
+            'typelist'=>$typelist,
+            'source'=>$source,
+            'glimpses'=>$glimpses,
+            'returnlink'=>"/source/show/$sourceid",
+            ]
+        );
+    }
+
+     public function filter(ManagerRegistry $doctrine)
+    {
+        $request = $this->requestStack->getCurrentRequest();
+        $pfield = $request->query->get('filter');
+        if (is_null($pfield))
+        {
+            $this->lib->clearCookieFilter("glimpse");
+        }
+        else
+        {
+     //       $this->lib->setCookieFilter("glimpse",$pfield);
+        }
+
+        if (!$pfield)
+        {
+            $glimpses = $doctrine->getRepository(Glimpse::class)->findAll();
+        }
+        else
+        {
+            if(is_numeric($pfield))
+            {
+              $glimpses[] = $doctrine->getRepository(Glimpse::class)->getOne($pfield);
+            }else
+            {
+              $filter = $pfield;
+              $glimpses = $doctrine->getRepository(Glimpse::class)->filterf($filter);
+            }
+            dump($glimpses);
+        }
+        foreach($glimpses as &$glimpse)
+        {
+              $glimpse->{"roles"} =  $doctrine->getRepository(Role::class)->findChildren($glimpse->getGlimpseId());
+        }
+        return $this->render(
+            'glimpse/showall.html.twig',
+            [
+            'glimpses'=>$glimpses,
+            'filter'=>$pfield,
+            'returnlink'=>"returnlink",
+            ]
+        );
     }
 
 
@@ -64,7 +202,7 @@ class GlimpseController extends AbstractController
     public function  new(ManagerRegistry $doctrine,$type)
     {
         $sourceid = $this->lib->getCookieSource();
-        $source =   $doctrine->getRepository(Source::class)->findOne($sourceid);
+        $source =   $doctrine->getRepository(Source::class)->getOne($sourceid);
         $glimpse = new Glimpse();
         $glimpse->{"source"}=$source->getTitle();
         $glimpse->setLocation($source->getRegion());
@@ -133,20 +271,12 @@ class GlimpseController extends AbstractController
 
     public function  startinput(ManagerRegistry $doctrine,$sourceid)
     {
-
-        $typelist = $this->templatesrc->getTypes();
-        dump($typelist);
-        $source =  $doctrine->getRepository(Source::class)->findOne($sourceid);
-        dump($source);
+        $source =  $doctrine->getRepository(Source::class)->getOne($sourceid);
         $this->lib->setCookieSource($sourceid);
-        {
-            return $this->render('source/startinput.html.twig', array(
+        return $this->render('source/startinput.html.twig', array(
                 'returnlink' => "/glimpse/new",
                 'source'=>$source,
-                'typelist' =>$typelist,
             ));
-
-        }
     }
 
     public function  edit(ManagerRegistry $doctrine,$gid)
@@ -161,7 +291,7 @@ class GlimpseController extends AbstractController
          dump($actors);
          $role->{"actors"}=$actors;
         }
-    dump($roles);
+        dump($roles);
         $nrole = new role();
         $nrole->setGlimpseref($gid);
         $roles[]=$nrole;
@@ -177,8 +307,9 @@ class GlimpseController extends AbstractController
 
     public function  edit_role(ManagerRegistry $doctrine,$gid,$pref)
     {
-        $glimpse = $doctrine->getRepository(Glimpse::class)->findOne($gid);
+        $glimpse = $doctrine->getRepository(Glimpse::class)->getOne($gid);
         $roles =  $doctrine->getRepository(Role::class)->findChildren($gid);
+        $allactors = $doctrine->getRepository(Actor::class)->findAll();
         dump($roles);
         foreach ($roles as $key=> $role)
         {
@@ -192,6 +323,7 @@ class GlimpseController extends AbstractController
             'glimpse' => $glimpse,
             'roles'=>$roles,
             'activerole'=>$pref,
+            'actors'=>$allactors,
             'returnlink' => "/glimpse/edit/".$gid,
         ));
 
@@ -224,7 +356,7 @@ class GlimpseController extends AbstractController
         {
             $glimpse = new Glimpse();
             $sourceid = $this->lib->getCookieSource();
-            $source =   $doctrine->getRepository(Source::class)->findOne($sourceid);
+            $source =   $doctrine->getRepository(Source::class)->getOne($sourceid);
             $glimpse->setLocation($source->getRegion());
             $glimpse->setSourceId($sourceid);
             $glimpse->setLanguage($source->getlanguage());
@@ -233,8 +365,8 @@ class GlimpseController extends AbstractController
         }
         else
         {
-            $glimpse = $doctrine->getRepository(Glimpse::class)->findOne($gid);
-              $source =   $doctrine->getRepository(Source::class)->findOne($glimpse->getSourceid());
+            $glimpse = $doctrine->getRepository(Glimpse::class)->getOne($gid);
+              $source =   $doctrine->getRepository(Source::class)->getOne($glimpse->getSourceid());
             $roles =  $doctrine->getRepository(Role::class)->findChildren($gid);
               $glimpse->{"source"} = $source->getTitle();
         }
@@ -301,7 +433,7 @@ class GlimpseController extends AbstractController
     public function  process_editrole(ManagerRegistry $doctrine,$gid,$aref)
     {
 
-        $glimpse = $doctrine->getRepository(Glimpse::class)->findOne($gid);
+        $glimpse = $doctrine->getRepository(Glimpse::class)->getOne($gid);
         $role =  $doctrine->getRepository(Role::class)->getOne($aref);
         //  $predicates =  $doctrine->getRepository("App:Predicate")->findChildren($gid,$aref);
            $request = $this->requestStack->getCurrentRequest();
@@ -335,137 +467,5 @@ class GlimpseController extends AbstractController
 
     }
 
-
-    public function show(ManagerRegistry $doctrine,$gid)
-    {
-
-        $glimpse = $doctrine->getRepository(Glimpse::class)->getOne($gid);
-        $roles =  $doctrine->getRepository(Role::class)->findChildren($gid);
-        if($glimpse != null)
-           $source =   $doctrine->getRepository(Source::class)->getOne($glimpse->getSourceid());
-        else
-            $source ="";
-
-        return $this->render(
-            'glimpse/show.html.twig',
-            [
-            'glimpse'=>$glimpse,
-            'roles'=>$roles,
-            'source'=>$source,
-            'returnlink'=>"returnlink",
-            ]
-        );
-    }
-
-
-    public function clearfilter(ManagerRegistry $doctrine)
-    {
-        $pfield = "";
-        $this->lib->clearCookieFilter("glimpse");
-        return $this->redirect("/glimpse/showall/");
-    }
-
-    public function showall(ManagerRegistry $doctrine)
-    {
-
-            $pfield =   $this->lib->getCookieFilter('glimpse');
-            dump($pfield);
-            if(is_numeric($pfield))
-            {
-              $glimpses[] = $doctrine->getRepository(Glimpse::class)->findOne($pfield);
-            }else
-            {
-              $filter = $pfield;
-              $glimpses = $doctrine->getRepository(Glimpse::class)->filterf($filter);
-            }
-            dump($glimpses);
-
-        foreach($glimpses as &$glimpse)
-        {
-              $glimpse->{"roles"} =  $doctrine->getRepository(Role::class)->findChildren($glimpse->getGlimpseId());
-        }
-        return $this->render(
-            'glimpse/showall.html.twig',
-            [
-            'glimpses'=>$glimpses,
-            'filter'=>$pfield,
-            'returnlink'=>"returnlink",
-            ]
-        );
-    }
-
-    public function showregion(ManagerRegistry $doctrine,$region)
-    {
-
-        $glimpses = $doctrine->getRepository(Glimpse::class)->viewregion($region);
-
-        return $this->render(
-            'glimpse/showregion.html.twig',
-            [
-            'region'=>$region,
-            'glimpses'=>$glimpses,
-            'returnlink'=>"returnlink",
-            ]
-        );
-    }
-
-    public function showsource(ManagerRegistry $doctrine,$sourceid)
-    {
-        $source = $doctrine->getRepository(Source::class)->findOne($sourceid);
-        $glimpses = $doctrine->getRepository(Glimpse::class)->viewsource($sourceid);
-        $typelist = $this->templatesrc->getTypes();
-        return $this->render('glimpse/showsource.html.twig',
-            [
-            'typelist'=>$typelist,
-            'source'=>$source,
-            'glimpses'=>$glimpses,
-            'returnlink'=>"/source/show/$sourceid",
-            ]
-        );
-    }
-
-     public function filter(ManagerRegistry $doctrine)
-    {
-        $request = $this->requestStack->getCurrentRequest();
-        $pfield = $request->query->get('filter');
-        dump($pfield);
-        if (is_null($pfield))
-        {
-            $this->lib->clearCookieFilter("glimpse");
-        }
-        else
-        {
-            $this->lib->setCookieFilter("glimpse",$pfield);
-        }
-
-        if (!$pfield)
-        {
-            $glimpses = $doctrine->getRepository(Glimpse::class)->findAll();
-        }
-        else
-        {
-            if(is_numeric($pfield))
-            {
-              $glimpses[] = $doctrine->getRepository(Glimpse::class)->findOne($pfield);
-            }else
-            {
-              $filter = $pfield;
-              $glimpses = $doctrine->getRepository(Glimpse::class)->filterf($filter);
-            }
-            dump($glimpses);
-        }
-        foreach($glimpses as &$glimpse)
-        {
-              $glimpse->{"roles"} =  $doctrine->getRepository(Role::class)->findChildren($glimpse->getGlimpseId());
-        }
-        return $this->render(
-            'glimpse/showall.html.twig',
-            [
-            'glimpses'=>$glimpses,
-            'filter'=>$pfield,
-            'returnlink'=>"returnlink",
-            ]
-        );
-    }
 
 }

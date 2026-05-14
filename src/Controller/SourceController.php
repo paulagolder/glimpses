@@ -39,14 +39,14 @@ class SourceController extends AbstractController
 
     public function  edit(ManagerRegistry $doctrine,$sid)
     {
-        $source = $doctrine->getRepository(Source::class)->findOne($sid);
+        $source = $doctrine->getRepository(Source::class)->getOne($sid);
         return $this->render('source/edit.html.twig', array(
             'source' => $source,
             'returnlink' => "/source/show/".$sid,
             ));
     }
 
-    public function setfilter(ManagerRegistry $doctrine)
+    public function setfilter()
     {
         $request = $this->requestStack->getCurrentRequest();
         $pfield = $request->query->get('filter');
@@ -59,7 +59,6 @@ class SourceController extends AbstractController
         }
         return $this->redirect("/source/showall/");
     }
-
 
     public function clearfilter(ManagerRegistry $doctrine)
     {
@@ -76,23 +75,15 @@ class SourceController extends AbstractController
            return $this->render('source/showall.html.twig',
            [
             'sources'=>$sources,
-
             ]
                );
-}
-
-
+   }
 
     public function  delete(ManagerRegistry $doctrine,$sid)
     {
-
          $doctrine->getRepository(Source::class)->delete($sid);
         return $this->redirect("/source/showall/");
-
     }
-
-
-
 
     public function  process_edit(ManagerRegistry $doctrine,$sid)
     {
@@ -102,41 +93,34 @@ class SourceController extends AbstractController
         }
         else
         {
-            $source = $doctrine->getRepository(Source::class)->findOne($sid);
+            $source = $doctrine->getRepository(Source::class)->getOne($sid);
         }
 
         $request = $this->requestStack->getCurrentRequest();
         if ($request->getMethod() == 'POST')
         {
-
             $source->setLanguage($request->request->get('_language'));
             $source->setRegion($request->request->get('_region'));
             $source->setTitle($request->request->get('_title'));
             $source->setPeriod($request->request->get('_period'));
             $source->setUrl($request->request->get('_url'));
-
-
+            $source->setGlimpsetypes($request->request->get('_glimpsetypes'));
             $entityManager = $doctrine->getManager();
             $entityManager->persist($source);
             $entityManager->flush();
             $sid = $source->getSourceid();
-
             return $this->redirect("/source/edit/".$sid);
-
         }
-
         return $this->render('source/edit.html.twig', array(
 
             'source' => $source,
             'returnlink' => "/source/show/".$sid,
             ));
-
     }
 
 public function showone(ManagerRegistry $doctrine,$sid)
 {
-
-    $source = $doctrine->getRepository(Source::class)->findOne($sid);
+    $source = $doctrine->getRepository(Source::class)->getOne($sid);
     return $this->render(
         'source/show.html.twig',
         [
@@ -174,6 +158,5 @@ public function showall(ManagerRegistry $doctrine)
         'returnlink'=>"returnlink",
         ]
         );
-}
-
+    }
 }

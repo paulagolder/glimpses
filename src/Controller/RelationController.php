@@ -57,7 +57,7 @@ class RelationController extends AbstractController
             $filter =   $this->lib->getCookieFilter('relation');
             if(is_numeric($filter))
             {
-              $relations = $doctrine->getRepository(Relation::class)->findOne($filter);
+              $relations = $doctrine->getRepository(Relation::class)->getOne($filter);
             }elseif (is_null($filter))
             {
                $relations = $doctrine->getRepository(Relation::class)->getAll();
@@ -69,8 +69,8 @@ class RelationController extends AbstractController
         dump($relations);
         foreach($relations as &$relation)
         {
-            $relation->{"actor1"}= $this->doctrine->getRepository(Actor::class)->findOne($relation->getActor1ref());
-            $relation->{"actor2"}= $this->doctrine->getRepository(Actor::class)->findOne($relation->getActor2ref());
+            $relation->{"actor1"}= $this->doctrine->getRepository(Actor::class)->getOne($relation->getActor1ref());
+            $relation->{"actor2"}= $this->doctrine->getRepository(Actor::class)->getOne($relation->getActor2ref());
         }
         dump($relations);
         return $this->render(
@@ -88,8 +88,8 @@ class RelationController extends AbstractController
     public function showone(ManagerRegistry $doctrine,$rid)
     {
         $relation = $doctrine->getRepository(Relation::class)->getOne($rid);
-        $actor1 = $doctrine->getRepository(Actor::class)->findOne($relation->getActor1ref());
-        $actor2 = $doctrine->getRepository(Actor::class)->findOne($relation->getActor2ref());
+        $actor1 = $doctrine->getRepository(Actor::class)->getOne($relation->getActor1ref());
+        $actor2 = $doctrine->getRepository(Actor::class)->getOne($relation->getActor2ref());
         $clues = explode(",",trim($relation->getClues()));
         dump($clues);
         $cluelist = array();
@@ -142,8 +142,8 @@ class RelationController extends AbstractController
  public function edit(ManagerRegistry $doctrine,$rid)
     {
         $relation = $doctrine->getRepository(Relation::class)->getOne($rid);
-        $actor1 = $doctrine->getRepository(Actor::class)->findOne($relation->getActor1ref());
-        $actor2 = $doctrine->getRepository(Actor::class)->findOne($relation->getActor2ref());
+        $actor1 = $doctrine->getRepository(Actor::class)->getOne($relation->getActor1ref());
+        $actor2 = $doctrine->getRepository(Actor::class)->getOne($relation->getActor2ref());
 
         dump($actor1);
         dump($actor2);
@@ -227,7 +227,7 @@ class RelationController extends AbstractController
     {
 
         $em = $doctrine->getManager();
-        $ar = $doctrine->getRepository(ActorRole::class)->findone($aid, $rid);
+        $ar = $doctrine->getRepository(ActorRole::class)->getOne($aid, $rid);
         $em->remove($ar);
         $em->flush();
         return $this->redirect("/actor/editroles/".$aid);
@@ -252,7 +252,7 @@ class RelationController extends AbstractController
                 $this->lib->clearCookieFilter("relation");
             }else
             {
-               $this->lib->setCookieFilter('relation',$pfield);
+              // $this->lib->setCookieFilter('relation',$pfield);
             }
             return $this->redirect("/relation/showall/");
     }

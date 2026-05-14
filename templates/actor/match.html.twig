@@ -143,15 +143,18 @@
                 </div>
                 <div class="roleTable" >
                     <div class="body">
+                          {% dump(roles2) %}
                         {% for pid, role in roles2 %}
                         <div class="row">
                             <div class="cell">
                                 <div class="subheading">
                                 </div>
                             </div>
+                        {% if role.glimpse is defined %}
                             {% set age = calAge(actor2.Birthdate,role.glimpse.date) %}
                             {% set formatedtext = FormatRole(role.roleid, role.glimpse) %}
                             <div class="cell" >{{formatedtext}} age: {{age}}</div>
+                            {% endif %}
                         </div>
 
                         {% endfor %}

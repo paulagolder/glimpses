@@ -9,13 +9,10 @@
 
 {% block js %}
 {{ parent() }}
-
 {% endblock %}
 
 {% block body %}
 <div id="source" >
-    
-    
     <div class ="heading" >
         <div class="title" > Entering Data for </div>
         <div class="returnbutton  button1"> <a class="button" href = "/source/show/{{source.sourceid}}" >return </a> </div>
@@ -29,6 +26,7 @@
         <div class="label"> Location  </div>
         <div class="field"> {{source.region}}  </div>
    </div>
+   {% set typelist = source.glimpsetypes | split(",") %}
    </div>
           {% for type in typelist %}
           <div class="subheading">
@@ -36,7 +34,6 @@
           </div>
           {% endfor %}
  </div>
-    
 {% endblock %}
 
 

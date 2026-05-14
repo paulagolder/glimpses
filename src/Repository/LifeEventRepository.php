@@ -40,9 +40,11 @@ class LifeEventRepository extends EntityRepository
     {
         $sql = "select l from App:Lifeevent  l";
         $sql .= ' where  l.actorref ='. $aid  ;
+        $sql .= ' order by l.middate '  ;
         $query = $this->getEntityManager()->createQuery($sql);
         $events = $query->getResult();
         $eventarray = array();
+        dump($events);
         foreach($events as $event)
         {
             $eventarray[$event->getLifeEventId()]=$event;

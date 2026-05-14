@@ -42,7 +42,7 @@ actor panel
     display:flex;
 }
 
-#actor  div.actortable div.row div.inputpair div.label
+#actor  div.actortable div.row  div.label
 {
     color: blue;
     padding-left: 1em;
@@ -61,7 +61,11 @@ actor panel
     width: 34em;
 }
 
-
+#actor  div.actortable div.row div.namepair div.field
+{
+    padding-left: 1em;
+    width: 20em;
+}
 
 div#actor div.actortable input.title
 {
@@ -147,10 +151,27 @@ div#actor div.eventTable div.body div.row div
     padding-right:1em;
 }
 
+#actor  div.eventTable div.body div.row div.date
+{
+    padding-left:3em;
+}
+
+
 #actor div.eventTable div.body div.row div.type
 {
     font-style:italic;
     color:blue;
+    width:6em;
+}
+
+#actor div.eventTable div.body div.row div.date
+{
+    width:6em;
+}
+
+#actor div.eventTable div.body div.row div.role
+{
+    width:16em;
 }
 
 /*========================================
@@ -176,10 +197,6 @@ relationship table
 /*========================================
 glimpses table
 ========================================== */
-html body.sf-js-enabled div.cglimpsestable div.cgrow div.glimpsetext{}
- div#actor div.glimpse div.row div.inputpair div.label{}
-#actor div.cglimpsestable div.row div.inputpair div.label{}
-#actor div.cglimpsestable div.row div.inputpair div.label{}
 
 
 div#actor div.cglimpsestable
@@ -198,7 +215,7 @@ div#actor div.cglimpsestable div.row div.inputpair div.label
     color : blue;
 }
 
-#actor div.cglimpsestable div.cgrow div.agecell
+#actor div.cglimpsestable div.row div.agecell
 {
     padding-left:1em;
 }
@@ -242,9 +259,10 @@ div#actor div.cglimpsestable div.row div.agecell
     width:10em;
 }
 
+
 div#actor div.cglimpsestable div.row div.glimpsetext
 {
-    width:90%;
+    width:56em;
     float:left;
 }
 
@@ -255,7 +273,7 @@ div#actor div.cglimpsestable div.row
     margin-left: 1em;
 }
 
-#actor div.cglimpsestable div.cgrow
+#actor div.cglimpsestable div.row
 {
     display:flex;
     margin-left: 1em;
@@ -374,12 +392,17 @@ div#actor div.cglimpsestable div.row
     /*=============================================
     roletable
     ============================*/
-    html body.sf-js-enabled div.roleTable div.row{}
+
+    div#actor div.roleTable div.body div.row div.returnbutton{}
+
+
+
     #actor div.roleTable
     {
         table-layout: auto;
         background-color: #eee;
         border-spacing: 5px;
+        background-color: #ccc;
         border-collapse:separate;
     }
 
@@ -397,7 +420,6 @@ div#actor div.cglimpsestable div.row
 
     #actor div.roleTable  div.row div.col1
     {
-
         width: 3em;
     }
 
@@ -418,8 +440,20 @@ div#actor div.cglimpsestable div.row
         width: 16em;
     }
 
+    #actor div.roleTable div.row div.col6
+    {
+        display:flex;
+    }
 
+    #actor div.actor div.roleTable div.row div.text
+    {
+        padding-left:0.5em;
+    }
 
+    #actor div.actor div.roleTable div.row div.age
+    {
+        padding-left:0.5em;
+    }
 
 
     /*=============================================

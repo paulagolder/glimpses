@@ -15,49 +15,56 @@
 <div id="actor" >
     <div class ="heading" >
         <div class="title">Actor:</div>
-        <div class= "actorname">{{actor.surname}}, {{actor.forename}}</div>
-        <div class="returnbutton button1"> <a href = "/actor/editroles/{{actor.actorid}}" >return </a> </div>
+        <div class= "field">{{actor.surname}}, {{actor.forename}}</div>
+        <div class="returnbutton button1"> <a href = "/actor/showone/{{actor.actorid}}" >return </a> </div>
         <div class="returnbutton">  <a   href = "/actor/delete/{{actor.actorid}}" >delete </a> </div>
         <div class="returnbutton">  <a   href = "/actor/edit/{{actor.actorid}}" >edit </a> </div>
         <div class="returnbutton"><a  href = "/actor/new" >Add New actor </a> </div>
     </div>
+    {% dump(actor) %}
+    {% dump(actors) %}
+     {% dump(actorsindexed) %}
         <div class="actortable">
-
             <div class="row">
-                  <div class="inputpair" >
-                                   <div class="label">birthdate</div>
-                                   {% if actor.birthdate is not null  %}
-                                   <div class= "field"> {{actor.Birthdate}} </div>
-                                   {% else %}
-                                   <div class= "field"> "Null"" </div>
-                                   {% endif %}
-                    <div class="label"> specifier </div>
-                    <div class= "longfield"> {{actor.specifier}} </div>
-                    </div>
+                <div class="inputpair" >
+                    <div class="label">ID </div>
+                    <div class= "field"> {{actor.actorid}}</div>
+                </div>
             </div>
             <div class="row">
-                 <div class="inputpair" >
+                <div class="inputpair" >
+                    <div class="label">name</div>
+                    <div class= "field"> {{actor.surname}}, {{actor.forename}} </div>
+                </div>
+                <div class="inputpair" >
+                    <div class="label"> specifier </div>
+                    <div class= "longfield"> {{actor.specifier}} </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="inputpair" >
+                    <div class="label">birthdate</div>
+                    {% if actor.birthdate is not null  %}
+                    <div class= "field"> {{actor.Birthdate}} </div>
+                    {% else %}
+                    <div class= "field"> "Null"" </div>
+                    {% endif %}
+                </div>
+                <div class="inputpair" >
                     <div class="label"> deathdate</div>
                     <div class= "field"> {{actor.deathdate}} </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="inputpair" >
                     <div class="label"> text </div>
                     <div class= "longfield"> {{actor.text}} </div>
-                     </div>
+                </div>
             </div>
         </div>
 
  <div class ="heading" >
-    <div class="title">Relationships</div>
- </div>
- <div class="relationTable" >
-        <div class="body">
-            {% for rid, relation in relations %}
-            <div class="row">
-                <div class="actor">{{actorsindexed[relation.actor1ref].getName()}} </div>
-                <div class="relation">{{relation.relation}} </div>
-               <div class="actor">{{actorsindexed[relation.actor2ref].getName()}} </div>
-            </div>
-            {% endfor %}
-        </div>
+    <div class="title">Events</div>
  </div>
 
  <div class="subheading" >
@@ -84,7 +91,6 @@
  <div class ="heading" >
       <div class="title">Glimpse </div>
       <div>{{glimpse.glimpseid}}</div>
-       <div class="returnbutton"><a  href = "/glimpse/showone/{{glimpse.glimpseid}}" >View</a> </div>
  </div>
  <div class="actortable">
         <div class="row">
@@ -119,12 +125,7 @@
                                  <div  class="col3" >{{role.role}}</div>
                                  <div  class="col4" >{{role.name}} </div>
                                  <div  class="col5" >{{role.predicates}} </div>
-                                 <div class="col6">
-                                {%   for rid , actor in   role.actors %}
-                                <div class="actorbutton"><a  href = "/actor/showone/{{rid}}" >{{actor}}</a> </div>
-                                {% endfor %}
                              </div>
-                         </div>
                           {% endfor %}
        </div>
     <div class="subheading" >
@@ -140,17 +141,13 @@
                 <div class="namepair" >
                         <div class="label">Name</div>
                         <div class= "field">{{actor.surname}}, {{actor.forename}}</div>
-                 </div>
-                  <div class="namepair" >
-                        <div class="label">Date</div>
-                        <div class= "field"> <input class="cellid" type="text" name="_date" value="{{glimpse.date}}" /> </div>
-                  </div>
+            </div>
             <div class="relnpair" >
                 <div class="label"> Relationship </div>
                 <select name="_relationship">
                     <option selected="selected">Choose one</option>
-                     {% for role in glimpse.roles %}
-                     <option value='{{role.role}}'>{{role.role}}</option>
+                   {% for  relationship in relationships %}
+                     <option value='{{relationship}}'>{{relationship}}</option>
                    {% endfor %}
                     </select>
             </div>
@@ -158,11 +155,9 @@
                 <div class="label"> of </div>
                 <select name="_actor2ref">
                     <option selected="selected">Choose Actor</option>
-                      {% for role in glimpse.roles %}
-                          {%   for rid , actor in   role.actors %}
-                                <option value={{rid}}>{{actor}})</option>
-                           {% endfor %}
-                       {% endfor %}
+                    {% for  actor in actors %}
+                    <option value='{{actor.actorid}}'>{{actor.surname}}, {{actor.forename}}: {{actor.birthdate}}({{actor.specifier}})</option>
+                    {% endfor %}
                 </select>
             </div>
           <div class="cluepair" >

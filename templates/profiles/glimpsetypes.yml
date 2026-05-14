@@ -75,6 +75,16 @@ marriage:
       cardinality: 2
    official:
      format: " #official was official at wedding between #groom and #bride on #date at #location"
+banns:
+   format: "banns for marriage between #groom and #bride read on #date at #location"
+   bride:
+     format: "banns  read for #bride wedded to #groom on #date at #location "
+   groom:
+     format: "banns  read for #groom wedded to #bride on #date at #location "
+   official:
+     format: " #official was official at banns reading for wedding between #groom and #bride on #date at #location"
+
+
 
 will:
    format: "last testement of  #testator on #date at #location"

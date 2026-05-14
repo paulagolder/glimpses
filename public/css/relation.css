@@ -1,4 +1,17 @@
 
+#relation div.subheading.row div.titlebi
+{
+    color:blue;
+    font-style:italic;
+
+}
+
+#relation div.subheading.row div.title
+{
+    margin-right:0em;
+}
+
+
 #relation   div.relationlist
 {
     overflow-y:scroll;

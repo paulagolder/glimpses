@@ -43,6 +43,13 @@ class Source
 
 
 
+     /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $glimpsetypes;
+
+
+
   public function getSourceid(): ?int
     {
         return $this->sourceid;
@@ -120,6 +127,19 @@ class Source
     public function setLanguage(string $text): self
     {
         $this->language = $text;
+
+        return $this;
+    }
+
+    public function getGlimpsetypes(): ?string
+    {
+        return $this->glimpsetypes;
+    }
+
+
+    public function setGlimpseTypes(string $text): self
+    {
+        $this->glimpsetypes = $text;
 
         return $this;
     }

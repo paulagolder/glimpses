@@ -1,0 +1,100 @@
+{# templates/actor/show.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link href="{{ asset('css/actor.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block js %}
+{{ parent() }}
+
+{% endblock %}
+
+{% block body %}
+   <div id="actor" >
+          <div class="subheading" >
+                 <div class="title">Actor </div>
+                 <div class="returnbutton button1">  <a   href = "/actor/showone/{{actor.actorid}}" >Returm </a> </div>
+               </div>
+       <div class="actor">
+         <div class="actortable">
+
+        <div class="row">
+            <div class="inputpair" >
+                <div class="label">name</div>
+                <div class= "field"> {{actor.surname}}, {{actor.forename}} </div>
+            </div>
+            <div class="inputpair" >
+                <div class="label"> specifier </div>
+                <div class= "longfield"> {{actor.specifier}} </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="inputpair" >
+                <div class="label">birthdate</div>
+                {% if actor.birthdate is not null  %}
+                <div class= "field"> {{actor.Birthdate}} </div>
+                {% else %}
+                <div class= "field"> "Null"" </div>
+                {% endif %}
+            </div>
+            <div class="inputpair" >
+                <div class="label"> deathdate</div>
+                <div class= "field"> {{actor.deathdate}} </div>
+            </div>
+        </div>
+    </div>
+        <div class="subheading" >
+            <div class="title">Parents</div>
+        </div>
+        <div class="eventTable" >
+           <div class="body">
+                {% for eid , parent  in parents %}
+                   <div class="row">
+                       <div class="text">{{parent.getLabel()}} </div>
+                   </div>
+                {% endfor %}
+         </div>
+        <div class="subheading" >
+            <div class="title">Spouses</div>
+        </div>
+        <div class="eventTable" >
+           <div class="body">
+                {% for eid , spouse  in wives %}
+                   <div class="row">
+                       <div class="text">{{spouse.getLabel()}} </div>
+                   </div>
+                {% endfor %}
+         </div>
+       <div class="eventTable" >
+                <div class="body">
+                     {% for eid , spouse  in husbands %}
+                        <div class="row">
+                            <div class="text">{{spouse.getLabel()}} </div>
+                        </div>
+                     {% endfor %}
+              </div>
+
+    </div>
+
+<div class="subheading" >
+            <div class="title">Children</div>
+        </div>
+        <div class="eventTable" >
+           <div class="body">
+                {% for eid , child  in children %}
+                   <div class="row">
+                       <div class="text">{{child.getLabel()}} </div>
+                   </div>
+                {% endfor %}
+         </div>
+
+    </div>
+</div>
+{% endblock %}
+
+
+
+
