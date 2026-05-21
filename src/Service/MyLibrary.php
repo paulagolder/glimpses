@@ -27,7 +27,7 @@ class MyLibrary
         $this->agelist =   Yaml::parseFile($ageyml[0]);
     }
 
-    public function getCookieRegion()
+    public function xgetCookieRegion()
     {
      $request = new Request();
      $cookies = $request->cookies;
@@ -38,8 +38,8 @@ class MyLibrary
 
     public function getCookieFilter($type)
     {
-   //  $request = $this->requestStack->getCurrentRequest();
-     $request = new Request();
+      $request = $this->requestStack->getCurrentRequest();
+     //$request = new Request();
      $cookies = $request->cookies;
      $reg="";
      if ($cookies->has($type.'_filter'))
@@ -190,7 +190,7 @@ class MyLibrary
 
     public function FormatEvent($glimpse)
     {
-    dump($this->templatelist);
+    //dump($this->templatelist);
         if($glimpse == null) return "++null++";
         $type= $glimpse->getType();
         $roles= $glimpse->roles;
@@ -206,4 +206,20 @@ class MyLibrary
         }
         return $fmt;
     }
+
+    public function matchMask($mask, $candidate)
+    {
+      $maskarray= explode(" ",$mask);
+      $candidatearray= explode(" ",$candidate);
+       if(!$maskarray[0]=="X")
+       {
+        if($maskarray[0]!=$candidatearray[0]) return false;
+       }
+       if(!$maskarray[0]=="X")
+       {
+           if($maskarray[1]!=$candidatearray[1]) return false;
+       }
+        return true;
+    }
+
 }

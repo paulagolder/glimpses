@@ -62,16 +62,16 @@ class SourceRepository extends EntityRepository
            $n=0;
            foreach($filterlist as $filter)
            {
-                dump($filter);
+                //dump($filter);
                 if($n>0) $sql .=" or ";
                 $afilter= "%".$filter."%";
                 $sql .= "  s.title LIKE '".$afilter."' or s.region LIKE '".$afilter."' ";
                 $n++;
            }
-           dump($sql);
+           //dump($sql);
            $query = $this->getEntityManager()->createQuery($sql);
            $sources = $query->getResult();
-           dump($sources);
+           //dump($sources);
            return $sources;
        }
 

@@ -54,7 +54,7 @@ class ActorRoleRepository extends EntityRepository
         $sql .= " and g.roleref = ".$rref." ";
         $query = $this->getEntityManager()->createQuery($sql);
         $roles = $query->getResult();
-        dump($roles);
+        ////dump($roles);
         return $roles;
     }
 
@@ -89,8 +89,8 @@ class ActorRoleRepository extends EntityRepository
         $roles= $qb->getQuery()->getResult();
         $aroles = array();
         $i=0;
-        dump($qb);
-           dump($aroles);
+        ////dump($qb);
+           ////dump($aroles);
         foreach( $roles as $key=>$content)
         {
           if($content)

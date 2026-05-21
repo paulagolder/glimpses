@@ -3,6 +3,8 @@
 namespace App\Entity;
 use App\Entity\Actor;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -141,13 +143,13 @@ class Relation
     public function addClue(string $text): self
     {
         $cluelist = explode(",",$this->clues);
-        dump($cluelist);
-        dump($text);
+        //dump($cluelist);
+        //dump($text);
         $newcluelist="";
         $first = true;
         foreach($cluelist as $clue)
         {
-           dump($clue);
+           //dump($clue);
           if($clue != $text && $clue != " ")
           {
              if(!$first) $newcluelist .= ",";
@@ -176,9 +178,10 @@ class Relation
     {
        $actor1= $this->doctrine->getRepository(Actor::class)->getOne($Actor1ref);
        $actor2= $this->doctrine->getRepository(Actor::class)->getOne($Actor2ref);
-
-        return " relation label";
+       return " relation label";
     }
+
+
 
 
 

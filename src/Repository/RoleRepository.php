@@ -36,7 +36,7 @@ class RoleRepository extends EntityRepository
 
     public function filter($keywords)
     {
-        dump($keywords);
+        //dump($keywords);
         $kwarray = explode(",",$keywords);
         $qb = $this->createQueryBuilder('r');
         $i=0;
@@ -48,7 +48,7 @@ class RoleRepository extends EntityRepository
               $i=$i+1;
         }
         $qy = $qb->getQuery();
-        dump($qy);
+        //dump($qy);
         $roles = $qy->getResult();
         $aroles = array();
         foreach( $roles as $key=>$role)
@@ -107,7 +107,7 @@ class RoleRepository extends EntityRepository
           $qb->setParameter( "fn2", "%".$fn2."%");
         $qb->setParameter( "kw2", "%".$kw2."%");
         $qy = $qb->getQuery();
-        dump($qy);
+        //dump($qy);
         $roles = $qy->getResult();
         $aroles = array();
         foreach( $roles as $key=>$role)
@@ -121,7 +121,7 @@ class RoleRepository extends EntityRepository
      public function filterf($filterstring)
     {
         $filterlist = explode(",", $filterstring);
-        dump($filterlist);
+        //dump($filterlist);
         $qb = $this->createQueryBuilder('r');
         $qb->select('r');
         $qb->from('App:Glimpse','g');
@@ -130,7 +130,7 @@ class RoleRepository extends EntityRepository
         foreach($filterlist as $filterpair)
         {
            $filter = explode("+",$filterpair);
-           dump($filter);
+           //dump($filter);
            if(count($filter)>1)
            {
               $namefilter ="%".$filter[0]."%".$filter[1]."%";
@@ -141,17 +141,17 @@ class RoleRepository extends EntityRepository
            }
            $clause .= " or  r.name like '".$namefilter."' or  r.predicates like '".$namefilter."' ";
         }
-        dump($clause);
+        //dump($clause);
         $clause = preg_replace( "/ or/"," ",$clause ,1);
-        dump($clause);
+        //dump($clause);
         $qb->andwhere($clause);
         $qb->orderby(' g.date ');
        // $qb->setparameter( 'name', $namefilter);
-        dump($qb);
+        //dump($qb);
         $qy= $qb->getQuery();
-        dump($qy);
+        //dump($qy);
         $roles = $qy->getResult();
-        dump($roles);
+        //dump($roles);
         $n=0;
         $glimpses= array();
         foreach($roles as &$arole )
@@ -159,7 +159,7 @@ class RoleRepository extends EntityRepository
           $glimpse = $this->getEntityManager()->getRepository(Glimpse::class)->getOne($arole->getGlimpseRef());
           $glimpses[$arole->getRoleid()] = $glimpse;
         }
-         dump($glimpses);
+         //dump($glimpses);
         return $glimpses;
     }
 

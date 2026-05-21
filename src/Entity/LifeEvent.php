@@ -147,10 +147,7 @@ class LifeEvent
         return $this->middate ;
     }
 
-    public function getDate(): ?string
-    {
-        return $this->middate ;
-    }
+
 
     public function setDate($text): self
     {
@@ -177,17 +174,16 @@ class LifeEvent
         return  $this->location ;
     }
 
-  public function setClues($text): self
+    public function setClues($text): self
     {
         $this->clues = $text;
         return $this;
     }
 
-     public function getClues(): ?string
+    public function getClues(): ?string
     {
         return  $this->clues ;
     }
-
 
     public function setRole($text): self
     {
@@ -206,14 +202,14 @@ class LifeEvent
         return $this;
     }
 
-     public function getSubject(): ?string
+    public function getSubject(): ?string
     {
         return  $this->subject ;
     }
 
     public static  function merge(&$lifeevents,$newlifeevents)
     {
-        dump($newlifeevents);
+        //dump($newlifeevents);
         foreach($newlifeevents as $eventtype => $lifeevent)
         {
             $yb = $lifeevent->getLowDate();
@@ -232,15 +228,38 @@ class LifeEvent
                 $lifeevents[$eventtype]->setHighDate($ya);
             }
         }
+    }
 
+    public  function getDate()
+    {
+        if($this->lowdate == $this->highdate)
+        {
+            return $this->lowdate;
+        }
+        else
+        {
+          $ldate = $this->parsedate($this->lowdate);
+          $hdate = $this->parsedate($this->highdate);
+          if($ldate[0] == $hdate[0])
+          {
+             return $ldate[0] ;
+          }
+          else
+          {
+            $ld= (float)$ldate[0];
+            $hd= (float)$hdate[0];
+             $md =(int)(( $ld+$hd)/2.0);
+             return "~".$md;
+          }
+        }
     }
 
 
     public static function xsetDates($date,$agerule)
     {
 
-        dump($date);
-        dump($agerule);
+        //dump($date);
+        //dump($agerule);
         $age = intval($agerule['age']);
         $dir = $agerule['limit'];
         if($dir=="GT")
@@ -268,7 +287,7 @@ class LifeEvent
             $ndate = $this->add($date ,$age);
             if($ndate > $this->highdate || $this->highdate=="9999-12-31") $this->highdate = $ndate;
         }
-        dump($this);
+        //dump($this);
 
     }
 

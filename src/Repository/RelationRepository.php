@@ -77,7 +77,7 @@ class RelationRepository extends EntityRepository
     {
           $filter = explode("+",$filterpair);
           $sql = "SELECT r FROM App:Relation r, App:Actor a1 , App:Actor a2 WHERE r.actor1ref = a1.actorid and r.actor2ref = a2.actorid  ";
-          dump($filter);
+          //dump($filter);
           if(count($filter)>1)
           {
              $namefilter ="%".$filter[0]."%".$filter[1]."%";
@@ -90,7 +90,7 @@ class RelationRepository extends EntityRepository
              $name0 = "%".$filter[0]."%";
              $sql .= "and ( a1.surname LIKE '".$name0."' or a1.forename LIKE '".$name0."' or  a2.surname LIKE '".$name0."' or a2.forename LIKE '".$name0."')";
           }
-        dump($sql);
+        //dump($sql);
         $query = $this->getEntityManager()->createQuery($sql);
         $sources = $query->getResult();
         return $sources;
@@ -100,7 +100,7 @@ class RelationRepository extends EntityRepository
  /*    public function xfilterf($filterstring)
     {
         $filterlist = explode(",", $filterstring);
-        dump($filterlist);
+        //dump($filterlist);
         $qb = $this->createQueryBuilder('r');
         $qb->select('r');
         $qb->from('App:Glimpse','g');
@@ -108,7 +108,7 @@ class RelationRepository extends EntityRepository
         foreach($filterlist as $filterpair)
         {
            $filter = explode("+",$filterpair);
-           dump($filter);
+           //dump($filter);
            if(count($filter)>1)
            {
            $namefilter ="%".$filter[0]."%".$filter[1]."%";
@@ -125,11 +125,11 @@ class RelationRepository extends EntityRepository
         $qb->orwhere('  g.location like :name  ');
         $qb->orderby(' g.date ');
         $qb->setparameter( 'name', $namefilter);
-        dump($qb);
+        //dump($qb);
         $qy= $qb->getQuery();
-        dump($qy);
+        //dump($qy);
         $roles = $qy->getResult();
-        dump($roles);
+        //dump($roles);
         $n=0;
         //not happy with this but it works
         foreach($roles as &$arole )
@@ -137,7 +137,7 @@ class RelationRepository extends EntityRepository
         $glimpse = $this->getEntityManager()->getRepository(Glimpse::class)->getOne($arole->getGlimpseRef());
          $glimpses[$arole->getRoleid()] = $glimpse;
         }
-         dump($glimpses);
+         //dump($glimpses);
         return $glimpses;
     }*/
 

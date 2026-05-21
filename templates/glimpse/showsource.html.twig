@@ -34,7 +34,6 @@
           {#   {% if glimpse.text %}
             <div class= "field ctext"> {{glimpse.text}} </div>
             {% else %} #}
-            {% dump(glimpse.roles) %}
               {% set formatedtext = FormatEvent(glimpse) %}
               {% if formatedtext %}
               <div class= "field ctext">

@@ -155,6 +155,7 @@ filterform
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 9em;
 }
 
 .filterform form div.filterrow div.label
@@ -171,7 +172,11 @@ filterform
     display: flex;
 }
 
+ span.blue
+ {
 
+     color:blue;
+ }
 
 
 .button
@@ -371,7 +376,7 @@ div.returnbutton a
     padding: 4px;
     display: inline;
     border-radius: 7px;
-    margin: 0 10px;
+    margin: 0 1px;
     background:#baf060;
     font-size: 12px;
     line-height: 15px;

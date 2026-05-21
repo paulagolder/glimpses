@@ -116,8 +116,22 @@ class Actor
 
     public function getLabel(): ?string
     {
-       $birthyear = substr($this->birthdate,0,4);
-       $deathyear = substr($this->deathdate,0,4);
+     if( substr($this->birthdate,0,1) == "<" or substr($this->birthdate,0,1) == ">" or substr($this->birthdate,0,1) == "~" )
+     {
+       $birthyear = substr($this->birthdate,0,5);
+     }
+     else
+     {
+         $birthyear = substr($this->birthdate,0,4);
+     }
+      if( substr($this->deathdate,0,1) == "<" or substr($this->deathdate,0,1) == ">" or substr($this->deathdate,0,1) == "~" )
+      {
+        $deathyear = substr($this->deathdate,0,5);
+      }
+      else
+      {
+          $deathyear = substr($this->deathdate,0,4);
+      }
         return $this->surname.", ".$this->forename." (".$birthyear."-".$deathyear.")";
     }
 
@@ -183,6 +197,14 @@ class Actor
         else $this->gender= "male";
         return $this;
     }
+
+    public  function getGenderSymbol(): ?string
+    {
+     if($this->gender == "female") return "F";
+     if($this->gender == "male") return "M";
+     else return "X";
+    }
+
 
     public function getContributor(): ?string
     {

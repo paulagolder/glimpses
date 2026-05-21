@@ -174,7 +174,7 @@ class Glimpse
 
     public function setDate(string $dt)
     {
-        dump($dt);
+        //dump($dt);
         $this->datequalifier = null;
         if (!$dt)
         {
@@ -189,17 +189,17 @@ class Glimpse
         if( stripos($dt, ':') !== false )
         {
             $datestruct = explode( ":",$dt );
-            dump($datestruct);
+            //dump($datestruct);
             $this->datequalifier = trim($datestruct[0]);
             $dt = trim($datestruct[01]);
-             dump($dt);
+             //dump($dt);
         }
-        dump($dt);
+        //dump($dt);
 
              if($this->validatedate($dt))
              {
                  $this->date = date('Y-m-d', strtotime($dt));
-                 dump($this->date);
+                 //dump($this->date);
             }
             else if ($this->validatedate($dt,"Y-m"))
             {
@@ -213,7 +213,7 @@ class Glimpse
             else
         {
             $this->date = "Error".$dt;
-               dump($this->date);
+               //dump($this->date);
         }
     }
 
@@ -262,13 +262,13 @@ class Glimpse
 
     function validateDate($date, $format = 'Y-m-d')
     {
-        dump($date);
-        dump($format);
+        //dump($date);
+        //dump($format);
         $d = \DateTime::createFromFormat($format, $date);
         // The Y ( 4 digits year ) returns TRUE for any integer with any number of digits so changing the comparison from == to === fixes the issue.
-        dump($d);
+        //dump($d);
         if(!$d) return false;
-        dump($d->format($format));
+        //dump($d->format($format));
         return $d && $d->format($format) === $date;
     }
 }

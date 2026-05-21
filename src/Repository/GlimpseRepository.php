@@ -64,7 +64,7 @@ class GlimpseRepository extends EntityRepository
          $roles = $this->getEntityManager()->getRepository(Role::class)->findChildren($gid);
          $source->{"roles"} = $roles;
         }
-        dump($sources);
+        //dump($sources);
         return $sources;
     }
 
@@ -73,10 +73,10 @@ class GlimpseRepository extends EntityRepository
         $conn = $this->getEntityManager()->getConnection();
         $sql = "select g from App:Glimpse g  where  LOCATE( 'Coker' , g.location  ) > 0 ";
     //    $query = $this->getEntityManager()->createQuery($sql);
-     //   dump($query);
+     //   //dump($query);
         $stmt = $conn->prepare($sql);
         $result = $stmt->executeQuery();
-        dump($results);
+        //dump($results);
         return $results;
     }
 
@@ -117,7 +117,7 @@ class GlimpseRepository extends EntityRepository
     public function findDuplicates($glimpse1)
     {
        $conn = $this->getEntityManager()->getConnection();
-         dump($glimpse1);
+         //dump($glimpse1);
         $sql = "select g from App:Glimpse g  where  g.type = '".$glimpse1->getType()."' and  g.date = '".$glimpse1->getDate()."' ";
         $query = $this->getEntityManager()->createQuery($sql);
         $glimpses = $query->getResult();

@@ -87,7 +87,7 @@ banns:
 
 
 will:
-   format: "last testement of  #testator on #date at #location"
+   format: "last testament of  #testator on #date at #location"
    testator:
       format: "will of #testator dated #date "
       cardinality: 1
@@ -147,6 +147,6 @@ probate:
 note:
   format: "note on #date at #location"
   participant:
-   format: " #participant particpated in note on #date at #location"
+   format: " #participant participated in note on #date at #location"
   official:
    format: " #official officiated in note on #date at #location "

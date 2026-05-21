@@ -20,7 +20,7 @@
         <div class="returnbutton button1"> <a href = "/relation/edit/{{relation.relationid}}" >Edit</a> </div>
     </div>
     <div class="subheading row" >
-        {% if actor1.label is defined  %}
+      {#}  {% if actor1.label is defined  %}
         {% set actor1label = actor1.label %}
         {% else %}
          {% set actor1label = "Missing actor" %}
@@ -32,39 +32,19 @@
                   {% endif %}
     <div class= "title">{{actor1label}}</div>
     <div class= "titlebi">{{relation.relation}}</div>
-    <div class= "title">{{actor2label}}</div>
+    <div class= "title">{{actor2label}}</div> #}
+    <div class="actorbutton"> <a href = "/actor/showone/{{relation.actor1ref}}" >{{actor1.label}}</a> </div>
+      <div class= "titlebi">{{relation.relation}}</div>
+       <div class="actorbutton"> <a href = "/actor/showone/{{relation.actor2ref}}" >{{actor2.label}}</a> </div>
+       <div class="cell"> {{relation.date}}</a> </div>
 </div>
 
 <div ></div>
 <div >
-  <div class="actor">
-        <div class="row">
-           <div class="returnbutton"> <a href = "/actor/showone/{{relation.actor1ref}}" >show </a> </div>
-           {% if actor1 is defined %}
-               {% if actor1 is not null %}
-                <div class= "field"> {{actor1.label}}</div>
-                <div class= "field">( {{actor1.specifier}} )</div>
-              {% endif %}
-               {% endif %}
-            </div>
-        </div>
-  <div class="actor">
-        <div class="row">
-           <div class="returnbutton"> <a href = "/actor/showone/{{relation.actor2ref}}" >show </a> </div>
-            {% if actor2 is defined %}
-               {% if actor2 is not null %}
-                <div class= "field"> {{actor2.label}}</div>
-                <div class= "field">( {{actor2.specifier}} )</div>
-                        {% endif %}
-                               {% endif %}
-            </div>
-        </div>
-    </div>
-    <div ></div>
+
       <div class="subheading" >
             <div class="title">Clues </div>
         </div>
-{% dump  clues %}
             <div class="">
                 {% for gid, glimpse in clues %}
                 <div class="row">
@@ -78,7 +58,6 @@
       <div class="subheading" >
             <div class="title">Roles </div>
         </div>
-{% dump  roles %}
             <div class="list">
                 {% for gid, role in roles %}
                 <div class="row">

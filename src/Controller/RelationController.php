@@ -66,13 +66,14 @@ class RelationController extends AbstractController
             {
               $relations = $this->doctrine->getRepository(Relation::class)->filterf($filter);
             }
-        dump($relations);
+        //dump($relations);
         foreach($relations as &$relation)
         {
             $relation->{"actor1"}= $this->doctrine->getRepository(Actor::class)->getOne($relation->getActor1ref());
             $relation->{"actor2"}= $this->doctrine->getRepository(Actor::class)->getOne($relation->getActor2ref());
+            $relation->{"mask"}= $this->getmask($relation);
         }
-        dump($relations);
+        //dump($relations);
         return $this->render(
             'relation/showall.html.twig',
             [
@@ -91,7 +92,7 @@ class RelationController extends AbstractController
         $actor1 = $doctrine->getRepository(Actor::class)->getOne($relation->getActor1ref());
         $actor2 = $doctrine->getRepository(Actor::class)->getOne($relation->getActor2ref());
         $clues = explode(",",trim($relation->getClues()));
-        dump($clues);
+        //dump($clues);
         $cluelist = array();
          foreach($clues as $clue)
         {
@@ -107,10 +108,10 @@ class RelationController extends AbstractController
           }
 
         }
-    dump($cluelist);
+    //dump($cluelist);
         $allrolerefs = $doctrine->getRepository(ActorRole::class)->getRelationRoles($relation->getActor1ref(),$relation->getActor2ref());
         $glimpses = array();
-         dump($allrolerefs);
+         //dump($allrolerefs);
                foreach($allrolerefs as $roleref)
                {
                    $arole =  $doctrine->getRepository(Role::class)->getOne($roleref->getRoleRef());
@@ -124,7 +125,7 @@ class RelationController extends AbstractController
                        $roles[$gref]=$arole;
                    }
                }
-           dump($roles);
+           //dump($roles);
         return $this->render(
             'relation/show.html.twig',
             [
@@ -144,10 +145,6 @@ class RelationController extends AbstractController
         $relation = $doctrine->getRepository(Relation::class)->getOne($rid);
         $actor1 = $doctrine->getRepository(Actor::class)->getOne($relation->getActor1ref());
         $actor2 = $doctrine->getRepository(Actor::class)->getOne($relation->getActor2ref());
-
-        dump($actor1);
-        dump($actor2);
-        dump("+".$relation->getClues()."+");
         $clues = explode(",",trim($relation->getClues()));
         $cluelist = array();
              foreach($clues as $clue)
@@ -164,13 +161,9 @@ class RelationController extends AbstractController
                                    }
                 }
             }
-                dump($cluelist);
-                dump(count($cluelist));
-
         $allrolerefs = $doctrine->getRepository(ActorRole::class)->getRelationRoles($relation->getActor1ref(),$relation->getActor2ref());
         $glimpses = array();
         $roles = array();
-        dump($allrolerefs);
         foreach($allrolerefs as $roleref)
         {
             $arole =  $doctrine->getRepository(Role::class)->getOne($roleref->getRoleRef());
@@ -184,7 +177,6 @@ class RelationController extends AbstractController
                                        $roles[$gref]=$arole;
             }
         }
-        dump($roles);
         return $this->render(
             'relation/edit.html.twig',
             [
@@ -201,10 +193,10 @@ class RelationController extends AbstractController
     public function addclue(ManagerRegistry $doctrine,$rid, $gref)
     {
         $relation = $doctrine->getRepository(Relation::class)->getOne($rid);
-        dump($relation);
-          dump($gref);
+        //dump($relation);
+          //dump($gref);
         $relation->addclue($gref);
-              dump($relation);
+              //dump($relation);
         $entityManager = $doctrine->getManager();
    //     $entityManager->persist($relation);
         $entityManager->flush();
@@ -252,9 +244,19 @@ class RelationController extends AbstractController
                 $this->lib->clearCookieFilter("relation");
             }else
             {
-              // $this->lib->setCookieFilter('relation',$pfield);
+               $this->lib->setCookieFilter('relation',$pfield);
             }
             return $this->redirect("/relation/showall/");
+    }
+
+
+     public function getMask($arelation): ?string
+    {
+       $actor1= $this->doctrine->getRepository(Actor::class)->getOne($arelation->getActor1ref());
+       $mask= $actor1->getGenderSymbol();
+       $actor2= $this->doctrine->getRepository(Actor::class)->getOne($arelation->getActor2ref());
+       $mask .=" ".$actor2->getGenderSymbol();
+       return $mask;
     }
 
 }

@@ -65,14 +65,18 @@
                         <td class="cell" >
                             <input type="text" name="_role[{{pid}}]['predicates']" value="{{role.predicates}}" />
                         </td>
+                     <td class="cell" >
+                               <div class="returnbutton "> <a class="button" href = "/actor/newactor/{{glimpse.glimpseid}}/{{role.roleid}}" >Add New Actor </a> </div>
+                      </td>
+
                       <td class="cell" >
-                                                                        <select name="_actor2ref">
-                                                                            <option selected="selected">Choose Actor</option>
-                                                                            {% for  actor in actors %}
-                                                                            <option value='{{actor.actorid}}'>{{actor.surname}}, {{actor.forename}}: {{actor.birthdate}}({{actor.specifier}})</option>
-                                                                            {% endfor %}
-                                                                        </select>
-                                                           </td>
+                          <select name="_selactorref">
+                             <option selected="selected">Choose Actor</option>
+                             {% for  actor in actors %}
+                                 <option value='{{actor.actorid}}'>{{actor.surname}}, {{actor.forename}}: {{actor.birthdate}}({{actor.specifier}})</option>
+                             {% endfor %}
+                          </select>
+                      </td>
                     </tr>
                     <tr class="row">
                         <td class="cell label" >
@@ -94,8 +98,6 @@
                                         <td class="cell" >
                                         <input type="text" name="_role[{{pid}}]['predicate'][{{predid}}]['object']" value="{{role.predicates[predid].object}}" />
                                         </td>
-
-
                                     </tr>
                                 {% endfor %}
                             </table>

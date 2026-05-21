@@ -21,6 +21,9 @@
          <div class='returnbutton  '>
                      <a  href = "/actor/new" >New Actor</a>
                  </div>
+             <div class='returnbutton  '>
+                                  <a  href = "/actor/updategender" >Update Gender</a>
+             </div>
       </div>
 <div class="filterform" >
 <form  action="/actor/setfilter">
@@ -40,7 +43,14 @@
         <div class="row ">
              <div class="returnbutton col1">   <a   href = "/actor/showone/{{actor.actorid}}" >view </a> </div>
             <div class= "col2">{{actor.actorId}}</div>
-            <div class= "col3"> {{actor.getLabel}}</div>
+          {%  if(actor.gender=="female") %}
+             <div class= "col3 female">
+          {% elseif(actor.gender=="male") %}
+              <div class= "col3 male">
+          {% else %}
+             <div class= "col3">
+           {% endif %}
+            {{actor.getLabel}}</div>
             <div class= "col4"> {{actor.specifier}}</div>
         </div>
         </div>

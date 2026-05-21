@@ -20,7 +20,7 @@ glimpse_new:
 
 glimpse_show:
     path: /glimpse/showone/{gid}
-    controller:  App\Controller\GlimpseController::show
+    controller:  App\Controller\GlimpseController::showone
 
 glimpse_show_all:
     path: /glimpse/showall/
@@ -69,7 +69,6 @@ glimpse_filter:
 glimpse_clearfilter:
    path:  /glimpse/clearfilter/
    controller:  App\Controller\GlimpseController::clearfilter
-
 
 actor_newactor:
    path:  /actor/newactor/{gid}/{rref}
@@ -134,6 +133,10 @@ actor_clearfilter:
 actor_new:
     path: /actor/new/
     controller:  App\Controller\ActorController::new
+
+actor_updategender:
+  path: /actor/updategender/
+  controller:  App\Controller\ActorController::updategender
 
 actor_newrelationship:
     path: /actor/newrelationship/{aid}

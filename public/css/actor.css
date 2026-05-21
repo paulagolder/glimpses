@@ -61,6 +61,7 @@ actor panel
     width: 34em;
 }
 
+
 #actor  div.actortable div.row div.namepair div.field
 {
     padding-left: 1em;
@@ -156,7 +157,6 @@ div#actor div.eventTable div.body div.row div
     padding-left:3em;
 }
 
-
 #actor div.eventTable div.body div.row div.type
 {
     font-style:italic;
@@ -173,6 +173,18 @@ div#actor div.eventTable div.body div.row div
 {
     width:16em;
 }
+
+
+#actor div.actor div.eventTable div.body div.row div.text
+{
+    width:56em;
+    float:left;
+    overflow: hidden;
+    white-space:nowrap;
+    text-overflow: ellipsis;
+
+}
+
 
 /*========================================
 relationship table
@@ -264,8 +276,10 @@ div#actor div.cglimpsestable div.row div.glimpsetext
 {
     width:56em;
     float:left;
+    overflow: hidden;
+    white-space:nowrap;
+    text-overflow: ellipsis;
 }
-
 
 div#actor div.cglimpsestable div.row
 {
@@ -302,6 +316,15 @@ div#actor div.cglimpsestable div.row
 
     }
 
+ #actor div.actorlist div.actor div.row div.col3.female
+ {
+     color: #e97b75;
+ }
+
+#actor div.actorlist div.actor div.row div.col3.male
+{
+    color: #3ea5c9;
+}
 
     #actor   div.row div.id
     {
@@ -455,6 +478,14 @@ div#actor div.cglimpsestable div.row
         padding-left:0.5em;
     }
 
+    #actor div.actor div.roleTable div.body div.row div.glimpsetext
+    {
+        width:56em;
+        float:left;
+        overflow: hidden;
+        white-space:nowrap;
+        text-overflow: ellipsis;
+    }
 
     /*=============================================
     newrelationship table

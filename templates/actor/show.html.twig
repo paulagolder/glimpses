@@ -74,13 +74,7 @@
            <div class="body">
                         {% for eid, levent in lifeevents %}
                                       <div class="row">
-                                           <div class="date">{{levent.lowdate}} </div>
-                                          {% if(levent.middate != levent.lowdate )  %}
-                                              <div class="date">{{levent.middate}} </div>
-                                          {% endif %}
-                                         {% if(levent.middate != levent.highdate )  %}
-                                          <div class="date">{{levent.highdate}} </div>
-                                           {% endif %}
+                                              <div class="date">{{levent.getDate}} </div>
                                            <div class="type">{{levent.eventtype}} </div>
                                            <div class="role">{{levent.role}} </div>
                                            <div class="text">{{levent.subject}} </div>
@@ -102,7 +96,11 @@
                 <div class="row">
                    <div class="returnbutton">  <a   href = "/relation/show/{{relation.relationid}}" >View</a> </div>
                    <div class="returnbutton">
+                       {% if actors[relation.actor1ref] is defined %}
                      <a   href = "/actor/showone/{{relation.actor1ref}}" >{{actors[relation.actor1ref].label}} </a>
+                        {% else %}
+                        missing actor {{relation.actor1ref}}
+                        {% endif %}
                    </div>
                    <div class="cell">  is {{relation.relation}} of </div>
                   {% if actors[relation.actor2ref] is defined %}

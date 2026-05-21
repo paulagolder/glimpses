@@ -14,12 +14,10 @@
 
 {% block body %}
 <div id="relation">
-
     <div class ="heading" >
       <div class="title">Relations</div>
         <div class="returnbutton button1"> <a href = "/actor/showall" >return </a> </div>
     </div>
-
  <div class="filterform">
 <form  action="/relation/setfilter">
   <div class="filterrow">
@@ -31,20 +29,11 @@
    </div>
    </form>
 </div>
-
     <div class="relationlist" >
     {% for relation in relations %}
     <div class="row" >
      <div class="returnbutton"> <a href = "/relation/show/{{relation.relationid}}" >show </a> </div>
-      {% if relation.actor1 is defined %}
-         {% if relation.actor1 is not null %}
-             {% if relation.actor2 is defined %}
-                   {% if relation.actor2 is not null %}
-                     <div>{{relation.actor1.label}} {{relation.relation}} {{relation.actor2.label}}</div>
-                   {% endif %}
-             {% endif %}
-         {% endif %}
-      {% endif %}
+        <div class="longtext">{{ FormatRelation(relation)| raw}}</div>
     </div>
     {% endfor %}
     </div>

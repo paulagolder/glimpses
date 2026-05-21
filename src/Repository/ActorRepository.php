@@ -29,6 +29,7 @@ class ActorRepository extends EntityRepository
         return $actors;
     }
 
+
     public function findAllIndexed()
     {
         $qb = $this->createQueryBuilder('g');
@@ -41,6 +42,31 @@ class ActorRepository extends EntityRepository
         }
         return $indexedactors;
     }
+
+    public function getgendernamelist()
+      {
+          $qb = $this->createQueryBuilder('g');
+          $qy = $qb->getQuery();
+          $actors = $qy->getResult();
+          $gendernames = array();
+          foreach($actors as $actor)
+          {
+               $forename = $actor->getForename();
+               $n=0;
+               if($actor->getGender() =="female") $n=-1;
+               if($actor->getGender()=="male")$n=+1;
+               if(array_key_exists($forename, $gendernames))
+               {
+               $gendernames[$forename] += $n;
+               }else
+               {
+                 $gendernames[$forename] = $n;
+               }
+          }
+          return $gendernames;
+      }
+
+
 
     public function getOne($aid)
     {
@@ -75,9 +101,27 @@ class ActorRepository extends EntityRepository
         return $actors;
     }
 
+
+      public function findRoleMatches($arole)
+      {
+         dump($arole);
+         $names = explode(" ",$arole->getName());
+         dump($names);
+           $qb = $this->createQueryBuilder('g');
+              $qb -> where(" g.surname = :surname ");
+              $qb->setParameter('surname', $names[1]);
+              $qb -> orwhere(" g.forename = :forename ");
+              $qb->setParameter('forename', $names[0]);
+              $qb->orderby("g.surname , g.forename");
+              $qy = $qb->getQuery();
+              $actors = $qy->getResult();
+              return $actors;
+
+      }
+
     public function exists($anactor)
     {
-    dump($anactor);
+    //dump($anactor);
         $qb = $this->createQueryBuilder('g');
         $qb -> where(" g.surname = :surname ");
         $qb->setParameter('surname', $anactor->getSurname());
@@ -102,6 +146,22 @@ class ActorRepository extends EntityRepository
     }
 
 
+    public function updategender($name,$gender)
+    {
+        $queryBuilder = $this->createQueryBuilder('a');
+        $query = $queryBuilder->update('App:Actor', 'a')
+                ->set('a.gender', ':gender')
+                ->where('a.forename = :name')
+                ->setParameter('name', $name)
+                ->setParameter('gender', $gender)
+                ->getQuery();
+        $result = $query->execute();
+
+    }
+
+
+
+
  public function filterf($filterstr)
        {
            $qb = $this->createQueryBuilder('a');
@@ -112,7 +172,7 @@ class ActorRepository extends EntityRepository
            foreach($filterlist as $filterpair)
            {
              $filter = explode("+",$filterpair);
-                      dump($filter);
+                      //dump($filter);
                       if($n>0) $sql .=" or ";
                       if(count($filter)>1)
                       {
@@ -129,10 +189,10 @@ class ActorRepository extends EntityRepository
              $n++;
                   }
               $sql .= " order  by  a.surname , a.forename " ;
-           dump($sql);
+           //dump($sql);
                  $query = $this->getEntityManager()->createQuery($sql);
                   $actors = $query->getResult();
-           dump($actors);
+           //dump($actors);
            return $actors;
        }
 

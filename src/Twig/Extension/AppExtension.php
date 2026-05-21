@@ -8,21 +8,25 @@ use Twig\TwigFilter;
 use Twig\TwigFunction;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Config\FileLocator;
-
+use App\Service\MyLibrary;
 
 class AppExtension extends AbstractExtension
 {
     private  $templatelist=array();
     private  $agelist=array();
+    private  $relationlist=array();
 
-    public function __construct(string $templatedir)
+    public function __construct(MyLibrary $lib,string $templatedir)
     {
+        $this->lib = $lib;
         $configDirectories = [$templatedir];
         $fileLocator = new FileLocator($configDirectories);
         $gstructyml = $fileLocator->locate('glimpsetypes.yml', null, false);
         $this->templatelist =   Yaml::parseFile($gstructyml[0]);
         $ageyml = $fileLocator->locate('agelist3.yml', null, false);
         $this->agelist =   Yaml::parseFile($ageyml[0]);
+        $relationyml = $fileLocator->locate('relations.yml', null, false);
+        $this->relationlist =   Yaml::parseFile($relationyml[0]);
     }
 
 
@@ -35,6 +39,7 @@ class AppExtension extends AbstractExtension
             new TwigFunction('FormatEvent',[$this, 'FormatEvent'] ),
             new TwigFunction('FormatEventFull',[$this, 'FormatEventFull'] ),
             new TwigFunction('FormatRoleFull',[$this, 'FormatRoleFull'] ),
+            new TwigFunction('FormatRelation',[$this, 'FormatRelation'] ),
             new TwigFunction('ideLink',[$this,'idelink']),
                 ];
     }
@@ -72,8 +77,7 @@ class AppExtension extends AbstractExtension
 
     public function getEventFormat($aglimpse,$templatelist)
     {
-                    dump($glimpse);
-                   dump($templatelist);
+                //   dump($templatelist);
                    return "event format ";
     }
 
@@ -93,6 +97,55 @@ class AppExtension extends AbstractExtension
         }
         return $fmt;
     }
+
+  public function FormatRelation($arelation)
+    {
+
+        $type= $arelation->getRelation();
+        if(isset($this->relationlist[$type]["format"]))
+        {
+        $fmt =  $this->relationlist[$type]["format"];
+        }
+         else
+         {
+              $substitutions = $this->relationlist[$type];
+              if( count($substitutions)==1)
+              {
+                  $subkey= array_key_first($substitutions);
+                  $fmt =   $this->relationlist[$subkey]["format"];
+              }
+              else
+              {
+              $mask= $arelation->{"mask"};
+             foreach($substitutions as $key=> $sub)
+             {
+                if($key=="format" or $key =="condition")
+                {
+
+                }
+                else
+                {
+                  if($this->lib->matchMask($mask,$sub["condition"]))
+                  {
+                     $fmt =  $this->relationlist[$key]["format"];
+                     $found=true;
+                  }
+                 }
+               }
+
+             }
+
+            }
+
+        $fmt = str_replace("#date", $arelation->getDate(), $fmt);
+         $actor1text = $arelation->{"actor1"}->getLabel();
+         $actor2text = $arelation->{"actor2"}->getLabel();
+        $fmt = str_replace("#actor1",  $actor1text, $fmt);
+        $fmt = str_replace("#actor2",  $actor2text, $fmt);
+        return $fmt;
+    }
+
+
 
     public function FormatEvent($glimpse)
     {

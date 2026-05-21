@@ -101,9 +101,7 @@
                         <div class="col3">{{role.role}}</div>
                         <div class="col4">{{role.name}}</div>
                         <div class="col5">{{role.predicates}}</div>
-                          <div class="col6">
-                                <div class="returnbutton"> <a    href = "/actor/newactor/{{glimpse.glimpseid}}/{{role.roleid}}" >New Actor</a> </div>
-                        </div>
+
                        <div class="col7">
                           {% for anactor in role.actors %}
                           <div class="actorbutton"><a href = "/actor/showone/{{anactor.actorid}}" > {{anactor.label }}</a></div>

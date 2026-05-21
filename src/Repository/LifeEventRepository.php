@@ -44,7 +44,6 @@ class LifeEventRepository extends EntityRepository
         $query = $this->getEntityManager()->createQuery($sql);
         $events = $query->getResult();
         $eventarray = array();
-        dump($events);
         foreach($events as $event)
         {
             $eventarray[$event->getLifeEventId()]=$event;

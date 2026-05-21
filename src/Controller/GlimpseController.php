@@ -22,11 +22,9 @@ use Symfony\Component\Config\FileLocator;
 
 class GlimpseController extends AbstractController
 {
-
     private $requestStack ;
     private $templatesrc;
     private $lib;
-
 
     public function __construct( Templates $templates ,MyLibrary $lib, RequestStack $request_stack ,string $templatedir)
     {
@@ -36,9 +34,8 @@ class GlimpseController extends AbstractController
     }
 
 
-    public function show(ManagerRegistry $doctrine,$gid)
+    public function showone(ManagerRegistry $doctrine,$gid)
     {
-
         $glimpse = $doctrine->getRepository(Glimpse::class)->getOne($gid);
         $roles =  $doctrine->getRepository(Role::class)->findChildren($gid);
         if($glimpse != null)
@@ -48,8 +45,7 @@ class GlimpseController extends AbstractController
         $duplicates = $doctrine->getRepository(Glimpse::class)->findDuplicates($glimpse);
         foreach($duplicates as &$dup)
         {
-         $dup->{"roles"} = $doctrine->getRepository(Role::class)->findChildren($dup->getGlimpseId());
-
+           $dup->{"roles"} = $doctrine->getRepository(Role::class)->findChildren($dup->getGlimpseId());
         }
         return $this->render(
             'glimpse/show.html.twig',
@@ -66,15 +62,15 @@ class GlimpseController extends AbstractController
 
     public function clearfilter(ManagerRegistry $doctrine)
     {
-        $pfield = "";
-        $this->lib->clearCookieFilter("glimpse");
-        return $this->redirect("/glimpse/showall/");
+         $pfield = "";
+         $this->lib->clearCookieFilter("glimpse");
+         return $this->redirect("/glimpse/showall/");
     }
 
     public function showall(ManagerRegistry $doctrine)
     {
+
             $pfield =   $this->lib->getCookieFilter('glimpse');
-            dump($pfield);
             if(is_numeric($pfield))
             {
               $glimpses[] = $doctrine->getRepository(Glimpse::class)->getOne($pfield);
@@ -83,7 +79,6 @@ class GlimpseController extends AbstractController
               $filter = $pfield;
               $glimpses = $doctrine->getRepository(Glimpse::class)->filterf($filter);
             }
-            dump($glimpses);
 
         foreach($glimpses as &$glimpse)
         {
@@ -101,9 +96,7 @@ class GlimpseController extends AbstractController
 
     public function showregion(ManagerRegistry $doctrine,$region)
     {
-
         $glimpses = $doctrine->getRepository(Glimpse::class)->viewregion($region);
-
         return $this->render(
             'glimpse/showregion.html.twig',
             [
@@ -131,17 +124,17 @@ class GlimpseController extends AbstractController
 
      public function filter(ManagerRegistry $doctrine)
     {
-        $request = $this->requestStack->getCurrentRequest();
-        $pfield = $request->query->get('filter');
+       $request = $this->requestStack->getCurrentRequest();
+       $pfield = $request->query->get('filter');
+
         if (is_null($pfield))
         {
             $this->lib->clearCookieFilter("glimpse");
         }
         else
         {
-     //       $this->lib->setCookieFilter("glimpse",$pfield);
+            $this->lib->setCookieFilter("glimpse",$pfield);
         }
-
         if (!$pfield)
         {
             $glimpses = $doctrine->getRepository(Glimpse::class)->findAll();
@@ -156,7 +149,7 @@ class GlimpseController extends AbstractController
               $filter = $pfield;
               $glimpses = $doctrine->getRepository(Glimpse::class)->filterf($filter);
             }
-            dump($glimpses);
+            ////dump($glimpses);
         }
         foreach($glimpses as &$glimpse)
         {
@@ -172,7 +165,6 @@ class GlimpseController extends AbstractController
         );
     }
 
-
     public function  dataentry(ManagerRegistry $doctrine,)
     {
         $glimpse = new Glimpse();
@@ -183,12 +175,11 @@ class GlimpseController extends AbstractController
         $roletemplate =  $this->templatesrc->getTemplates($type);
         foreach($roletemplate as $key => $card)
         {
-            dump($card);
+            //dump($card);
             $role = new role();
             $role->setRole($key);
             $roles[]=$role;
         }
-
         return $this->render('glimpse/edit.html.twig', array(
 
             'glimpse' => $glimpse,
@@ -215,16 +206,16 @@ class GlimpseController extends AbstractController
         $glimpse->setGlimpseId(0);
         $roles = array();
         $typelist = $this->templatesrc->getTypes();
-        dump($typelist);
+        //dump($typelist);
         if($type!="X")
         {
             $roletemplate =  $this->templatesrc->getTemplates($type);
-            dump( $roletemplate );
+            //dump( $roletemplate );
             $ir=0;
             foreach($roletemplate as $key => $card)
             {
-                   dump($key);
-                dump($card);
+                   //dump($key);
+                //dump($card);
                 $nr=1;
                 if(is_array($card))
                 {
@@ -238,10 +229,10 @@ class GlimpseController extends AbstractController
                     $nr=$card;
                 }
                 if($nr<1) $nr=1;
-                dump($nr);
+                //dump($nr);
                 for ($r = 1; $r <= $nr; $r++)
                 {
-                    dump($r);
+                    //dump($r);
                     $role = new role();
                     $role->setRole($key);
                     $roles[$ir]=$role;
@@ -249,7 +240,7 @@ class GlimpseController extends AbstractController
                     if($ir>10) break;
                 }
             }
-            dump($roles);
+            //dump($roles);
             return $this->render('glimpse/edit.html.twig', array(
 
                 'glimpse' => $glimpse,
@@ -284,14 +275,14 @@ class GlimpseController extends AbstractController
         $glimpse = $doctrine->getRepository(Glimpse::class)->getOne($gid);
         $source =  $doctrine->getRepository(Source::class)->getOne($glimpse->getSourceid());
         $roles =  $doctrine->getRepository(Role::class)->findChildren($gid);
-        dump($roles);
+        $allactors = $doctrine->getRepository(Actor::class)->findAll();
         foreach($roles as &$role)
         {
          $actors =  $doctrine->getRepository(ActorRole::class)->getActors($role->getRoleId());
-         dump($actors);
+         //dump($actors);
          $role->{"actors"}=$actors;
         }
-        dump($roles);
+        //dump($roles);
         $nrole = new role();
         $nrole->setGlimpseref($gid);
         $roles[]=$nrole;
@@ -300,6 +291,7 @@ class GlimpseController extends AbstractController
             'glimpse' => $glimpse,
             'source'=>$source,
             'roles'=>$roles,
+            'actors' => $allactors,
             'returnlink' => "/glimpse/showone/".$gid,
             'typelist' =>['baptism','marriage', 'burial'],
         ));
@@ -309,15 +301,7 @@ class GlimpseController extends AbstractController
     {
         $glimpse = $doctrine->getRepository(Glimpse::class)->getOne($gid);
         $roles =  $doctrine->getRepository(Role::class)->findChildren($gid);
-        $allactors = $doctrine->getRepository(Actor::class)->findAll();
-        dump($roles);
-        foreach ($roles as $key=> $role)
-        {
-            $aref = $role->getroleid();
-            dump($role );
-        }
-
-        dump($roles);
+        $allactors = $doctrine->getRepository(Actor::class)->findRoleMatches($roles[$pref]);
         return $this->render('glimpse/editrole.html.twig', array(
 
             'glimpse' => $glimpse,
@@ -419,7 +403,7 @@ class GlimpseController extends AbstractController
             return $this->redirect("/glimpse/edit/".$gid);
 
         }
-        dump($glimpse);
+        //dump($glimpse);
         return $this->render('glimpse/edit.html.twig', array(
 
             'glimpse' => $glimpse,
@@ -432,19 +416,35 @@ class GlimpseController extends AbstractController
 
     public function  process_editrole(ManagerRegistry $doctrine,$gid,$aref)
     {
-
+       $entityManager = $doctrine->getManager();
         $glimpse = $doctrine->getRepository(Glimpse::class)->getOne($gid);
         $role =  $doctrine->getRepository(Role::class)->getOne($aref);
         //  $predicates =  $doctrine->getRepository("App:Predicate")->findChildren($gid,$aref);
            $request = $this->requestStack->getCurrentRequest();
         if ($request->getMethod() == 'POST')
         {
+        $selactor = $request->request->all()["_selactorref"];
+        dump(" actor sell:".$selactor);
+           $actorrole =  $doctrine->getRepository(ActorRole::class)->findOne($selactor,$aref);
+                  if($actorrole)
+                  {
+
+                  }
+                  else
+                  {
+                     $actorrole = new ActorRole();
+                     $actorrole->setActorref($selactor);
+                     $actorrole->setRoleRef($aref);
+                     $entityManager->persist($actorrole);
+                     $entityManager->flush();
+                  }
+         $doctrine->getRepository(ActorRole::class)->getActors($role->getRoleId());
         $rqroles=$request->request->all()["_role"];
         $rrole = $rqroles[$aref];
             $glimpse->setContributor("paul");
             $now = new \DateTime();
             $glimpse->setUpdateDt($now);
-            $entityManager = $doctrine->getManager();
+
             $entityManager->persist($glimpse);
             $entityManager->flush();
             $role->setRole($rrole["'role'"]);

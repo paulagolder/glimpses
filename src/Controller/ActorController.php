@@ -42,6 +42,7 @@ class ActorController extends AbstractController
         } else
         {
             $actors = $doctrine->getRepository(Actor::class)->filterf($filter);
+             $this->lib->setCookieFilter("actor",$filter);
         }
         return $this->render(
                         'actor/showall.html.twig',
@@ -96,7 +97,7 @@ class ActorController extends AbstractController
             $this->lib->clearCookieFilter("actor");
         } else
         {
-           // $this->lib->setCookieFilter('actor', $pfield);
+            $this->lib->setCookieFilter('actor', $pfield);
         }
         return $this->redirect("/actor/showall/");
     }
@@ -142,7 +143,7 @@ class ActorController extends AbstractController
             $relation->{"actor2"} = $em->getRepository(Actor::class)->getOne($relation->getActor2ref());
         }
         $aroles = $doctrine->getRepository(ActorRole::class)->getActorRoles($aid);
-        dump($aroles);
+        ////dump($aroles);
         $froles = array();
         foreach ($aroles as &$arole)
         {
@@ -152,7 +153,7 @@ class ActorController extends AbstractController
             $glimpse->{"roles"} = $broles;
             $froles[$arole->getRoleRef()] = $glimpse;
         }
-        dump($froles);
+        ////dump($froles);
         $sroles = $doctrine->getRepository(Role::class)->filterf($gfilter);
         $cglimpses = array();
         foreach ($sroles as $key=> $srole)
@@ -169,7 +170,7 @@ class ActorController extends AbstractController
                 }
             }
         }
-        dump($cglimpses);
+        ////dump($cglimpses);
         $duplicates = $doctrine->getRepository(Actor::class)->findAllMatching($actor);
         return $this->render('actor/editroles.html.twig', array(
                     'actor' => $actor,
@@ -215,13 +216,21 @@ class ActorController extends AbstractController
         $now = new \DateTime();
         $actor->setUpdateDt($now);
         $actor->setSpecifier($specifier);
-        if($glimpse->getType() == "baptism" or $glimpse->getType() == "birth" ) $actor->setBirthdate($glimpse->getDate());
-        if($glimpse->getType() == "burial" or $glimpse->getType() == "death" ) $actor->setDeathdate($glimpse->getDate());
+        if( ($glimpse->getType() == "baptism") or ($glimpse->getType() == "birth") )
+        {
+            if($role->getRole() == "child" )
+              $actor->setBirthdate($glimpse->getDate());
+        }
+
+        if($glimpse->getType() == "burial" or $glimpse->getType() == "death" )
+        {
+           if($role->getRole() == "defunct")
+               $actor->setDeathdate($glimpse->getDate());
+        }
         $oaid =  $doctrine->getRepository(Actor::class)->exists($actor);
          $entityManager = $doctrine->getManager();
         if($oaid)
         {
-          dump("++duplicate++".$oaid);
           $aid =$oaid;
         }else
         {
@@ -229,8 +238,6 @@ class ActorController extends AbstractController
           $entityManager->flush();
           $aid = $actor->getActorid();
         }
-    dump($aid);
-    dump($rref);
         $actorrole =  $doctrine->getRepository(ActorRole::class)->findOne($aid,$rref);
         if($actorrole)
         {
@@ -244,7 +251,8 @@ class ActorController extends AbstractController
            $entityManager->persist($actorrole);
            $entityManager->flush();
         }
-        return $this->redirect("/glimpse/edit/".$gid);
+        return $this->redirect("/glimpse/editrole/".$gid."/".$rref);
+
     }
 
     public function newrelationship(ManagerRegistry $doctrine, $aid)
@@ -268,6 +276,25 @@ class ActorController extends AbstractController
         return $this->redirect("/actor/showall/");
     }
 
+    public function updategender(ManagerRegistry $doctrine)
+    {
+        $gendernamelist = $doctrine->getRepository(Actor::class)->getgendernamelist();
+        ////dump($gendernamelist);
+        foreach($gendernamelist as $name=>$count)
+        {
+          if($count >0)
+          {
+          ////dump("male ".$name);
+           $doctrine->getRepository(Actor::class)->updategender($name,"male");
+          }else if($count <0)
+          {
+          ////dump("female ".$name);
+          $doctrine->getRepository(Actor::class)->updategender($name,"female");
+          }
+        }
+        return $this->redirect("/actor/showall/");
+    }
+
     public function merge(ManagerRegistry $doctrine, $aid, $daid)
     {
         $actor1 = $doctrine->getRepository(Actor::class)->getOne($aid);
@@ -283,7 +310,7 @@ class ActorController extends AbstractController
         $entityManager->flush();
         $roles = $doctrine->getRepository(ActorRole::class)->getRolesIndexed($aid);
         $roles2 = $doctrine->getRepository(ActorRole::class)->getRolesIndexed($daid);
-        dump($roles2);
+        ////dump($roles2);
         foreach ($roles2 as $rid => $role)
         {
             if (!array_key_exists($rid, $roles))
@@ -374,13 +401,13 @@ class ActorController extends AbstractController
             $aid = $actor->getActorid();
             $par = $request->request->get('_role');
 
-            dump($par);
+            ////dump($par);
             if (!is_null($par))
             {
                 foreach ($par as $key => $arole)
                 {
-                    dump($key);
-                    dump($arole);
+                    ////dump($key);
+                    ////dump($arole);
                     $ref = $arole["'roleref'"];
                     if ($ref == null || $ref == 0)
                     {
@@ -431,21 +458,21 @@ class ActorController extends AbstractController
             $entityManager->persist($actor);
             $entityManager->flush();
             $rrole = $request->request->get('_role');
-            dump($rrole[$aref]);
+            ////dump($rrole[$aref]);
             # $role->setText( $rrole[$aref]["'text'"]) ;
             $role->setRole($rrole[$aref]["'role'"]);
             $role->setName($rrole[$aref]["'name'"]);
-            dump($role);
+            ////dump($role);
             $entityManager->persist($role);
             $entityManager->flush();
             $preds = $rrole[$aref]["'predicates'"];
             $predlist = explode(";", $preds);
-            dump($predlist);
+            ////dump($predlist);
             if ($predlist)
             {
                 foreach ($predlist as $predref => $opred)
                 {
-                    dump($opred);
+                    ////dump($opred);
                     if (array_key_exists($predref, $predicates))
                     {
                         $npredicate = $predicates[$predref];
@@ -500,7 +527,7 @@ class ActorController extends AbstractController
             $reln->setActor2ref($actor2);
             $reln->setClues($clues);
             $reln->setDate($date);
-            dump($reln);
+            ////dump($reln);
             $getrelation =  $doctrine->getRepository(Relation::class)->findbyKey($a1ref,$relation,$actor2);
              if($getrelation == null)
              {
@@ -526,7 +553,7 @@ class ActorController extends AbstractController
         $relationships = ["father", "mother", "son", "daughter", "wife", "husband", "sister", "brother", "resident"];
         $eventtypes =["birth","marriage","resident","death","burial","grant_of_probate"];
         $lifeevents = $doctrine->getRepository(LifeEvent::class)->findAllEvents($aid);
-        dump($lifeevents);
+        ////dump($lifeevents);
         $relations = $doctrine->getRepository(Relation::class)->findByActor($aid);
         $glimpse = $doctrine->getRepository(Glimpse::class)->getOne($gid);
         $glimpse->{"roles"} = $doctrine->getRepository(Role::class)->findChildren($gid);
@@ -539,13 +566,17 @@ class ActorController extends AbstractController
           $actorlist = array();
           foreach($roleactors as $anactor)
           {
-          $anactorid = $anactor["actorref"];
+            $anactorid = $anactor["actorref"];
             $anactor = $doctrine->getRepository(Actor::class)->getOne($anactorid);
-           $actorlist[$anactorid] = $anactor->getLabel();
+            if($anactor != null)
+            {
+              $actorlist[$anactorid] = $anactor->getLabel();
+            }
+
           }
            $arole->{"actors"} = $actorlist;
         }
-        dump($glimpse);
+        ////dump($glimpse);
         return $this->render('actor/newrelationship.html.twig', array(
                     'actor' => $actor,
                     'actorsindexed' => $actorsindexed,
@@ -568,18 +599,18 @@ class ActorController extends AbstractController
            $role->{"glimpse"} = $glimpse;
         }
         $entityManager = $doctrine->getManager();
-        dump($roles);
+        ////dump($roles);
         // $lifeevents =  $doctrine->getRepository(LifeEvent::class)->findAllEvents($aid);
-        //   dump( $lifeevents);
+        //   ////dump( $lifeevents);
         $lifeevents = array();
         foreach ($roles as &$role)
         {
             $froles[$role->getRoleId()] = $role;
             $slevents = $this->templates->getLifeEvents($aid, $role->glimpse->getType(), $role->getRole(), $role->glimpse->getDate());
-            dump($slevents);
+            ////dump($slevents);
             $lifeevents[]=reset($slevents);
         }
-        dump($lifeevents);
+        ////dump($lifeevents);
         foreach ($lifeevents as $key => $lifeevent)
         {
             $em = $doctrine->getManager();
@@ -642,7 +673,7 @@ class ActorController extends AbstractController
         $arole = new ActorRole();
         $arole->setActorref($aid);
         $arole->setRoleRef($rid);
-        dump($arole);
+        ////dump($arole);
         $entityManager = $doctrine->getManager();
         $entityManager->persist($arole);
         try
@@ -686,7 +717,7 @@ class ActorController extends AbstractController
         $husbands=array();
         $children=array();
         $parents=array();
-        dump($relnlist);
+        ////dump($relnlist);
         foreach($relnlist as $areln)
         {
         $relation = $areln->getRelation();
@@ -718,10 +749,10 @@ class ActorController extends AbstractController
             if ($relation== "child") $parents[ $a1id ] = $actor1;
         }
     }
-      dump($wives);
-      dump($husbands);
-      dump($children);
-       dump($parents);
+      ////dump($wives);
+      ////dump($husbands);
+      ////dump($children);
+       ////dump($parents);
     return $this->render('actor/maketree.html.twig', array(
                                   'actor' => $actor,
                                   'wives' => $wives,
@@ -732,4 +763,3 @@ class ActorController extends AbstractController
                       ));
     }
 }
-

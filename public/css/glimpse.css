@@ -339,7 +339,7 @@ edit role Table
 
 #glimpse div.editroleTable div.row div.col4
 {
-    width:16em;
+    width:12em;
 }
 
 #glimpse div.editroleTable div.body div.row div.col4 input
@@ -349,7 +349,7 @@ edit role Table
 
 #glimpse div.editroleTable div.row div.col5
 {
-    width:16em;
+    width:13em;
 }
 
 #glimpse div.editroleTable div.body div.row div.col5 input
@@ -358,7 +358,14 @@ edit role Table
 }
 #glimpse div.editroleTable div.row div.col6
 {
-    width:7em;
+    display:flex;
+    width:15em;
+}
+
+#glimpse div.editroleTable div.row div.col7
+{
+    display:flex;
+    width:16em;
 }
 
 
@@ -409,6 +416,11 @@ edit role Table
     width: 16em;
 }
 
+#glimpse div.glimpse form table.roleTable tbody tr.row td.cell select
+{
+    width: 16em;
+
+}
 
 /*=============================================
 duplicate table

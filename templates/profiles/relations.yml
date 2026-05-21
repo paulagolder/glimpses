@@ -1,0 +1,47 @@
+bride:
+   wife:
+
+child:
+    daughter:
+      condition: X F
+    son:
+      condition: X M
+
+father:
+   format: "#actor1 <span class='blue'>is father of</span> #actor2"
+
+father_of_groom:
+  father:
+
+groom:
+   husband:
+
+husband:
+   format: "#actor1 <span class='blue'>is husband of</span> #actor2"
+   inverse: wife
+
+mother:
+   format: "#actor1 <span class='blue'>is mother of</span> #actor2"
+
+son:
+   format: "#actor1 <span class='blue'>is son of</span> #actor2"
+   inverse:
+     father:
+       condition: M M
+     mother:
+       condition M F
+
+daughter:
+   format: "#actor1 <span class='blue'>is daughter</span> of #actor2"
+   inverse:
+     father:
+       condition: F M
+     mother:
+       condition: F F
+
+wife:
+   format: "#actor1 <span class='blue'>is wife of</span> #actor2"
+   inverse: husband
+
+defunct:
+  format: "#actor1 <span class='blue'>was buried</span> #actor2"
