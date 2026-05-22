@@ -31,6 +31,21 @@ census:
      resident:
        format: "#resident was present at #location on #date "
        cardinality: 10
+     head:
+         format: "#head was head of houshold at #location on #date "
+         cardinality: 1
+     wife:
+           format: "#wife was wife of head of household  at #location on #date "
+           cardinality: 1
+     son:
+       format: "#son was son of head of household  at #location on #date "
+       cardinality: 1
+     daughter:
+       format: "#daughter was daughter of head of household  at #location on #date "
+       cardinality: 1
+     grandson:
+       format: "#grandson was grandson of head of household  at #location on #date "
+       cardinality: 1
 
 burial:
    format: "#defunct buried on #date at #location"

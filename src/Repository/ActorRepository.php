@@ -80,12 +80,35 @@ class ActorRepository extends EntityRepository
 
     public function findAllMatching($actor)
     {
-        $qb = $this->createQueryBuilder('g');
-        $qb -> where(" concat( g.forename,'+',g.surname) = :name1 ");
-        $qb->setParameter('name1', $actor->getForename()."+".$actor->getSurname());
 
-        $qy = $qb->getQuery();
-          $actors = $qy->getResult();
+         $sql = "SELECT g FROM App\Entity\Actor g  ";
+         $name0= $actor->getForename()."+".$actor->getSurname();
+         $sql .= " where concat( g.forename,'+',g.surname) = '{$name0}' ";
+
+          $filterlist = explode(",",$actor->getKeywords());
+dump($filterlist);
+           foreach($filterlist as $filterpair)
+           {
+           dump("*".$filterpair."*");
+           if($filterpair != "")
+           {
+             $filter = explode("+",$filterpair);
+
+                      if(count($filter)>1)
+                      {
+                         $namec ="%".$filter[0]."%".$filter[1]."%";
+                         $sql .= " or( concat( g.forename,'+',g.surname) like '{$namec}'  )  ";
+
+                      }else
+                      {
+                         $name1 ="%".$filter[0]."%";
+                         $sql .= " or g.forename like '{$name1}'  or  g.surname like '{$name1}'  ";
+                      }
+           }
+       }
+
+           $query = $this->getEntityManager()->createQuery($sql);
+           $actors = $query->getResult();
         return $actors;
     }
 
@@ -159,10 +182,7 @@ class ActorRepository extends EntityRepository
 
     }
 
-
-
-
- public function filterf($filterstr)
+       public function filterf($filterstr)
        {
            $qb = $this->createQueryBuilder('a');
            $qb->select();

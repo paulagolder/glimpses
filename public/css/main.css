@@ -74,6 +74,9 @@ div.row div.actorname
 
 div.actorbutton a
 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     padding: 4px;
     display: inline;
     border-radius: 7px;

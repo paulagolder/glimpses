@@ -171,7 +171,7 @@ class ActorController extends AbstractController
             }
         }
         ////dump($cglimpses);
-        $duplicates = $doctrine->getRepository(Actor::class)->findAllMatching($actor);
+        $matches = $doctrine->getRepository(Actor::class)->findAllMatching($actor);
         return $this->render('actor/editroles.html.twig', array(
                     'actor' => $actor,
                     'actors' => $actors,
@@ -180,7 +180,7 @@ class ActorController extends AbstractController
                     'roles' => $froles,
                     'returnlink' => "/actor/show/" . $aid,
                     'cglimpses' => $cglimpses,
-                    'duplicates' => $duplicates,
+                    'duplicates' => $matches,
                     'typelist' => ['baptism', 'marriage', 'burial', 'inventory', 'will'],
         ));
     }

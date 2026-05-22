@@ -425,6 +425,8 @@ class GlimpseController extends AbstractController
         {
         $selactor = $request->request->all()["_selactorref"];
         dump(" actor sell:".$selactor);
+        if(is_numeric($selactor))
+        {
            $actorrole =  $doctrine->getRepository(ActorRole::class)->findOne($selactor,$aref);
                   if($actorrole)
                   {
@@ -438,6 +440,7 @@ class GlimpseController extends AbstractController
                      $entityManager->persist($actorrole);
                      $entityManager->flush();
                   }
+        }
          $doctrine->getRepository(ActorRole::class)->getActors($role->getRoleId());
         $rqroles=$request->request->all()["_role"];
         $rrole = $rqroles[$aref];
