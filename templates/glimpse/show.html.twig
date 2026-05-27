@@ -22,7 +22,7 @@
         <div class="returnbutton">  <a   href = "/glimpse/edit/{{glimpse.glimpseid}}" >edit </a> </div>
         <div class="returnbutton"><a  href = "/source/startinput/{{glimpse.sourceid}}" >Add New Glimpse </a> </div>
     </div>
-    <div class="glimpseform">
+    <div class="table">
             <div class="row">
             <div class="inputpair" >
                 <div class="label">ID </div>
@@ -77,15 +77,15 @@
                 <div class="subheading" >
                     <div class="title"> roles </div>
                 </div>
-                <div class="roleTable" >
+                <div class="list" >
                         {% for pid, role in roles %}
                         {%  if role.roleid>0 %}
                         <div  class="row" >
-                            <div class="col1" >  </div>
-                            <div  class="col2"  > {{role.roleid}} </div>
-                            <div  class="col3" >{{role.role}}</div>
-                            <div  class="col4" >{{role.name}} </div>
-                            <div  class="col5" >{{role.predicates}} </div>
+                            <div class="returnbutton" >  </div>
+                            <div  class="cid"  > {{role.roleid}} </div>
+                            <div  class="ctype" >{{role.role}}</div>
+                            <div  class="cname" >{{role.name}} </div>
+                            <div  class="cmtext" >{{role.predicates}} </div>
                         </div>
                         {% else %}
                         <div class="row">
@@ -105,11 +105,11 @@
                 </div>
                 {% for dup in duplicates %}
                  {% if glimpse.glimpseid != dup.glimpseid %}
-                 <div class="duplicatestable">
+                 <div class="list">
                     <div class="row" >
                         <div class="returnbutton">  <a   href = "/glimpse/showone/{{dup.glimpseid}}" >View</a> </div>
-                        <div class="label" >{{dup.glimpseid}}   </div>
-                        <div class="text">{{ FormatEvent(dup)}}   </div>
+                        <div class="cid" >{{dup.glimpseid}}   </div>
+                        <div class="cmtext">{{ FormatEvent(dup)}}   </div>
                      </div>
                      </div>
                    {% endif %}

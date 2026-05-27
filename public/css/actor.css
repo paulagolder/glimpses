@@ -1,12 +1,5 @@
 
 
-#actor   div.actorlist
-{
-    overflow-y:scroll;
-    overflow-x:hidden;
-    height:38em;
-    width:90%;
-}
 /*========================================
 twocols panel
 ========================================== */
@@ -29,89 +22,7 @@ twocols panel
     border:2px solid green;
 }
 
-/*========================================
-actor panel
-========================================== */
 
-#actor  div.actor div.row div.inputpair div.label{}
-#actor div.actortable div.row div.inputpair div.label{}
-
-#actor  div.actortable div.row  div.inputpair
-{
-    margin-right: 2em;
-    display:flex;
-}
-
-#actor  div.actortable div.row  div.label
-{
-    color: blue;
-    padding-left: 1em;
-    width: 5em;
-}
-
-#actor div.actortable div.row div.inputpair div.field
-{
-    padding-left: 1em;
-    width: 8em;
-}
-
-#actor  div.actortable div.row div.inputpair div.longfield
-{
-    padding-left: 1em;
-    width: 34em;
-}
-
-
-#actor  div.actortable div.row div.namepair div.field
-{
-    padding-left: 1em;
-    width: 20em;
-}
-
-div#actor div.actortable input.title
-{
-    width:40em;
-    height:4em;
-}
-
-div#actor div.actortable textarea.title
-{
-    width:40em;
-    height:4em;
-}
-
-div#actor div.actortable input.id
-{
-    width:3em;
-}
-
-div#actor div.actortable input.language
-{
-    width:3em;
-}
-
-
-div#actor div.actortable input.region
-{
-    width:10em;
-}
-
-div#actor div.actortable input.period
-{
-    width:10em;
-}
-
-div#actor div.actortable input.url
-{
-    width:40em;
-    height:4em;
-}
-
-div#actor div.actortable textarea.url
-{
-    width:40em;
-    height:4em;
-}
 
 
 /*========================================
@@ -305,7 +216,7 @@ div#actor div.cglimpsestable div.row
         actor list
         ========================================== */
 
-
+/*
     div#actor div.actorlist div.actor div.row div.col2
     {
         width:3em;
@@ -321,16 +232,6 @@ div#actor div.cglimpsestable div.row
         text-overflow: ellipsis;
 
     }
-
- #actor div.actorlist div.actor div.row div.col3.female
- {
-     color: #e97b75;
- }
-
-#actor div.actorlist div.actor div.row div.col3.male
-{
-    color: #3ea5c9;
-}
 
     #actor   div.row div.id
     {
@@ -361,7 +262,7 @@ div#actor div.cglimpsestable div.row
     #actor   div.row div.cell.cdate
     {
         width:6em;
-    }
+    }*/
 
     #actor   div.form
     {

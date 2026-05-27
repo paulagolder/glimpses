@@ -37,22 +37,20 @@
       </form>
   </div>
 
-<div class= "actorlist">
+<div class= "list">
     {% for actor in actors %}
-    <div class= "actor">
         <div class="row ">
              <div class="returnbutton col1">   <a   href = "/actor/showone/{{actor.actorid}}" >view </a> </div>
-            <div class= "col2">{{actor.actorId}}</div>
+            <div class= "cid">{{actor.actorId}}</div>
           {%  if(actor.gender=="female") %}
-             <div class= "col3 female">
+             <div class= "clname female">
           {% elseif(actor.gender=="male") %}
-              <div class= "col3 male">
+              <div class= "clname male">
           {% else %}
-             <div class= "col3">
+             <div class= "clname">
            {% endif %}
             {{actor.getLabel}}</div>
-            <div class= "col4"> {{actor.specifier}}</div>
-        </div>
+            <div class= "mtext"> {{actor.specifier}}</div>
         </div>
     {% endfor %}
        </div>

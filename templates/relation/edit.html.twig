@@ -21,28 +21,31 @@
          <div class="returnbutton "> <a href = "/relation/delete/{{relation.relationid}}" >Delete</a> </div>
     </div>
       <div class="subheading row" >
+          {% if actor1 is not null %}
             <div class="actorbutton"> <a href = "/actor/showone/{{relation.actor1ref}}" >{{actor1.label}}</a> </div>
                  <div class= "titlebi">{{relation.relation}}</div>
                   <div class="actorbutton"> <a href = "/actor/showone/{{relation.actor2ref}}" >{{actor2.label}}</a> </div>
-                  <div class="cell"> {{relation.date}}</a> </div>
-</div>
+                  <div class="cell"> {{relation.date}}</div>
+           {% else %}
+           <div class="cell"> somethings wrong</div>
+           {% endif %}
+       </div>
 
 <div ></div>
 <div >
 
-      <div class="subheading" >
+         <div class="subheading" >
             <div class="title">Clues </div>
         </div>
             <div class="">
                 {% for gid, glimpse in clues %}
                 <div class="row">
                      <div class="returnbutton"> <a href = "/relation/removeclue/{{relation.relationid}}/{{gid}}" >Remove Clue </a></div>
-                   <div class="returnbutton"> <a href = "/glimpse/showone/{{gid}}" >View Glimpse </a></div>
-                            <div class="cell">{{  FormatEvent(glimpse)}}  </div>
-
-   </div>
-                    {% endfor %}
-</div>
+                     <div class="returnbutton"> <a href = "/glimpse/showone/{{gid}}" >View Glimpse </a></div>
+                    <div class="cell">{{  FormatEvent(glimpse)}}  </div>
+                </div>
+                {% endfor %}
+           </div>
 
       <div class="subheading" >
             <div class="title">Candidate Clues </div>

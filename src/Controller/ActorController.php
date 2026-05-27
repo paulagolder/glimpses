@@ -379,9 +379,12 @@ class ActorController extends AbstractController
 
    public function getMask(ManagerRegistry $doctrine, $arelation): ?string
     {
+
        $actor1= $doctrine->getRepository(Actor::class)->getOne($arelation->getActor1ref());
+       if($actor1 == null) return "Z Z";
        $mask= $actor1->getGenderSymbol();
        $actor2= $doctrine->getRepository(Actor::class)->getOne($arelation->getActor2ref());
+          if($actor2 == null) return $mask .=" Z";
        $mask .=" ".$actor2->getGenderSymbol();
        return $mask;
     }
@@ -550,8 +553,10 @@ class ActorController extends AbstractController
             $getrelation =  $doctrine->getRepository(Relation::class)->findbyKey($a1ref,$relation,$actor2);
              if($getrelation == null)
              {
+              $reln->{"mask"} = $this->getmask($doctrine,$reln);
+              $normrelation = $this->lib->normaliseRelation($reln);
             $entityManager = $doctrine->getManager();
-            $entityManager->persist($reln);
+            $entityManager->persist( $normrelation );
             $entityManager->flush();
 
             }
@@ -781,5 +786,15 @@ class ActorController extends AbstractController
                                   'parents' => $parents,
                                   'returnlink' => "/actor/show/" . $aid,
                       ));
+    }
+
+
+     public function xxgetMask($arelation): ?string
+    {
+       $actor1= $this->doctrine->getRepository(Actor::class)->getOne($arelation->getActor1ref());
+       $mask= $actor1->getGenderSymbol();
+       $actor2= $this->doctrine->getRepository(Actor::class)->getOne($arelation->getActor2ref());
+       $mask .=" ".$actor2->getGenderSymbol();
+       return $mask;
     }
 }

@@ -19,7 +19,6 @@ div#page
 
 div#page div.header
 {
-  #color: #fff;
   color: #0f0;
 }
 
@@ -83,9 +82,12 @@ div.actorbutton a
     padding-bottom:1px;
     display: inline;
     border-radius: 7px;
-    margin: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
     background: #f4cbd7;
-    font-size: 12px;
+    font-size: 10px;
     line-height: 15px;
     color: #e53174;
     width: auto;
@@ -392,6 +394,23 @@ div#right div.subheading div.title
     color:maroon;
 }
 
+html body div.subheading.row div.returnbutton
+{
+    padding: 4px;
+    display: inline;
+    border-radius: 7px;
+    margin: 0 1px;
+    background:#baf060;
+    font-size: 10px;
+    line-height: 14px;
+    color: black;
+    width: auto;
+    height: auto;
+    box-sizing: content-box;
+    text-decoration : none;
+
+}
+html body div#glimpse div.editroleTable div.row div.col1 div.returnbutton{}
 
 div.returnbutton a 
 {
@@ -424,26 +443,93 @@ a, a:visited ,a:link
 div.row
 {
     display:flex;
+    font-size:9pt;
+    line-height: 15px;
+    border: 1px solid white;
+}
+/*====================================
+main scroling lists
+=========================*/
+div.list div.row
+{
+    display:flex;
+    font-size:9pt;
+    line-height: 15px;
+    border: 0.0091px solid #c7c7da;
 }
 
-div.row div.cellid
+div.list div.row div.cloc
+{
+    width:12em;
+}
+
+div.list div.row div.ctype
+{
+    width:5em;
+}
+
+div.list div.row div.cage
+{
+    width:5em;
+}
+
+div.list div.row div.ctext
+{
+    width:44em;
+}
+
+div.list div.row div.cname
+{
+    width:10em;
+}
+
+div.list div.row div.clname
+{
+    width:17em;
+}
+
+div.list div.row div.cmtext
+{
+    width:10em;
+}
+
+div.list div.row div.cltext
+{
+    width:30em;
+}
+
+div.list div.row div
+{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+div.list div.row div.cid
 {
     width :3em;
     text-align:right;
     padding-right:0.5em;
 }
 
-div.row div.celldate
+div.list div.row div.cdate
 {
     width :7em;
     text-align:right;
     padding-right:0.5em;
 }
 
-div.xrow:nth-child(2n+2)
+div.list div.row div.female
 {
-    background: rgba(0, 0, 80, 0.1);
+    color: #e97b75;
 }
+
+div.list div.row div.male
+{
+    color: #3ea5c9;
+}
+
+/*==============================
 
 div.hidebar button
 {
@@ -486,6 +572,106 @@ div.hidebar button
     margin-bottom: 0.5em;
 }
 
+==========================*/
+/*===========================
+table
+ ===========================*/
+/*========================================
+actor panel
+========================================== */
+
+div.row div.inputpair div.label{}
+div.table div.row div.inputpair div.label{}
+
+div.table div.row
+{
+    display: flex;
+    font-size: 9pt;
+    line-height: 15px;
+    border: 0.0091px solid #c7c7da;
+}
+
+
+div.table div.row  div.inputpair
+{
+    margin-right: 2em;
+    display:flex;
+}
+
+div.table div.row  div.label
+{
+    color: blue;
+    padding-left: 1em;
+    width: 5em;
+}
+
+#actor div.actortable div.row div.inputpair div.field
+{
+    padding-left: 1em;
+    width: 8em;
+}
+
+div.table div.row div.inputpair div.longfield
+{
+    padding-left: 1em;
+    width: 34em;
+}
+
+
+div.table div.row div.namepair div.field
+{
+    padding-left: 1em;
+    width: 20em;
+}
+
+div.table input.title
+{
+    width:40em;
+    height:4em;
+}
+
+div.table textarea.title
+{
+    width:40em;
+    height:4em;
+}
+
+div.table input.id
+{
+    width:3em;
+}
+
+div.table input.language
+{
+    width:3em;
+}
+
+
+div.table input.region
+{
+    width:10em;
+}
+
+div.table input.period
+{
+    width:10em;
+}
+
+div.table input.url
+{
+    width:40em;
+    height:4em;
+}
+
+div.table textarea.url
+{
+    width:40em;
+    height:4em;
+}
+
+/*===========================
+  inputform
+ ===========================*/
 div.inputform
 {
     margin-top:3em;

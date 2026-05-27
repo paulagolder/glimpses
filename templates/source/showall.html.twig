@@ -37,17 +37,15 @@
      </div>
 
 
-  <div class= "sourcelist">
+  <div class= "list">
     {% for source in sources %}
-    <div class= "source">
         <div class="row ">
              <div class="returnbutton col1">   <a   href = "/source/show/{{source.sourceid}}" >view </a> </div>
-            <div class= "col2">{{source.sourceId}}</div>
-            <div class= "col3"> {{source.title}}</div>
-            <div class= "col4"> {{source.region}}</div>
-            <div class= "col5"> {{source.period}} </div>
+            <div class= "cid">{{source.sourceId}}</div>
+            <div class= "cltext"> {{source.title}}</div>
+            <div class= "cloc"> {{source.region}}</div>
+            <div class= "cdate"> {{source.period}} </div>
          </div>
-    </div>
     {% endfor %}
   </div>
 

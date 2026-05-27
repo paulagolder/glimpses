@@ -22,7 +22,7 @@
                   <div class="returnbutton"><a  href = "/actor/maketree/{{actor.actorid}}" >Show Tree </a> </div>
                </div>
        <div class="actor">
-         <div class="actortable">
+         <div class="table">
          <div class="row">
             <div class="inputpair" >
                 <div class="label">ID </div>
@@ -69,23 +69,22 @@
         <div class="subheading" >
             <div class="title">Life Events </div>
         </div>
-        <div class="eventTable" >
-           <div class="body">
-                        {% for eid, levent in lifeevents %}
-                                      <div class="row">
-                                              <div class="date">{{levent.getDate}} </div>
-                                           <div class="type">{{levent.eventtype}} </div>
-                                           <div class="text">{{levent.subject|raw}} </div>
-                                            <div class="age" >  Age: {{calAge(actor.Birthdate,levent.getDate)}} </div>
-                                          {% set cluelist = levent.clues|split(',') %}
-                                           {% for clue in cluelist %}
-                                           <div class="returnbutton" ><a   href = "/glimpse/showone/{{clue}}" >Clue_{{clue}}</a> </div>
-                                              {% endfor %}
-
-                                      </div>
-                       {% endfor %}
-                  </div>
+        <div class="list" >
+                {% for eid, levent in lifeevents %}
+                 <div class="row">
+                     <div class="cdate">{{levent.getDate}} </div>
+                     <div class="ctype">{{levent.eventtype}} </div>
+                     <div class="cmtext">{{levent.subject|raw}} </div>
+                     <div class="cage" >  Age: {{calAge(actor.Birthdate,levent.getDate)}} </div>
+                     {% set cluelist = levent.clues|split(',') %}
+                     {% for clue in cluelist %}
+                         <div class="returnbutton" ><a   href = "/glimpse/showone/{{clue}}" >Clue_{{clue}}</a> </div>
+                     {% endfor %}
+                 </div>
+                 {% endfor %}
         </div>
+    </div>
+    </div>
         <div class="subheading" >
             <div class="title">Relationships</div>
         </div>
@@ -97,7 +96,7 @@
 
                        {% if actors[relation.actor1ref] is defined %}
                        {% if actor.actorid == relation.actor1ref %}
-                       <span class="actor">{{actors[relation.actor1ref].label}} </span>
+                      <div class=" cell"> <span class="actor">{{actors[relation.actor1ref].label}} </span></div>
                        {%else %}
                        <div class="actorbutton">
                      <a   href = "/actor/showone/{{relation.actor1ref}}" >{{actors[relation.actor1ref].label}} </a>
@@ -128,7 +127,7 @@
             <div class="subheading" >
                 <div class="title">Roles </div>
             </div>
-            <div class="roleTable" >
+            <div class="list" >
                     {% for pid, glimpse in roles %}
                     <div class="row">
                          <div class="returnbutton">  <a   href = "/glimpse/showone/{{glimpse.glimpseid}}" >View</a> </div>
@@ -140,9 +139,7 @@
                     {% endfor %}
                 </div>
             </div>
-        </div>
-    </div>
-</div>
+
 {% endblock %}
 
 

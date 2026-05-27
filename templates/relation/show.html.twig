@@ -20,23 +20,14 @@
         <div class="returnbutton button1"> <a href = "/relation/edit/{{relation.relationid}}" >Edit</a> </div>
     </div>
     <div class="subheading row" >
-      {#}  {% if actor1.label is defined  %}
-        {% set actor1label = actor1.label %}
-        {% else %}
-         {% set actor1label = "Missing actor" %}
-         {% endif %}
-          {% if actor2.label is defined  %}
-                 {% set actor2label = actor2.label %}
-                 {% else %}
-                  {% set actor2label = "Missing actor" %}
-                  {% endif %}
-    <div class= "title">{{actor1label}}</div>
-    <div class= "titlebi">{{relation.relation}}</div>
-    <div class= "title">{{actor2label}}</div> #}
+    {% if actor1 is not null  %}
     <div class="actorbutton"> <a href = "/actor/showone/{{relation.actor1ref}}" >{{actor1.label}}</a> </div>
       <div class= "titlebi">{{relation.relation}}</div>
        <div class="actorbutton"> <a href = "/actor/showone/{{relation.actor2ref}}" >{{actor2.label}}</a> </div>
-       <div class="cell"> {{relation.date}}</a> </div>
+       <div class="cell"> {{relation.date}}</div>
+     {% else %}
+      <div class="cell"> Something wrong </div>
+     {% endif %}
 </div>
 
 <div ></div>
