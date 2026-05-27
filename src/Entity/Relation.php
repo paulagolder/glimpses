@@ -56,7 +56,7 @@ class Relation
         return $this->relationid;
     }
 
-   public function setRelationiId(int $ref): self
+   public function setRelationId(int $ref): self
     {
         $this->relationid= $ref;
         return $this;
@@ -181,7 +181,23 @@ class Relation
        return " relation label";
     }
 
+    public function getInverse(): self
+    {
+      $inv= new Relation();
+      $inv->actor1ref = $this->actor2ref;
+      $inv->actor2ref=$this->actor1ref;
+      $inv->date = $this->date;
+      $inv->clues = $this->clues;
+      $inv->relation= $this->relation;
+      $inv->relationid = $this->relationid;
+       return $inv;
+    }
 
+    public function getHashKey():?string
+    {
+      $key= $this->actor1ref.$this->actor2ref;
+      return $key;
+    }
 
 
 

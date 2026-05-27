@@ -14,10 +14,13 @@ class MyLibrary
 {
      private  $templatelist=array();
      private  $agelist=array();
-     private $requestStack ;
+     private  $requestStack ;
+     private  $relationlist=array();
+
 
     public function __construct(  RequestStack $request_stack,$templatedir)
     {
+
         $this->requestStack = $request_stack;
         $configDirectories = [$templatedir];
         $fileLocator = new FileLocator($configDirectories);
@@ -25,6 +28,8 @@ class MyLibrary
         $this->templatelist =   Yaml::parseFile($gstructyml[0]);
         $ageyml = $fileLocator->locate('agelist3.yml', null, false);
         $this->agelist =   Yaml::parseFile($ageyml[0]);
+        $relationyml = $fileLocator->locate('relations.yml', null, false);
+        $this->relationlist =   Yaml::parseFile($relationyml[0]);
     }
 
     public function xgetCookieRegion()
@@ -207,15 +212,127 @@ class MyLibrary
         return $fmt;
     }
 
+ public function FormatEventFull($glimpse,$rolekey)
+    {
+        $type= $glimpse->getType();
+        $roles= $glimpse->roles;
+        $fmt =  $this->templatelist[$type]["format"];
+        $fmt = str_replace("#location", $glimpse->getLocation(), $fmt);
+        $fmt = str_replace("#date", $glimpse->getDate(), $fmt);
+        $ps ="";
+        if(!is_null($roles))
+        {
+        foreach($roles as $key=>$arole)
+        {
+           $aname = $arole->getName();
+        if($key==$rolekey)
+        {
+          //$aname = strtoupper($aname);
+          $aname = "<span class='relation' >".$aname."</span>";
+        }
+            if (str_contains($fmt, "#".$arole->getRole()))
+            {
+               $fmt = str_replace("#".$arole->getRole(), $aname, $fmt);
+            }else
+            {
+               $ps .= " ".$arole->getRole().":". $aname;
+            }
+        }
+        $fmt .= $ps;
+        }
+        return $fmt;
+    }
+
+
+
+    public function normaliseRelation($arelation)
+    {
+            $newrelation = $arelation;
+            $type= $arelation->getRelation();
+            $substitutions = $this->relationlist[$type];
+             if( count($substitutions)==1)
+             {
+                      $subkey= array_key_first($substitutions);
+                      if($subkey=="format") return $newrelation;
+                      $newrelation->setRelation($subkey);
+                      return  $newrelation;
+             }
+             else
+             {
+                 $mask= $arelation->{"mask"};
+                 foreach($substitutions as $key=> $sub)
+                 {
+                     if($key=="format" or $key =="condition" or $key=="inverse")
+                     {
+
+                     }
+                     else
+                     {
+                       if($this->matchMask($mask,$sub["condition"]))
+                       {
+                          $newrelation->setRelation($key);
+                          return $newrelation;
+                       }
+                     }
+                 }
+
+             }
+             return $newrelation;
+       }
+
+
+
+
+    public function invertRelation($arelation)
+    {
+            $newrelation = $arelation;
+            $type= $arelation->getRelation();
+            $substitutions = $this->relationlist[$type];
+             if( count($substitutions)==1)
+             {
+                      $subkey= array_key_first($substitutions);
+                      $newrelation->setRelation($subkey);
+                      return  $this->invertRelation($newrelation);
+             }
+             else
+             {
+                 $mask= $arelation->{"mask"};
+                 if( !array_key_exists("inverse",$substitutions)) return $newrelation;
+                 $inversions = $substitutions["inverse"];
+                 if(!is_array($inversions))
+                 {
+                   $invrelation = $newrelation->getInverse();
+                   $invrelation->setRelation($inversions);
+                   return $invrelation;
+                 }else
+                 {
+                 foreach($inversions as $key=> $sub)
+                 {
+                 $found = $this->matchMask($mask,$sub["condition"]);
+                  if($found)
+                  {
+                     $invrelation = $newrelation->getInverse();
+                       $invrelation->setRelation($key);
+                     return $invrelation;
+                  }
+                 }
+             }
+             return $newrelation;
+               }
+
+             }
+
+
+
     public function matchMask($mask, $candidate)
     {
       $maskarray= explode(" ",$mask);
       $candidatearray= explode(" ",$candidate);
-       if(!$maskarray[0]=="X")
+       if($candidatearray[0]!="X")
        {
         if($maskarray[0]!=$candidatearray[0]) return false;
        }
-       if(!$maskarray[0]=="X")
+       if($candidatearray[1]!="X")
        {
            if($maskarray[1]!=$candidatearray[1]) return false;
        }

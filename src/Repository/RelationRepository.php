@@ -57,9 +57,21 @@ class RelationRepository extends EntityRepository
     $qy = $qb->getQuery();
     $rns = $qy->getResult();
     $Relations = array();
-    foreach( $rns as $key=>$Relation)
+    $hashkey=array();
+    foreach( $rns as $key=>$arelation)
     {
-      $Relations[$Relation->getRelationId()]= $Relation;
+     $nrelation=$arelation;
+     if($arelation->getActor2Ref() == $aid)
+     {
+       $nrelation = $arelation->getInverse();
+     }
+      $newhashkey= $nrelation->gethashKey();
+      if(!in_array($newhashkey, $hashkey))
+      {
+      $Relations[$arelation->getRelationId()]= $arelation;
+      $hashkey[]=$newhashkey;
+      }
+
     }
     return $Relations;
   }

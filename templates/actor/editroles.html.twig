@@ -87,8 +87,7 @@
                                 <div class="date">{{levent.highdate}} </div>
                                  {% endif %}
                                  <div class="type">{{levent.eventtype}} </div>
-                                 <div class="role">{{levent.role}} </div>
-                                 <div class="text">{{levent.subject}} </div>
+                                 <div class="text">{{levent.subject|raw}} </div>
                                 {% set cluelist = levent.clues|split(',') %}
                                  {% for clue in cluelist %}
                                  <div class="returnbutton" ><a   href = "/glimpse/showone/{{clue}}" >Clue_{{clue}}</a> </div>
@@ -139,7 +138,7 @@
                 <div class="returnbutton">  <a   href = "/glimpse/showone/{{arole.glimpseid}}" >view </a> </div>
                  <div class="returnbutton">  <a   href = "/actor/newrelationshipwithglimpse/{{actor.actorid}}/{{arole.glimpseid}}" >Make Reln </a> </div>
                   {% set formatedtext = FormatRoleFull(arole,pid) %}
-                <div class="glimpsetext" >{{formatedtext}}</div>
+                <div class="glimpsetext" >{{formatedtext| raw}}</div>
                {% if(actor.Birthdate != null) %}
                   {%  set   age= calAge(actor.Birthdate,arole.date) %}
                   <div class="age" >AGE:{{age}}</div>
@@ -161,7 +160,7 @@
                <div class="returnbutton"><a   href = "/actor/addrole/{{actor.actorid}}/{{pid}}" >Add </a> </div>
                 <div class="returnbutton" ><a  href = "/glimpse/showone/{{cglimpse.getGlimpseId()}}" >View</a></div>
                 {% set formatedtext = FormatEventFull(cglimpse,pid) %}
-                <div class="glimpsetext" >{{formatedtext}}</div>
+                <div class="glimpsetext" >{{formatedtext | raw}}</div>
                 <div class="agecell" > AGE: {{age}} </div>
             </div>
         {% endif %}

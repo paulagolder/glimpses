@@ -29,6 +29,11 @@ class Source
  /**
      * @ORM\Column(type="string", length=40, nullable=true)
      */
+    private $locality;
+
+ /**
+     * @ORM\Column(type="string", length=40, nullable=true)
+     */
     private $region;
 
  /**
@@ -41,14 +46,10 @@ class Source
      */
     private $language;
 
-
-
      /**
      * @ORM\Column(type="text", nullable=true)
      */
     private $glimpsetypes;
-
-
 
   public function getSourceid(): ?int
     {
@@ -58,22 +59,17 @@ class Source
     public function setSourceid(int $id): self
     {
         $this->sourceid = $id;
-
         return $this;
     }
-
-
 
     public function getTitle(): ?string
     {
         return $this->title;
     }
 
-
     public function setTitle(string $text): self
     {
         $this->title = $text;
-
         return $this;
     }
 
@@ -90,31 +86,37 @@ class Source
         return $this;
     }
 
+    public function getLocality(): ?string
+    {
+        return $this->locality;
+    }
+
+    public function setLocality(string $text): self
+    {
+        $this->locality = $text;
+
+        return $this;
+    }
 
      public function getRegion(): ?string
     {
         return $this->region;
     }
 
-
     public function setRegion(string $text): self
     {
         $this->region = $text;
-
         return $this;
     }
-
 
      public function getPeriod(): ?string
     {
         return $this->period;
     }
 
-
     public function setPeriod(string $text): self
     {
         $this->period = $text;
-
         return $this;
     }
 
@@ -123,11 +125,9 @@ class Source
         return $this->language;
     }
 
-
     public function setLanguage(string $text): self
     {
         $this->language = $text;
-
         return $this;
     }
 
@@ -140,7 +140,6 @@ class Source
     public function setGlimpseTypes(string $text): self
     {
         $this->glimpsetypes = $text;
-
         return $this;
     }
 

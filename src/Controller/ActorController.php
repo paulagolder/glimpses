@@ -74,6 +74,16 @@ class ActorController extends AbstractController
         }
         $lifeevents = $doctrine->getRepository(LifeEvent::class)->findAllEvents($aid);
         $relations = $doctrine->getRepository(Relation::class)->findByActor($aid);
+        foreach($relations as &$arelation)
+        {
+           $arelation->{"mask"} = $this->getMask($doctrine, $arelation);
+           $arelation = $this->lib->normaliseRelation($arelation);
+           if($arelation->getActor2ref() == $aid && $arelation->getActor1ref() != $aid)
+           {
+
+              $arelation = $this->lib->invertRelation($arelation);
+           }
+        }
         $nrole = new ActorRole();
         $nrole->setActorref($aid);
         $roles[] = $nrole;
@@ -367,6 +377,15 @@ class ActorController extends AbstractController
         return $this->redirect("/actor/edit/" . $aid);
     }
 
+   public function getMask(ManagerRegistry $doctrine, $arelation): ?string
+    {
+       $actor1= $doctrine->getRepository(Actor::class)->getOne($arelation->getActor1ref());
+       $mask= $actor1->getGenderSymbol();
+       $actor2= $doctrine->getRepository(Actor::class)->getOne($arelation->getActor2ref());
+       $mask .=" ".$actor2->getGenderSymbol();
+       return $mask;
+    }
+
     public function process_edit(ManagerRegistry $doctrine, $aid)
     {
         if ($aid < 1)
@@ -635,11 +654,12 @@ class ActorController extends AbstractController
             $reln->setEventtype($glimpse->getType());
             $reln->setDate($glimpse->getDate());
             $reln->setLocation($glimpse->getLocation());
-            $text =$this->lib->FormatEvent($glimpse);
+            $text =$this->lib->FormatEventFull($glimpse,$roleid);
             $reln->setSubject($text);
             $role =  $doctrine->getRepository(Role::class)->getOne($roleid);
             $reln->setRole($role->getRole().":".$role->getName());
             $reln->setclues($glimpseid);
+            dump($reln);
             $entityManager = $doctrine->getManager();
             $entityManager->persist($reln);
             $entityManager->flush();

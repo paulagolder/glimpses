@@ -19,7 +19,6 @@
                  <div class="returnbutton button1">  <a   href = "/actor/delete/{{actor.actorid}}" >delete </a> </div>
                  <div class="returnbutton">  <a   href = "/actor/edit/{{actor.actorid}}" >edit </a> </div>
                  <div class="returnbutton">  <a   href = "/actor/editroles/{{actor.actorid}}" >edit roles </a> </div>
-                 <div class="returnbutton"><a  href = "/actor/new" >Add New actor </a> </div>
                   <div class="returnbutton"><a  href = "/actor/maketree/{{actor.actorid}}" >Show Tree </a> </div>
                </div>
        <div class="actor">
@@ -76,8 +75,8 @@
                                       <div class="row">
                                               <div class="date">{{levent.getDate}} </div>
                                            <div class="type">{{levent.eventtype}} </div>
-                                           <div class="role">{{levent.role}} </div>
-                                           <div class="text">{{levent.subject}} </div>
+                                           <div class="text">{{levent.subject|raw}} </div>
+                                            <div class="age" >  Age: {{calAge(actor.Birthdate,levent.getDate)}} </div>
                                           {% set cluelist = levent.clues|split(',') %}
                                            {% for clue in cluelist %}
                                            <div class="returnbutton" ><a   href = "/glimpse/showone/{{clue}}" >Clue_{{clue}}</a> </div>
@@ -95,20 +94,29 @@
                 {% for rid, relation in relations %}
                 <div class="row">
                    <div class="returnbutton">  <a   href = "/relation/show/{{relation.relationid}}" >View</a> </div>
-                   <div class="returnbutton">
+
                        {% if actors[relation.actor1ref] is defined %}
+                       {% if actor.actorid == relation.actor1ref %}
+                       <span class="actor">{{actors[relation.actor1ref].label}} </span>
+                       {%else %}
+                       <div class="actorbutton">
                      <a   href = "/actor/showone/{{relation.actor1ref}}" >{{actors[relation.actor1ref].label}} </a>
+                       </div>
+                       {% endif %}
                         {% else %}
                         missing actor {{relation.actor1ref}}
                         {% endif %}
-                   </div>
+
                    <div class="cell">  is {{relation.relation}} of </div>
                   {% if actors[relation.actor2ref] is defined %}
-                   <div class="returnbutton">  <a   href = "/actor/showone/{{relation.actor2ref}}" >{{actors[relation.actor2ref].label}}</a> </div>
-                   <div class="cell">  Clues </div>
+                     {% if actor.actorid == relation.actor2ref %}
+                           <span class="actor">{{actors[relation.actor2ref].label}} </span>
+                     {%else %}
+                        <div class="actorbutton">  <a   href = "/actor/showone/{{relation.actor2ref}}" >{{actors[relation.actor2ref].label}}</a> </div>
+                     {% endif %}
                    {% set clues = relation.Clues |split(",") %}
                    {% for aclue in clues %}
-                   <div class="returnbutton">  <a   href = "/glimpse/showone/{{aclue}}" >Clue {{aclue}}</a> </div>
+                   <div class="returnbutton button1">  <a   href = "/glimpse/showone/{{aclue}}" >Clue {{aclue}}</a> </div>
                    {% endfor %}
                    {% else %}
                     <div class="cell"> Actor {{relation.actor2ref}} not found </div>
@@ -125,7 +133,7 @@
                     <div class="row">
                          <div class="returnbutton">  <a   href = "/glimpse/showone/{{glimpse.glimpseid}}" >View</a> </div>
                     {% set formatedtext = FormatRoleFull(glimpse,pid) %}
-                        <div class="text" >{{formatedtext}}</div>
+                        <div class="text" >{{formatedtext|raw}}</div>
                         <div class="age" >  Age: {{calAge(actor.Birthdate,glimpse.date)}} </div>
                        {#  <div class="cell">{{glimpse.predicates}} </div>#}
                     </div>

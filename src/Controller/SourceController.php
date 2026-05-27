@@ -101,6 +101,7 @@ class SourceController extends AbstractController
         {
             $source->setLanguage($request->request->get('_language'));
             $source->setRegion($request->request->get('_region'));
+            $source->setLocality($request->request->get('_locality'));
             $source->setTitle($request->request->get('_title'));
             $source->setPeriod($request->request->get('_period'));
             $source->setUrl($request->request->get('_url'));

@@ -381,7 +381,7 @@ class GlimpseController extends AbstractController
                 {
                     $nrole = new role();
                     $nrole->setGlimpseref($gid);
-                    $nrole->setRole(trim($arole["'role'"]));
+                    $nrole->setRole(strtolower(trim($arole["'role'"])));
                     $nrole->setName($arole["'name'"]);
                     $nrole->setPredicates($arole["'predicates'"]);
                     if($nrole->getName())

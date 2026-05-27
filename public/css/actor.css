@@ -152,6 +152,12 @@ div#actor div.eventTable div.body div.row div
     padding-right:1em;
 }
 
+div#actor div.eventTable div.body div.row div.age
+{
+    width:5em;
+}
+
+
 #actor  div.eventTable div.body div.row div.date
 {
     padding-left:3em;

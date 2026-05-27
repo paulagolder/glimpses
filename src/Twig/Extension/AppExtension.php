@@ -40,6 +40,7 @@ class AppExtension extends AbstractExtension
             new TwigFunction('FormatEventFull',[$this, 'FormatEventFull'] ),
             new TwigFunction('FormatRoleFull',[$this, 'FormatRoleFull'] ),
             new TwigFunction('FormatRelation',[$this, 'FormatRelation'] ),
+            new TwigFunction('FormatEventfromEvent',[$this, 'FormatEventfromEvent'] ),
             new TwigFunction('ideLink',[$this,'idelink']),
                 ];
     }
@@ -56,9 +57,9 @@ class AppExtension extends AbstractExtension
        $bdate2 = substr($bdate."-01-01",0,10);
        $gdate2 = substr($gdate."-01-01",0,10);
        try{
-          $date1 = new \DateTime($bdate2);
+              $date1 = new \DateTime($bdate2);
               $year1 =  (int)$date1->format('Y');
-       }catch(Exception $e)
+       }catch(Throwable  $e)
               {
               return("=-=-=");
               }
@@ -100,7 +101,6 @@ class AppExtension extends AbstractExtension
 
   public function FormatRelation($arelation)
     {
-
         $type= $arelation->getRelation();
         if(isset($this->relationlist[$type]["format"]))
         {
@@ -136,7 +136,6 @@ class AppExtension extends AbstractExtension
              }
 
             }
-
         $fmt = str_replace("#date", $arelation->getDate(), $fmt);
          $actor1text = $arelation->{"actor1"}->getLabel();
          $actor2text = $arelation->{"actor2"}->getLabel();
@@ -144,6 +143,19 @@ class AppExtension extends AbstractExtension
         $fmt = str_replace("#actor2",  $actor2text, $fmt);
         return $fmt;
     }
+
+ public function FormatEventfromEvent($event)
+    {
+        if($event == null) return "++null++";
+        $type= $event->getEventType();
+        $role= $event->getRole();
+        $fmt =  $this->templatelist[$type]["format"];
+        $fmt = str_replace("#location", $event->getLocation(), $fmt);
+        $fmt = str_replace("#date", $event->getDate(), $fmt);
+
+        return $fmt;
+    }
+
 
 
 
@@ -180,7 +192,8 @@ class AppExtension extends AbstractExtension
            $aname = $arole->getName();
         if($key==$rolekey)
         {
-          $aname = strtoupper($aname);
+         // $aname = strtoupper($aname);
+           $aname = "<span class='relation' >".$aname."</span>";
         }
             if (str_contains($fmt, "#".$arole->getRole()))
             {
@@ -208,7 +221,8 @@ class AppExtension extends AbstractExtension
         {
           $arole = $roles[$rolekey];
           $aname = $arole->getName();
-          $aname = strtoupper($aname);
+       //   $aname = strtoupper($aname);
+           $aname = "<span class='relation' >".$aname."</span>";
            if (str_contains($fmt, "#".$arole->getRole()))
            {
                $fmt = str_replace("#".$arole->getRole(), $aname, $fmt);

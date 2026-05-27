@@ -77,10 +77,13 @@ div.actorbutton a
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    padding: 4px;
+    padding-left: 4px;
+    padding-right:4px;
+    padding-top:1px;
+    padding-bottom:1px;
     display: inline;
     border-radius: 7px;
-    margin: 0 10px;
+    margin: 10px;
     background: #f4cbd7;
     font-size: 12px;
     line-height: 15px;
@@ -89,6 +92,22 @@ div.actorbutton a
     height: auto;
     box-sizing: content-box;
     text-decoration : none;
+}
+
+ span.relation
+ {
+     color:blue;
+     font-style:italic;
+ }
+
+
+span.actor
+{
+    padding-left: 4px;
+    padding-right: 4px;
+    color:deeppink;
+    font-style:italic;
+    font-weight: bold;
 }
 
 /*==================================

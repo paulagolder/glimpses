@@ -84,12 +84,9 @@ class ActorRepository extends EntityRepository
          $sql = "SELECT g FROM App\Entity\Actor g  ";
          $name0= $actor->getForename()."+".$actor->getSurname();
          $sql .= " where concat( g.forename,'+',g.surname) = '{$name0}' ";
-
           $filterlist = explode(",",$actor->getKeywords());
-dump($filterlist);
            foreach($filterlist as $filterpair)
            {
-           dump("*".$filterpair."*");
            if($filterpair != "")
            {
              $filter = explode("+",$filterpair);
