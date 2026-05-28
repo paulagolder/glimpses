@@ -188,20 +188,18 @@ filterform
     color:blue;
     padding:0.1em;
     padding-left:0.2em;
-    font-size: 1.5em;
 }
 
 .filterform form div.filterrow
 {
     display: flex;
+    height: 30px;
 }
 
  span.blue
  {
-
      color:blue;
  }
-
 
 .button
 {
@@ -228,8 +226,7 @@ div.clearbutton
     box-shadow: inset 0 0 1px 1px #f6f6f6;
     color: #333;
     font: bold 12px/1 "helvetica neue", helvetica, arial, sans-serif;
-    padding-top: 12px ;
-
+    padding-top: 7px ;
     padding-left: 8px ;
     padding-right: 8px ;
     text-align: center;
@@ -465,7 +462,7 @@ div.list div.row div.cloc
 
 div.list div.row div.ctype
 {
-    width:5em;
+    width:10em;
 }
 
 div.list div.row div.cage
@@ -483,6 +480,12 @@ div.list div.row div.cname
     width:10em;
 }
 
+
+div.list div.row div.crole
+{
+    width:10em;
+}
+
 div.list div.row div.clname
 {
     width:17em;
@@ -495,7 +498,12 @@ div.list div.row div.cmtext
 
 div.list div.row div.cltext
 {
-    width:30em;
+    width:10em;
+}
+
+div.list div.row div.cstext
+{
+    width:13em;
 }
 
 div.list div.row div
@@ -527,6 +535,21 @@ div.list div.row div.female
 div.list div.row div.male
 {
     color: #3ea5c9;
+}
+
+div.list div.input.row div.returnbutton.delete
+{
+    width: 43px;
+}
+
+div.list div.input.row div.returnbutton.edit
+{
+    width: 29px;
+}
+
+div.list div.input.row input
+{
+    font-size:9pt;
 }
 
 /*==============================
@@ -646,6 +669,10 @@ div.table input.language
     width:3em;
 }
 
+div.table div.row div.cltext
+{
+    width:50em;
+}
 
 div.table input.region
 {
@@ -677,7 +704,7 @@ div.inputform
     margin-top:3em;
     background: rgba(0, 0, 80, 0.1);
 }
-    
+
 
 div.datarow
 {
@@ -749,3 +776,19 @@ div.xrow div.field
  {
   transform: translateY(+25%);
 }
+
+/*===========================
+  table input form
+ ===========================*/
+
+table.inputtable
+{
+    font-size:9pt;
+}
+
+table.inputtable tbody tr.row td.cell input
+{
+    font-size:9pt;
+}
+
+

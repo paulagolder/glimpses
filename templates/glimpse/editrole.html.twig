@@ -19,33 +19,34 @@
         <div class="returnbutton button1"> <a  href = "{{returnlink}}" >return </a> </div>
     </div>
 </div>
-    <div class="glimpse">
-       <div class="glimpseform">
-                <div class="row">
-                    <div class="label"> location </div>
-                    <div class= "field">{{glimpse.location}}</div>
-                    <div class="label"> type </div>
-                    <div class= "field">{{glimpse.type}}</div>
-                </div>
-                <div class="row">
-                    <div class="label"> date </div>
-                    <div class= "field">{{glimpse.date}}</div>
-                    <div class="label"> text </div>
-                    <div class= "field">{{glimpse.text}}</div>
-                </div>
-                <div class="subheading" >
-                    <div class="title"> roles </div>
-                </div>
-            </div>
-             <form action="/glimpse/process_editrole/{{glimpse.glimpseid}}/{{activerole}}" method="post" >
-                <table class="roleTable" >
-                    <col class="col1" />
-                    <col class="col2" />
-                        <col class="col3" />
-                        <col class="col41" />
-                    {% for pid, role in roles %}
-                    {%  if role.roleid != activerole  and role.roleid > 0 %}
-                    <tr class="row">
+<div class="glimpse">
+   <div class="table">
+     <div class="row">
+        <div class="label"> location </div>
+        <div class= "field">{{glimpse.location}}</div>
+        <div class="label"> type </div>
+        <div class= "field">{{glimpse.type}}</div>
+        <div class="label"> date </div>
+        <div class= "field">{{glimpse.date}}</div>
+     </div>
+     <div class="row">
+
+        <div class="label"> text </div>
+        <div class= "cltext">{{glimpse.text}}</div>
+     </div>
+   </div>
+   <div class="subheading" >
+        <div class="title"> roles </div>
+   </div>
+   <form action="/glimpse/process_editrole/{{glimpse.glimpseid}}/{{activerole}}" method="post" >
+      <table class="inputtable" >
+         <col class="col1" />
+         <col class="col2" />
+         <col class="col3" />
+         <col class="col41" />
+      {% for pid, role in roles %}
+      {%  if role.roleid != activerole  and role.roleid > 0 %}
+          <tr class="row">
                         <td class="cell" > <a    href = "/glimpse/editrole/{{glimpse.glimpseid}}/{{pid}}" >{{role.roleid}} </a>    </td>
                         <td class="cell">{{role.role}}</td>
                         <td class="cell">{{role.name}}</td>

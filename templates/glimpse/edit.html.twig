@@ -22,7 +22,7 @@
         <div class="returnbutton"> <a  href = "/source/startinput/{{glimpse.sourceid}}" >Add New Glimpse </a> </div>
     </div>
 
-    <div class="glimpseform">
+    <div class="table">
         <form action="/glimpse/process_edit/{{glimpse.glimpseid}}" method="post"  id="glimpseform"  >
             <div class="row">
                 <div class="inputpair id">
@@ -87,41 +87,37 @@
             <div class="subheading" >
                 <div class="title"> roles </div>
             </div>
-            <div class="editroleTable" >
-                    {% for pid, role in roles %}
-                    {% if role.role != 'format' %}
-                    {%  if role.roleid>0 %}
-
-                    <div class="row">
-                        <div class="col1">
-                                <div class="returnbutton"> <a    href = "/glimpse/deleterole/{{glimpse.glimpseid}}/{{pid}}" >delete </a> </div>
-                                <div class="returnbutton">  <a  href = "/glimpse/editrole/{{glimpse.glimpseid}}/{{pid}}" >edit </a>  </div>
-                        </div>
-                        <div class="col2" >{{role.roleid}} </div>
-                        <div class="col3">{{role.role}}</div>
-                        <div class="col4">{{role.name}}</div>
-                        <div class="col5">{{role.predicates}}</div>
-
-                       <div class="col7">
-                          {% for anactor in role.actors %}
+            <div class="list" >
+                 {% for pid, role in roles %}
+                 {% if role.role != 'format' %}
+                 {%  if role.roleid>0 %}
+                  <div class="row">
+                      <div class="returnbutton"> <a    href = "/glimpse/deleterole/{{glimpse.glimpseid}}/{{pid}}" >delete </a> </div>
+                      <div class="returnbutton">  <a  href = "/glimpse/editrole/{{glimpse.glimpseid}}/{{pid}}" >edit </a>  </div>
+                      <div class="cid" >{{role.roleid}} </div>
+                      <div class="ctype">{{role.role}}</div>
+                      <div class="cname">{{role.name}}</div>
+                      <div class="cstext">{{role.predicates}}</div>
+                      <div class="ctext">
+                      {% for anactor in role.actors %}
                           <div class="actorbutton"><a href = "/actor/showone/{{anactor.actorid}}" > {{anactor.label }}</a></div>
-                          {% endfor %}
-                       </div>
-                    </div>
-                    {% else %}
-                    <div class="row">
-                        <div class="col1" >
-                        </div>
-                        <div class="col2" >
+                      {% endfor %}
+                 </div>
+                 </div>
+                 {% else %}
+                 <div class="input row">
+                        <div class="returnbutton delete" >   </div>
+                        <div class="returnbutton edit" >   </div>
+                        <div class="cid" >
                             <input type="hidden" name="_role[{{pid}}]['ref']" value="{{role.roleid}}" />
                         </div>
-                        <div class="col3" >
+                        <div class="ctype" >
                             <input type="text" name="_role[{{pid}}]['role']" value="{{role.role}}" />
                         </div>
-                        <div class="col4" >
+                        <div class="cname" >
                             <input type="text" name="_role[{{pid}}]['name']" value="{{role.name}}" />
                         </div>
-                        <div class="col5" >
+                        <div class="cstext" >
                             <input type="text" name="_role[{{pid}}]['predicates']" value="{{role.predicates}}" />
                         </div>
                         <div class="col6"> </div>
