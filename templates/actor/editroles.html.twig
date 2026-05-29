@@ -25,123 +25,105 @@
 
 
         <div class="actor">
-             <div class="actortable">
-            <div class="row">
-                <div class="inputpair" >
-                                   <div class="label">birth:</div>
-                                   {% if actor.birthdate is not null  %}
-                                   <div class= "date"> {{actor.Birthdate}} </div>
-                                   {% else %}
-                                   <div class= "date"> - </div>
-                                   {% endif %}
-                 </div>
-                 <div class="inputpair" >
-                                   <div class="label"> death:</div>
-                                   <div class= "date"> {{actor.deathdate}} </div>
-                 </div>
-                 <div class="inputpair" >
+             <div class="table">
+                <div class="row">
+                     <div class="label">birth:</div>
+                     {% if actor.birthdate is not null  %}
+                       <div class= "cdate"> {{actor.Birthdate}} </div>
+                     {% else %}
+                       <div class= "cdate"> - </div>
+                     {% endif %}
+                     <div class="label"> death:</div>
+                     <div class= "cdate"> {{actor.deathdate}} </div>
                     <div class="label"> specifier </div>
-                    <div class= "longfield"> {{actor.specifier}} </div>
-                </div>
-                <div class="inputpair" >
+                    <div class= "cmtext"> {{actor.specifier}} </div>
                     <div class="label"> text </div>
-                    <div class= "longfield"> {{actor.text}} </div>
+                    <div class= "cltext"> {{actor.text}} </div>
                 </div>
-            </div>
-        </div>
-
-
-
-        <div class="subheading" >
-            <div class="title"> Matches? </div>
-        </div>
-    <div class="matchTable" >
-        <div class="body">
+             </div>
+      <div class="subheading" >
+          <div class="title"> Matches? </div>
+      </div>
+             <div class="list" >
             {% for aid, anactor in duplicates %}
-                {%  if( anactor.actorid != actor.actorid ) %}
-            <div class="row">
-                <div class="cellid"> {{anactor.actorid}}</div>
-                <div class="actorname">{{anactor.surname}}, {{anactor.forename}}&#32({{anactor.birthdate}}-{{anactor.deathdate}}) </div>
-                <div class="returnbutton">  <a   href = "/actor/compare/{{actor.actorid}}/{{anactor.actorid}}" >Compare</a> </div>
-                <div class="returnbutton">  <a   href = "/actor/showone/{{anactor.actorid}}" >View</a> </div>
-            </div>
-           {% endif %}
+               {%  if( anactor.actorid != actor.actorid ) %}
+               <div class="row">
+                 <div class="cid"> {{anactor.actorid}}</div>
+                 <div class="cmname">{{anactor.label}} </div>
+                 <div class="button">  <a   href = "/actor/compare/{{actor.actorid}}/{{anactor.actorid}}" >Compare</a> </div>
+                 <div class="button">  <a   href = "/actor/showone/{{anactor.actorid}}" >View</a> </div>
+               </div>
+              {% endif %}
             {% endfor %}
-        </div>
-    </div>
+           </div>
 
 
-        <div class="subheading" >
+      <div class="subheading" >
             <div class="title"> Life Events </div>
-        </div>
-     <div class="eventTable" >
-        <div class="body">
+      </div>
+           <div class="list" >
               {% for eid, levent in lifeevents %}
-                            <div class="row">
-                                   <div class="returnbutton">  <a   href = "/actor/deleteevent/{{levent.lifeeventid}}" >delete</a> </div>
-                                 <div class="date">{{levent.lowdate}} </div>
-                                {% if(levent.middate != levent.lowdate )  %}
-                                    <div class="date">{{levent.middate}} </div>
-                                {% endif %}
-                               {% if(levent.middate != levent.highdate )  %}
-                                <div class="date">{{levent.highdate}} </div>
-                                 {% endif %}
-                                 <div class="type">{{levent.eventtype}} </div>
-                                 <div class="text">{{levent.subject|raw}} </div>
-                                {% set cluelist = levent.clues|split(',') %}
-                                 {% for clue in cluelist %}
-                                 <div class="returnbutton" ><a   href = "/glimpse/showone/{{clue}}" >Clue_{{clue}}</a> </div>
-                                    {% endfor %}
-
-                            </div>
+              <div class="row">
+                 <div class="button">  <a   href = "/actor/deleteevent/{{levent.lifeeventid}}" >delete</a> </div>
+                 <div class="cdate">{{levent.lowdate}} </div>
+                 {% if(levent.middate != levent.lowdate )  %}
+                     <div class="date">{{levent.middate}} </div>
+                 {% endif %}
+                 {% if(levent.middate != levent.highdate )  %}
+                     <div class="cdate">{{levent.highdate}} </div>
+                 {% endif %}
+                 <div class="ctype">{{levent.eventtype}} </div>
+                 <div class="ctext">{{levent.subject|raw}} </div>
+                 {% set cluelist = levent.clues|split(',') %}
+                 {% for clue in cluelist %}
+                     <div class="button" ><a   href = "/glimpse/showone/{{clue}}" >Clue_{{clue}}</a> </div>
+                 {% endfor %}
+             </div>
              {% endfor %}
-        </div>
-    </div>
+           </div>
 
-        <div class="subheading" >
-            <div class="title">Relationships</div>
-        </div>
+   <div class="subheading" >
+        <div class="title">Relationships</div>
+   </div>
 
-    <div class="relationTable" >
-        <div class="body">
+        <div class="list" >
             {% for rid, relation in relations %}
                 <div class="row">
-                      <div class="returnbutton">  <a   href = "/actor/deleterelation/{{actor.actorid}}/{{rid}}" >delete</a> </div>
-                      <div class="returnbutton">  <a   href = "/relation/edit/{{rid}}" >Edit</a> </div>
+                      <div class="button">  <a   href = "/actor/deleterelation/{{actor.actorid}}/{{rid}}" >delete</a> </div>
+                      <div class="button">  <a   href = "/relation/edit/{{rid}}" >Edit</a> </div>
                       {% if actors[relation.actor1ref] is defined %}
-                          <div class="actorname">{{actors[relation.actor1ref].getName()}} </div>
+                          <div class="cname">{{actors[relation.actor1ref].getName()}} </div>
                       {% else %}
-                          <div class="actorname"> actor not found </div>
+                          <div class="cname"> actor not found </div>
                       {% endif %}
-                               <div class="relation">is {{relation.relation}} of </div>
-                               {% if actors[relation.actor2ref] is defined %}
-                              <div class="actorname">{{actors[relation.actor2ref].getName()}} </div>
-                              {% else %}
-                              <div class="actorname"> actor not found </div>
-                              {% endif %}
-                                  {% set cluelist = relation.clues|split(',') %}
-                           {% for clue in cluelist %}
-                              <div class="returnbutton" ><a   href = "/glimpse/showone/{{clue}}" >Clue_{{clue}}</a> </div>
-                           {% endfor %}
-                           </div>
+                      <div class="ctype">is {{relation.relation}} of </div>
+                      {% if actors[relation.actor2ref] is defined %}
+                          <div class="cname">{{actors[relation.actor2ref].getName()}} </div>
+                      {% else %}
+                          <div class="cname"> actor not found </div>
+                      {% endif %}
+                      {% set cluelist = relation.clues|split(',') %}
+                      {% for clue in cluelist %}
+                              <div class="button" ><a   href = "/glimpse/showone/{{clue}}" >Clue_{{clue}}</a> </div>
+                      {% endfor %}
+                </div>
                 {% endfor %}
-            </div>
         </div>
-      <div class="subheading" >
-                <div class="title">Roles</div>
-            </div>
-    <div class="roleTable" >
+    <div class="subheading" >
+       <div class="title">Roles</div>
+    </div>
+    <div class="list" >
         <div class="body">
             {% for pid, arole in roles %}
             <div class="row">
-                <div class="returnbutton">  <a   href = "/actor/deleterole/{{actor.actorid}}/{{pid}}" >remove </a> </div>
-                <div class="returnbutton">  <a   href = "/glimpse/showone/{{arole.glimpseid}}" >view </a> </div>
-                 <div class="returnbutton">  <a   href = "/actor/newrelationshipwithglimpse/{{actor.actorid}}/{{arole.glimpseid}}" >Make Reln </a> </div>
+                <div class="button">  <a   href = "/actor/deleterole/{{actor.actorid}}/{{pid}}" >remove </a> </div>
+                <div class="button">  <a   href = "/glimpse/showone/{{arole.glimpseid}}" >view </a> </div>
+                 <div class="button">  <a   href = "/actor/newrelationshipwithglimpse/{{actor.actorid}}/{{arole.glimpseid}}" >Make Reln </a> </div>
                   {% set formatedtext = FormatRoleFull(arole,pid) %}
-                <div class="glimpsetext" >{{formatedtext| raw}}</div>
+                <div class="cltext" >{{formatedtext| raw}}</div>
                {% if(actor.Birthdate != null) %}
                   {%  set   age= calAge(actor.Birthdate,arole.date) %}
-                  <div class="age" >AGE:{{age}}</div>
+                  <div class="cage right" >AGE:{{age}}</div>
            {% endif %}
             </div>
             {% endfor %}
@@ -151,17 +133,17 @@
         <div class="subheading" >
             <div class="title">Candidate Glimspes </div>
         </div>
-     <div class= "cglimpsestable">
+     <div class= "list">
 
             {% for pid, cglimpse in cglimpses %}
                {%  set   age= calAge(actor.Birthdate,cglimpse.date) %}
                {%   if (age > -10) and ( age <110 ) %}
             <div class= "row">
-               <div class="returnbutton"><a   href = "/actor/addrole/{{actor.actorid}}/{{pid}}" >Add </a> </div>
-                <div class="returnbutton" ><a  href = "/glimpse/showone/{{cglimpse.getGlimpseId()}}" >View</a></div>
+               <div class="button"><a   href = "/actor/addrole/{{actor.actorid}}/{{pid}}" >Add </a> </div>
+                <div class="button" ><a  href = "/glimpse/showone/{{cglimpse.getGlimpseId()}}" >View</a></div>
                 {% set formatedtext = FormatEventFull(cglimpse,pid) %}
-                <div class="glimpsetext" >{{formatedtext | raw}}</div>
-                <div class="agecell" > AGE: {{age}} </div>
+                <div class="cltext" >{{formatedtext | raw}}</div>
+                <div class="cage right" > AGE: {{age}} </div>
             </div>
         {% endif %}
             {% endfor %}

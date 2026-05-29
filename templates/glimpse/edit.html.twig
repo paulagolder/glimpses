@@ -22,66 +22,40 @@
         <div class="returnbutton"> <a  href = "/source/startinput/{{glimpse.sourceid}}" >Add New Glimpse </a> </div>
     </div>
 
-    <div class="table">
+    <div class="input table">
         <form action="/glimpse/process_edit/{{glimpse.glimpseid}}" method="post"  id="glimpseform"  >
             <div class="row">
-                <div class="inputpair id">
                     <div class="label">ID </div>
-                    <div class= "field"> {{glimpse.glimpseid}}</div>
-                </div>
-                <div class="inputpair language">
+                    <div class= "cid"> {{glimpse.glimpseid}}</div>
                     <div class="label"> language </div>
                     <div class= "field">{{glimpse.language}} </div>
-                </div>
-
             </div>
             <div class="row">
-                <div class="inputpair sourceid">
                     <div class="label"> sourceid </div>
-                    <div class= "field"> {{glimpse.sourceid}} </div>
-                </div>
-                <div class="inputpair source">
+                    <div class= "cid"> {{glimpse.sourceid}} </div>
+                    <div class="label"> page </div>
+                    <div class= "icid"> <input class="ref" type="text" name="_ref" value="{{glimpse.ref}}" /> </div>
                     <div class="label"> source </div>
-                    <div class= "field"> {{glimpse.source}}</div>
-                </div>
-                <div class="inputpair sourcelink">
-                    <div class="button"><a href="{{source.url}}" target="new" > View Source </a> </div>
-                </div>
+                    <div class= "ltext"> {{glimpse.source}}</div>
+                    <div class="linkbutton"><a href="{{source.url}}" target="new" > View Source </a> </div>
             </div>
             <div class="row">
-                <div class="inputpair ref">
-                    <div class="label"> ref </div>
-                    <div class= "field"> <input class="ref" type="text" name="_ref" value="{{glimpse.ref}}" /> </div>
-                </div>
-                <div class="inputpair type">
                     <div class="label"> type </div>
                     <div class= "field"> <input class="type" type="text" name="_type" value="{{glimpse.type}}" /> </div>
-                </div>
-
-                <div class="inputpair datequalifier">
                     <div class="label"> Qual </div>
                     <div class= "field"> <input class="datequalifier" type="text" name="_datequalifier" value="{{glimpse.datequalifier}}" /> </div>
-                </div>
-                <div class="inputpair date">
                     <div class="label"> date </div>
                     <div class= "field"> <input class="date" type="text" name="_gdate" value="{{glimpse.date}}" /> </div>
-                </div>
-                  <div class="inputpair location">
                     <div class="label"> location </div>
                     <div class= "field"> <input class="ref" type="text" name="_location" value="{{glimpse.location}}" /> </div>
-                </div>
             </div>
             <div class="row">
-                <div class="inputpair text">
                     <div class="label"> text </div>
                     <div class= "field"> <input class="text" type="text" name="_text" value="{{glimpse.text}}" /> </div>
-                </div>
             </div>
            <div class="row">
-             <div class="inputpair text">
                    <div class="label">image</div>
                    <div class= "field"> <input class="image" type="text" name="_image" value="{{glimpse.image}}" /> </div>
-             </div>
             </div>
         </div>
             <div class="subheading" >
@@ -126,7 +100,7 @@
                     {% endif %}
                       {% endif %}
                     {% endfor %}
-                </div>
+
             <button type="submit" id="submitbutton"   > enregistrer</button>
         </form>
     </div>

@@ -263,6 +263,12 @@ a.clearbutton
     margin-left:auto;
 }
 
+
+.right
+{
+    margin-left:auto;
+}
+
 .subheading {
     display: flex;
 }
@@ -447,12 +453,28 @@ div.row
 /*====================================
 main scroling lists
 =========================*/
+
+div.list {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    width: 90%;
+}
+
 div.list div.row
 {
     display:flex;
     font-size:9pt;
     line-height: 15px;
     border: 0.0091px solid #c7c7da;
+}
+
+div.list div.row div
+{
+    padding-left:0.5em;
+    padding-right:0em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 div.list div.row div.cloc
@@ -480,6 +502,11 @@ div.list div.row div.cname
     width:10em;
 }
 
+div.list div.row div.cmname
+{
+    width:15em;
+}
+
 
 div.list div.row div.crole
 {
@@ -498,7 +525,7 @@ div.list div.row div.cmtext
 
 div.list div.row div.cltext
 {
-    width:10em;
+    width:73em;
 }
 
 div.list div.row div.cstext
@@ -506,12 +533,6 @@ div.list div.row div.cstext
     width:13em;
 }
 
-div.list div.row div
-{
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
 
 div.list div.row div.cid
 {
@@ -550,6 +571,35 @@ div.list div.input.row div.returnbutton.edit
 div.list div.input.row input
 {
     font-size:9pt;
+}
+
+div.list div.button
+{
+    background-color: transparent;
+    border-radius: 3px;
+    color: #333;
+    text-align: center;
+    width: auto;
+    border: none;
+    box-shadow: none;
+    padding: 0px;
+
+}
+
+
+div.list div.button a
+{
+    padding: 4px;
+    display: inline;
+    border-radius: 7px;;
+    background: #baf060;
+    font-size: 10px;
+    line-height: 15px;
+    color: black;
+    width: auto;
+    height: auto;
+    box-sizing: content-box;
+    text-decoration: none;
 }
 
 /*==============================
@@ -600,18 +650,20 @@ div.hidebar button
 table
  ===========================*/
 /*========================================
-actor panel
+ table
 ========================================== */
 
 div.row div.inputpair div.label{}
 div.table div.row div.inputpair div.label{}
+
 
 div.table div.row
 {
     display: flex;
     font-size: 9pt;
     line-height: 15px;
-    border: 0.0091px solid #c7c7da;
+    border: 0.0091px solid #afafc7;
+    background: rgba(0, 0, 80, 0.1);
 }
 
 
@@ -628,11 +680,6 @@ div.table div.row  div.label
     width: 5em;
 }
 
-#actor div.actortable div.row div.inputpair div.field
-{
-    padding-left: 1em;
-    width: 8em;
-}
 
 div.table div.row div.inputpair div.longfield
 {
@@ -640,155 +687,210 @@ div.table div.row div.inputpair div.longfield
     width: 34em;
 }
 
+ div.input.table  div.row div.iltext input.ltext
+ {
+   width:40em;
+ }
 
-div.table div.row div.namepair div.field
+
+div.input.table  div.row  input.istext
+{
+    width: 5em;
+}
+
+div.input.table  div.row  input.imtext
+{
+    width: 10em;
+}
+
+div.input.table  div.row input.iltext
+{
+    width: 40em;
+}
+div.input.table  div.row div.mfield
 {
     padding-left: 1em;
     width: 20em;
 }
 
-div.table input.title
+div.input.table  div.row input.iid
 {
-    width:40em;
-    height:4em;
+    width: 10em;
 }
 
-div.table textarea.title
+    div.input.table div.row div.iltext
+    {
+        padding-left: 1em;
+        width: 20em;
+    }
+
+div.input.table div.row div.imtext
 {
-    width:40em;
-    height:4em;
+    padding-left: 1em;
+    width: 10em;
 }
 
-div.table input.id
-{
-    width:3em;
-}
+    div.table div.row div.field
+    {
+        padding-left: 1em;
+        width: 20em;
+    }
 
-div.table input.language
-{
-    width:3em;
-}
-
-div.table div.row div.cltext
-{
-    width:50em;
-}
-
-div.table input.region
-{
-    width:10em;
-}
-
-div.table input.period
-{
-    width:10em;
-}
-
-div.table input.url
-{
-    width:40em;
-    height:4em;
-}
-
-div.table textarea.url
-{
-    width:40em;
-    height:4em;
-}
-
-/*===========================
-  inputform
- ===========================*/
-div.inputform
-{
-    margin-top:3em;
-    background: rgba(0, 0, 80, 0.1);
-}
+    div.input.table  div.row div.field input.text
+    {
+        width: 20em;
+    }
 
 
-div.datarow
-{
-    font-size:1em;
-}
+    div.table div.row div.namepair div.field
+    {
+        padding-left: 1em;
+        width: 20em;
+    }
 
-div.datarow div.label
-{
-    color:yellow;
-     font-size:1em;
-}
+    div.table input.title
+    {
+        width:40em;
+        height:4em;
+    }
 
-div.datarow div.data
-{
-    color:blue;
-     font-size:1em;
-}
+    div.table textarea.title
+    {
+        width:40em;
+        height:4em;
+    }
 
-div.xrow div.label
-{
-    color:maroon;
-     font-size:1em;
-     width:10em;
-}
+    div.table input.id
+    {
+        width:3em;
+    }
 
-div.xrow div.field
-{
-    color:black;
-     font-size:1em;
-}
+    div.table input.language
+    {
+        width:3em;
+    }
 
-.tooltip {
-    position: relative;
-    display: inline-block;
-    border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
-}
+    div.table div.row div.cltext
+    {
+        width:50em;
+    }
 
-/* Tooltip text */
-.tooltip .tooltiptext {
-    visibility: hidden;
-    width: 120px;
-    color: #f00;
-    text-align: center;
-    padding: 5px 0;
-    border-radius: 6px;
- 
-    /* Position the tooltip text - see examples below! */
-    position: absolute;
-    z-index: 1;
-}
+    div.table input.region
+    {
+        width:10em;
+    }
 
-/* Show the tooltip text when you mouse over the tooltip container */
-.tooltip:hover .tooltiptext {
-    visibility: visible;
-}
+    div.table input.period
+    {
+        width:10em;
+    }
 
-.selectable:hover
-{
-    background: rgba(0, 0, 80, 0.1);
-}
+    div.table input.url
+    {
+        width:40em;
+        height:4em;
+    }
 
-.resizable
-{
-    resize: both;
-    overflow: auto;
-}
+    div.table textarea.url
+    {
+        width:40em;
+        height:4em;
+    }
 
-#xxsource_list div.source div.row div.field
- {
-  transform: translateY(+25%);
-}
+    /*===========================
+      inputform
+     ===========================*/
+    div.inputform
+    {
+        margin-top:3em;
+        background: rgba(0, 0, 80, 0.1);
+    }
 
-/*===========================
-  table input form
- ===========================*/
 
-table.inputtable
-{
-    font-size:9pt;
-}
+    div.datarow
+    {
+        font-size:1em;
+    }
 
-table.inputtable tbody tr.row td.cell input
-{
-    font-size:9pt;
-}
+    div.datarow div.label
+    {
+        color:yellow;
+        font-size:1em;
+    }
+
+    div.datarow div.data
+    {
+        color:blue;
+        font-size:1em;
+    }
+
+    div.xrow div.label
+    {
+        color:maroon;
+        font-size:1em;
+        width:10em;
+    }
+
+    div.xrow div.field
+    {
+        color:black;
+        font-size:1em;
+    }
+
+    .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+    }
+
+    /* Tooltip text */
+    .tooltip .tooltiptext {
+        visibility: hidden;
+        width: 120px;
+        color: #f00;
+        text-align: center;
+        padding: 5px 0;
+        border-radius: 6px;
+
+        /* Position the tooltip text - see examples below! */
+        position: absolute;
+        z-index: 1;
+    }
+
+    /* Show the tooltip text when you mouse over the tooltip container */
+    .tooltip:hover .tooltiptext {
+        visibility: visible;
+    }
+
+    .selectable:hover
+    {
+        background: rgba(0, 0, 80, 0.1);
+    }
+
+    .resizable
+    {
+        resize: both;
+        overflow: auto;
+    }
+
+    #xxsource_list div.source div.row div.field
+    {
+        transform: translateY(+25%);
+    }
+
+    /*===========================
+      table input form
+     ===========================*/
+
+    table.inputtable
+    {
+        font-size:9pt;
+    }
+
+    table.inputtable tbody tr.row td.cell input
+    {
+        font-size:9pt;
+    }
+
 
 

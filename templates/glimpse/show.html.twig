@@ -24,56 +24,35 @@
     </div>
     <div class="table">
             <div class="row">
-            <div class="inputpair" >
                 <div class="label">ID </div>
-                <div class= "field"> {{glimpse.glimpseid}}</div>
-                </div>
-                <div class="inputpair" >
+                <div class= "cid"> {{glimpse.glimpseid}}</div>
                     <div class="label"> language </div>
-                    <div class= "field"> {{glimpse.language}}</div>
-                    </div>
-                    <div class="inputpair" >
+                    <div class= "cid"> {{glimpse.language}}</div>
                     <div class="label"> sourceid </div>
-                    <div class= "field"> {{glimpse.sourceid}}</div>
-                    </div>
-                        <div class="inputpair" >
+                    <div class= "cid"> {{glimpse.sourceid}}</div>
                     <div class="label"> source </div>
-                    <div class= "field"> {{source.title}}</div>
-                    </div>
-                    <div class="inputpair" >
-                    <div class="label"> source </div>
-                    <div class= "field"><a target="_blank" rel="noopener noreferrer" href={{source.url}}>View</a></div>
-                    </div>
-                </div>
-
+                    <div class= "cltext"> {{source.title}}</div>
+                    <div class= "cluebutton"><a target="_blank" rel="noopener noreferrer" href={{source.url}}>View</a></div>
+            </div>
             <div class="row">
-            <div class="inputpair" >
-                    <div class="label"> type </div>
-                    <div class= "field"> {{glimpse.type}} </div>
-            </div>
-            <div class="inputpair" >
-                    <div class="label"> location </div>
-                    <div class= "field"> {{glimpse.location}}</div>
-            </div>
-            </div>
-                <div class="row">
-                <div class="inputpair" >
                     <div class="label"> date </div>
-                    <div class= "field"> {{glimpse.date}} </div>
-                        </div>
-            <div class="inputpair" >
+                    <div class= "cdate"> {{glimpse.date}} </div>
+                    <div class="label"> type </div>
+                    <div class= "crole"> {{glimpse.type}} </div>
+                    <div class="label"> location </div>
+                    <div class= "cloc"> {{glimpse.location}}</div>
+            </div>
+            <div class="row">
+
                     <div class="label"> text </div>
                     <div class= "field"> {{glimpse.text}} </div>
-                    </div>
-
-             <div class="inputpair" >
-                                <div class="label"> image </div>
-                                <div class= "field">
+                    <div class="label"> image </div>
+                   <div class= "field">
                                  {#   <div class="returnbutton">{{ ideLink('glimpse.image')}} >View Image </a> </div>#}
-                                    </div>
-             </div>
-                            </div>
-                               </div>
+                    </div>
+            </div>
+         </div>
+
                 <div class="subheading" >
                     <div class="title"> roles </div>
                 </div>

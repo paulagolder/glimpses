@@ -19,78 +19,62 @@
                  <div class="returnbutton button1">  <a   href = "/actor/showone/{{actor.actorid}}" >Returm </a> </div>
                </div>
        <div class="actor">
-         <div class="actortable">
+         <div class="table">
 
         <div class="row">
-            <div class="inputpair" >
                 <div class="label">name</div>
-                <div class= "field"> {{actor.surname}}, {{actor.forename}} </div>
-            </div>
-            <div class="inputpair" >
+                <div class= "cname"> {{actor.surname}}, {{actor.forename}} </div>
                 <div class="label"> specifier </div>
-                <div class= "longfield"> {{actor.specifier}} </div>
-            </div>
+                <div class= "cltext"> {{actor.specifier}} </div>
         </div>
         <div class="row">
-            <div class="inputpair" >
                 <div class="label">birthdate</div>
                 {% if actor.birthdate is not null  %}
-                <div class= "field"> {{actor.Birthdate}} </div>
+                <div class= "cdate"> {{actor.Birthdate}} </div>
                 {% else %}
-                <div class= "field"> "Null"" </div>
+                <div class= "cid"> "Null"" </div>
                 {% endif %}
-            </div>
-            <div class="inputpair" >
                 <div class="label"> deathdate</div>
-                <div class= "field"> {{actor.deathdate}} </div>
-            </div>
+                <div class= "cdate"> {{actor.deathdate}} </div>
         </div>
     </div>
-        <div class="subheading" >
-            <div class="title">Parents</div>
-        </div>
-        <div class="eventTable" >
-           <div class="body">
+    <div class="subheading" >
+        <div class="title">Parents</div>
+    </div>
+        <div class="list" >
                 {% for eid , parent  in parents %}
                    <div class="row">
-                       <div class="text">{{parent.getLabel()}} </div>
+                       <div class="clname">{{parent.getLabel()}} </div>
                    </div>
                 {% endfor %}
          </div>
-        <div class="subheading" >
-            <div class="title">Spouses</div>
-        </div>
-        <div class="eventTable" >
-           <div class="body">
+   <div class="subheading" >
+         <div class="title">Spouses</div>
+   </div>
+        <div class="list" >
                 {% for eid , spouse  in wives %}
                    <div class="row">
-                       <div class="text">{{spouse.getLabel()}} </div>
+                       <div class="clname">{{spouse.getLabel()}} </div>
                    </div>
                 {% endfor %}
-         </div>
-       <div class="eventTable" >
-                <div class="body">
-                     {% for eid , spouse  in husbands %}
-                        <div class="row">
-                            <div class="text">{{spouse.getLabel()}} </div>
-                        </div>
-                     {% endfor %}
+                {% for eid , spouse  in husbands %}
+                     <div class="row">
+                         <div class="clname">{{spouse.getLabel()}} </div>
+                     </div>
+                {% endfor %}
               </div>
 
     </div>
 
 <div class="subheading" >
             <div class="title">Children</div>
-        </div>
-        <div class="eventTable" >
-           <div class="body">
+</div>
+        <div class="list" >
                 {% for eid , child  in children %}
                    <div class="row">
-                       <div class="text">{{child.getLabel()}} </div>
+                       <div class="clname">{{child.getLabel()}} </div>
                    </div>
                 {% endfor %}
-         </div>
-
     </div>
 </div>
 {% endblock %}

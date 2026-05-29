@@ -1,7 +1,7 @@
 baptism:
   format: "#child baptised on #date at #location, parents #father #mother"
   child:
-     format: "<span class='blue'>#child </span>was baptised on #date at #location parents #father #mother"
+     format: "#child was baptised on #date at #location parents #father #mother"
      cardinality: 1
   father:
      format: "baptised child #child on #date at #location parents #father #mother"

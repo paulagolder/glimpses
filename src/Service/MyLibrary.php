@@ -291,12 +291,13 @@ class MyLibrary
              if( count($substitutions)==1)
              {
                       $subkey= array_key_first($substitutions);
+                      if($subkey=="format") return $newrelation;
                       $newrelation->setRelation($subkey);
                       return  $this->invertRelation($newrelation);
              }
              else
              {
-                 $mask= $arelation->{"mask"};
+                  $mask = $arelation->{"mask"};
                  if( !array_key_exists("inverse",$substitutions)) return $newrelation;
                  $inversions = $substitutions["inverse"];
                  if(!is_array($inversions))

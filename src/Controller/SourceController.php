@@ -134,23 +134,20 @@ public function showone(ManagerRegistry $doctrine,$sid)
 public function showall(ManagerRegistry $doctrine)
 {
     $pfield =   $this->lib->getCookieFilter('source');
-            if (is_null($pfield))
-            {
-                 $sources  = $doctrine->getRepository(Source::class)->findAll();
-            }
-            else
-            {
-                $filter = "%".$pfield."%";
-                 $sources  = $doctrine->getRepository(Source::class)->filterf($filter);
-            }
-
+    if (is_null($pfield))
+    {
+      $sources  = $doctrine->getRepository(Source::class)->findAll();
+    }
+    else
+    {
+      $filter = "%".$pfield."%";
+      $sources  = $doctrine->getRepository(Source::class)->filterf($filter);
+    }
     foreach($sources as $key=> &$source)
     {
-     $stats =   $doctrine->getRepository(Glimpse::class)->Countglimpses($source->getSourceid());
-     $source->stats = $stats;
+      $stats =   $doctrine->getRepository(Glimpse::class)->Countglimpses($source->getSourceid());
+      $source->stats = $stats;
     }
-    //dump($sources);
-
     return $this->render('source/showall.html.twig',
         [
         'sources'=>$sources,

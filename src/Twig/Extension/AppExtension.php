@@ -96,6 +96,7 @@ class AppExtension extends AbstractExtension
         {
             $fmt = str_replace("#".$arole->getRole(), $arole->getName(), $fmt);
         }
+          $fmt = str_replace("#mother","" , $fmt);
         return $fmt;
     }
 
@@ -174,6 +175,7 @@ class AppExtension extends AbstractExtension
             $fmt = str_replace("#".$arole->getRole(), $arole->getName(), $fmt);
         }
         }
+          $fmt = str_replace("#mother","" , $fmt);
         return $fmt;
     }
 
@@ -203,6 +205,7 @@ class AppExtension extends AbstractExtension
                $ps .= " ".$arole->getRole().":". $aname;
             }
         }
+        $ps = str_replace("#mother","" , $ps);
         $fmt .= $ps;
         }
         return $fmt;
@@ -221,8 +224,7 @@ class AppExtension extends AbstractExtension
         {
           $arole = $roles[$rolekey];
           $aname = $arole->getName();
-       //   $aname = strtoupper($aname);
-           $aname = "<span class='relation' >".$aname."</span>";
+          $aname = "<span class='relation' >".$aname."</span>";
            if (str_contains($fmt, "#".$arole->getRole()))
            {
                $fmt = str_replace("#".$arole->getRole(), $aname, $fmt);

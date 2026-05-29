@@ -742,42 +742,39 @@ class ActorController extends AbstractController
         $husbands=array();
         $children=array();
         $parents=array();
-        ////dump($relnlist);
+         foreach($relnlist as $areln)
+                {
+                 $areln->{"mask"} = $this->getMask($doctrine, $areln);
+                 $areln =  $this->lib->normaliseRelation($areln);
+                 }
         foreach($relnlist as $areln)
         {
-        $relation = $areln->getRelation();
-        if($areln->getActor1ref() == $aid)
+         $areln->{"mask"} = $this->getMask($doctrine, $areln);
+        if($areln->getActor2ref() == $aid)
         {
-          $a2id = $areln->getActor2ref();
+            $rrelation = $this->lib->invertRelation($areln);
+        }else
+        {
+         $rrelation = $areln;
+        }
+
+          $relation = $rrelation->getRelation();
+          $a2id = $rrelation->getActor2ref();
           $actor2 = $doctrine->getRepository(Actor::class)->getOne($a2id);
-          if ($relation== "groom") $wives[ $a2id ] = $actor2;
+
           if ($relation== "husband") $wives[ $a2id ] = $actor2;
           if ($relation== "father") $children[ $a2id ] = $actor2;
           if ($relation== "mother") $children[ $a2id ] = $actor2;
-          if ($relation== "bride") $husbands[ $a2id ] = $actor2;
           if ($relation== "wife") $husbands[ $a2id ] = $actor2;
           if ($relation== "son") $parents[ $a2id ] = $actor2;
-           if ($relation== "child") $parents[ $a2id ] = $actor2;
-        }
-        else
-        {
-          $a1id = $areln->getActor2ref();
-          $actor1 = $doctrine->getRepository(Actor::class)->getOne($a1id);
-           if ($relation== "groom") $wives[  $a1id ] =  $actor1;
-           if ($relation== "husband") $wives[  $a1id ] =  $actor1;
-           if ($relation== "child") $children[  $a1id ] =  $actor1;
-           if ($relation== "mother") $children[ $a1id ] = $actor1;
-           if ($relation== "father") $children[ $a1id ] = $actor1;
-           if ($relation== "bride") $husbands[  $a1id ] =  $actor1;
-           if ($relation== "wife") $husbands[  $a1id ] =  $actor1;
-           if ($relation== "son") $parents[ $a1id ] = $actor1;
-            if ($relation== "child") $parents[ $a1id ] = $actor1;
-        }
-    }
+          if ($relation== "daughter") $parents[ $a2id ] = $actor2;
+          if ($relation== "child") $parents[ $a2id ] = $actor2;
+
+       }
       ////dump($wives);
       ////dump($husbands);
       ////dump($children);
-       ////dump($parents);
+     // dump($parents);
     return $this->render('actor/maketree.html.twig', array(
                                   'actor' => $actor,
                                   'wives' => $wives,
