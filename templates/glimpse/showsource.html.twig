@@ -27,10 +27,10 @@
      <div class= "list">
     {% for pid, glimpse in glimpses %}
         <div class="row">
-             <div class="returnbutton " ><a  href = "/glimpse/showone/{{glimpse.glimpseid}}" >View </a> </div>
-            <div class= "field cref"> {{glimpse.ref}} </div>
-            <div class= "field ctype"> {{glimpse.type}}</div>
-            <div class= "field cdate"> {{glimpse.date}}</div>
+             <div class="button " ><a  href = "/glimpse/showone/{{glimpse.glimpseid}}" >View </a> </div>
+            <div class= "cid"> {{glimpse.ref}} </div>
+            <div class= "ctype"> {{glimpse.type}}</div>
+            <div class= "cdate"> {{glimpse.date}}</div>
           {#   {% if glimpse.text %}
             <div class= "field ctext"> {{glimpse.text}} </div>
             {% else %} #}

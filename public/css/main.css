@@ -550,12 +550,12 @@ div.list div.row div.cdate
 
 div.list div.row div.female
 {
-    color: #e97b75;
+    color: #da1409;
 }
 
 div.list div.row div.male
 {
-    color: #3ea5c9;
+    color: #037399;
 }
 
 div.list div.input.row div.returnbutton.delete
@@ -573,7 +573,7 @@ div.list div.input.row input
     font-size:9pt;
 }
 
-div.list div.button
+div.list div.row div.button
 {
     background-color: transparent;
     border-radius: 3px;
@@ -583,9 +583,14 @@ div.list div.button
     border: none;
     box-shadow: none;
     padding: 0px;
-
+    overflow: unset;
+    margin-left: 1em;
 }
 
+div.list div.row div.button.button1
+{
+    margin-left: auto;
+}
 
 div.list div.button a
 {
@@ -691,6 +696,12 @@ div.table div.row div.inputpair div.longfield
  {
    width:40em;
  }
+
+div.input.table div.row div.cltext
+{
+
+
+}
 
 
 div.input.table  div.row  input.istext
@@ -824,18 +835,7 @@ div.input.table div.row div.imtext
         font-size:1em;
     }
 
-    div.xrow div.label
-    {
-        color:maroon;
-        font-size:1em;
-        width:10em;
-    }
 
-    div.xrow div.field
-    {
-        color:black;
-        font-size:1em;
-    }
 
     .tooltip {
         position: relative;
@@ -873,10 +873,6 @@ div.input.table div.row div.imtext
         overflow: auto;
     }
 
-    #xxsource_list div.source div.row div.field
-    {
-        transform: translateY(+25%);
-    }
 
     /*===========================
       table input form
@@ -891,6 +887,7 @@ div.input.table div.row div.imtext
     {
         font-size:9pt;
     }
+
 
 
 

@@ -6,24 +6,24 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ActorRoleRepository")
+ *
  * @ORM\Table(name="actorrole")
  */
 class ActorRole
 {
-
     /**
      * @ORM\Id()
+     *
      * @ORM\Column(type="integer")
      */
     private $actorref;
 
-
     /**
      * @ORM\Id()
+     *
      * @ORM\Column(type="integer")
      */
     private $roleref;
-
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -47,18 +47,20 @@ class ActorRole
 
     public function setActorRef(int $ref): self
     {
-        $this->actorref= $ref;
+        $this->actorref = $ref;
+
         return $this;
     }
 
-   public function getRoleRef(): ?int
+    public function getRoleRef(): ?int
     {
         return $this->roleref;
     }
 
     public function setRoleRef(int $ref): self
     {
-        $this->roleref= $ref;
+        $this->roleref = $ref;
+
         return $this;
     }
 
@@ -70,6 +72,7 @@ class ActorRole
     public function setText(string $text): self
     {
         $this->text = $text;
+
         return $this;
     }
 
@@ -81,6 +84,7 @@ class ActorRole
     public function setContributor(?string $contributor): self
     {
         $this->contributor = $contributor;
+
         return $this;
     }
 
@@ -92,6 +96,7 @@ class ActorRole
     public function setUpdateDt(?\DateTimeInterface $updatedt): self
     {
         $this->updatedt = $updatedt;
+
         return $this;
     }
 }

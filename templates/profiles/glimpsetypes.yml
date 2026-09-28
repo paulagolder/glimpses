@@ -32,7 +32,7 @@ census:
        format: "#resident was present at #location on #date "
        cardinality: 10
      head:
-         format: "#head was head of houshold at #location on #date "
+         format: "#head was head of household at #location on #date "
          cardinality: 1
      wife:
            format: "#wife was wife of head of household  at #location on #date "
@@ -50,7 +50,7 @@ census:
 burial:
    format: "#defunct buried on #date at #location"
    defunct:
-     format: "was buried on #date at #location"
+     format: "#defunct was buried on #date at #location"
      cardinality: 1
    father:
      format: " #father is father of #defunct  buried on #date at #location"
@@ -58,9 +58,17 @@ burial:
    mother:
      format: " #mother is mother of #defunct  buried on #date at #location"
      cardinality: 1
+   daughter:
+     format: " #daughter is daughter of #defunct  buried on #date at #location"
+     cardinality: 1
+   son:
+     format: " #son is son of #defunct  buried on #date at #location"
+     cardinality: 1
    official: 0
    husband:
-      format: "#husband of #defunct at buried on #date  #location "
+      format: "#husband is husband of #defunct  buried on #date at #location "
+   wife:
+        format: "#wife is wife of #defunct  buried on #date at #location "
 
 death:
    format: "#defunct buried on #date at #location"
@@ -112,6 +120,9 @@ will:
    brother:
       format: "#brother  is brother cited in  #testator 's will dated #date "
       cardinality: 10
+   sister:
+        format: "#sister  is sister cited in  #testator 's will dated #date "
+        cardinality: 10
    son:
       format: "#son  is son cited in #testator 's will dated #date"
       cardinality: 10
@@ -121,9 +132,15 @@ will:
    daughter:
       format: "#wife  is spouse cited in #testator 's will dated #date "
       cardinality: 10
+   granddaughter:
+     format: "#granddaughter was granddaughter of #testator at #location on #date "
+     cardinality: 10
    grandson:
         format: "#grandson was grandson of #testator at #location on #date "
         cardinality: 10
+   son-in-law:
+          format: "#son-in-law was son-in-law of #testator at #location on #date "
+          cardinality: 10
    witness:
        format: "will of #testator dated #date at #location "
        cardinality: 2

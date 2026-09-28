@@ -45,7 +45,8 @@
                 {% for eid , parent  in parents %}
                    <div class="row">
                        <div class="clname">{{parent.getLabel()}} </div>
-                   </div>
+                      <div class="returnbutton button1">  <a   href = "/actor/maketree/{{parent.actorid}}" >Follow </a> </div>
+                 </div>
                 {% endfor %}
          </div>
    <div class="subheading" >
@@ -55,6 +56,7 @@
                 {% for eid , spouse  in wives %}
                    <div class="row">
                        <div class="clname">{{spouse.getLabel()}} </div>
+                       <div class="returnbutton">  <a   href = "/actor/maketree/{{spouse.actorid}}" >Follow </a> </div>
                    </div>
                 {% endfor %}
                 {% for eid , spouse  in husbands %}
@@ -73,6 +75,7 @@
                 {% for eid , child  in children %}
                    <div class="row">
                        <div class="clname">{{child.getLabel()}} </div>
+                        <div class="returnbutton">  <a   href = "/actor/maketree/{{child.actorid}}" >Follow </a> </div>
                    </div>
                 {% endfor %}
     </div>

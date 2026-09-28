@@ -1,4 +1,22 @@
 
+/*================================
+relation list
+=================================== */
+
+div#relation div.list
+{
+    height:37em;
+
+}
+
+
+
+
+
+
+
+
+
 #relation div.subheading.row div.titlebi
 {
     color:blue;
@@ -174,13 +192,6 @@ div#relation textarea.url
 }
 
 
-#relation   div.list
-{
-    overflow-y:scroll;
-    overflow-x:hidden;
-    height:70%;
-    width:90%;
-}
 
 .column {
     float: left;

@@ -34,7 +34,7 @@
                     <div class="label"> sourceid </div>
                     <div class= "cid"> {{glimpse.sourceid}} </div>
                     <div class="label"> page </div>
-                    <div class= "icid"> <input class="ref" type="text" name="_ref" value="{{glimpse.ref}}" /> </div>
+                    <div class= "cid"> <input class="id" type="text" name="_ref" value="{{glimpse.ref}}" /> </div>
                     <div class="label"> source </div>
                     <div class= "ltext"> {{glimpse.source}}</div>
                     <div class="linkbutton"><a href="{{source.url}}" target="new" > View Source </a> </div>
@@ -42,8 +42,6 @@
             <div class="row">
                     <div class="label"> type </div>
                     <div class= "field"> <input class="type" type="text" name="_type" value="{{glimpse.type}}" /> </div>
-                    <div class="label"> Qual </div>
-                    <div class= "field"> <input class="datequalifier" type="text" name="_datequalifier" value="{{glimpse.datequalifier}}" /> </div>
                     <div class="label"> date </div>
                     <div class= "field"> <input class="date" type="text" name="_gdate" value="{{glimpse.date}}" /> </div>
                     <div class="label"> location </div>
@@ -51,7 +49,7 @@
             </div>
             <div class="row">
                     <div class="label"> text </div>
-                    <div class= "field"> <input class="text" type="text" name="_text" value="{{glimpse.text}}" /> </div>
+                    <div class= "cltext"> <input class="iltext" type="text" name="_text" value="{{glimpse.text}}" /> </div>
             </div>
            <div class="row">
                    <div class="label">image</div>
@@ -66,17 +64,17 @@
                  {% if role.role != 'format' %}
                  {%  if role.roleid>0 %}
                   <div class="row">
-                      <div class="returnbutton"> <a    href = "/glimpse/deleterole/{{glimpse.glimpseid}}/{{pid}}" >delete </a> </div>
-                      <div class="returnbutton">  <a  href = "/glimpse/editrole/{{glimpse.glimpseid}}/{{pid}}" >edit </a>  </div>
+                      <div class="returnbutton delete"> <a    href = "/glimpse/deleterole/{{glimpse.glimpseid}}/{{pid}}" >delete </a> </div>
+                      <div class="returnbutton edit">  <a  href = "/glimpse/editrole/{{glimpse.glimpseid}}/{{pid}}" >edit </a>  </div>
                       <div class="cid" >{{role.roleid}} </div>
                       <div class="ctype">{{role.role}}</div>
                       <div class="cname">{{role.name}}</div>
                       <div class="cstext">{{role.predicates}}</div>
-                      <div class="ctext">
+
                       {% for anactor in role.actors %}
                           <div class="actorbutton"><a href = "/actor/showone/{{anactor.actorid}}" > {{anactor.label }}</a></div>
                       {% endfor %}
-                 </div>
+
                  </div>
                  {% else %}
                  <div class="input row">
@@ -94,8 +92,7 @@
                         <div class="cstext" >
                             <input type="text" name="_role[{{pid}}]['predicates']" value="{{role.predicates}}" />
                         </div>
-                        <div class="col6"> </div>
-                         <div class="col7"> </div>
+
                     </div>
                     {% endif %}
                       {% endif %}

@@ -15,6 +15,14 @@ father:
      daughter:
        condition: M F
 
+grandfather:
+  format: "#actor1 <span class='blue'>is grandfather of</span> #actor2"
+  inverse:
+    grandson:
+      condition: M M
+    granddaughter:
+      condition: M F
+
 father_of_groom:
   father:
 
@@ -32,6 +40,15 @@ mother:
        condition: F M
      daughter:
        condition: F F
+
+grandmother:
+  format: "#actor1 <span class='blue'>is grandmother of</span> #actor2"
+  inverse:
+    grandson:
+      condition: F M
+    granddaughter:
+      condition: F F
+
 son:
    format: "#actor1 <span class='blue'>is son of</span> #actor2"
    inverse:
@@ -47,6 +64,14 @@ daughter:
        condition: F M
      mother:
        condition: F F
+
+granddaughter:
+         format: "#actor1 <span class='blue'>is granddaughter</span> of #actor2"
+         inverse:
+           grandfather:
+             condition: F M
+           gvrandmother:
+             condition: F F
 
 wife:
    format: "#actor1 <span class='blue'>is wife of</span> #actor2"

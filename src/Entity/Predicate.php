@@ -2,15 +2,8 @@
 
 namespace App\Entity;
 
-
-
-
 class Predicate
 {
-
-
-
-
     private $predicateref;
     private $roleref;
     private $glimpseid;
@@ -19,16 +12,14 @@ class Predicate
     private $contributor;
     private $updatedt;
 
-
-
- public function getPredicateref(): ?int
+    public function getPredicateref(): ?int
     {
         return $this->predicateref;
     }
 
-   public function setPredicateref(int $ref): self
+    public function setPredicateref(int $ref): self
     {
-        $this->predicateref= $ref;
+        $this->predicateref = $ref;
 
         return $this;
     }
@@ -40,32 +31,27 @@ class Predicate
 
     public function setroleref(int $ref): self
     {
-        $this->roleref= $ref;
+        $this->roleref = $ref;
 
         return $this;
     }
 
-
-   public function getGlimpseid(): ?int
+    public function getGlimpseid(): ?int
     {
         return $this->glimpseid;
     }
 
     public function setGlimpseid(int $ref): self
     {
-        $this->glimpseid= $ref;
+        $this->glimpseid = $ref;
 
         return $this;
     }
-
-
-
 
     public function getVerb(): ?string
     {
         return $this->verb;
     }
-
 
     public function setVerb(string $verb): self
     {
@@ -74,12 +60,10 @@ class Predicate
         return $this;
     }
 
-
     public function getObject(): ?string
     {
         return $this->object;
     }
-
 
     public function setObject(string $object): self
     {
@@ -87,8 +71,6 @@ class Predicate
 
         return $this;
     }
-
-
 
     public function getContributor(): ?string
     {
@@ -107,15 +89,10 @@ class Predicate
         return $this->updatedt;
     }
 
-
-
     public function setUpdateDt(?\DateTimeInterface $updatedt): self
     {
         $this->updatedt = $updatedt;
 
         return $this;
     }
-
-
-
 }

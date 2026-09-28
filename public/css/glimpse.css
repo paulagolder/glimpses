@@ -1,13 +1,14 @@
-#glimpse div.heading {
-    display: flex;
-}
 
-#glimpse   div.glimpselist
+
+
+/*===============================
+ glimpse list
+==================================== */
+
+
+#glimpse   div.list
 {
-    overflow-y:scroll;
-    overflow-x:hidden;
     height:38em;
-    width:90%;
 }
 
 

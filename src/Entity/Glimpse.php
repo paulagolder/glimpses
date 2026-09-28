@@ -9,10 +9,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Glimpse
 {
-
     /**
      * @ORM\Id()
+     *
      * @ORM\GeneratedValue()
+     *
      * @ORM\Column(type="integer")
      */
     private $glimpseid;
@@ -48,11 +49,6 @@ class Glimpse
     private $date;
 
     /**
-     * @ORM\Column(type="string", length=12, nullable=true)
-     */
-    private $datequalifier;
-
-    /**
      * @ORM\Column(type="integer",  nullable=true)
      */
     private $sourceid;
@@ -72,9 +68,9 @@ class Glimpse
      */
     private $updatedt;
 
-     /**
-         * @ORM\Column(type="string", nullable=true)
-         */
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
     private $image;
 
     public $roles;
@@ -87,6 +83,7 @@ class Glimpse
     public function setGlimpseid(int $glimpseid): self
     {
         $this->glimpseid = $glimpseid;
+
         return $this;
     }
 
@@ -95,9 +92,10 @@ class Glimpse
         return $this->sourceid;
     }
 
-    public function setSourceid( $sourceid): self
+    public function setSourceid($sourceid): self
     {
         $this->sourceid = $sourceid;
+
         return $this;
     }
 
@@ -109,6 +107,7 @@ class Glimpse
     public function setText(string $text): self
     {
         $this->text = $text;
+
         return $this;
     }
 
@@ -120,6 +119,7 @@ class Glimpse
     public function setImage(string $text): self
     {
         $this->image = $text;
+
         return $this;
     }
 
@@ -131,6 +131,7 @@ class Glimpse
     public function setLanguage(?string $lang): self
     {
         $this->language = $lang;
+
         return $this;
     }
 
@@ -142,6 +143,7 @@ class Glimpse
     public function setLocation(string $location): self
     {
         $this->location = $location;
+
         return $this;
     }
 
@@ -153,6 +155,7 @@ class Glimpse
     public function setType(string $type): self
     {
         $this->type = $type;
+
         return $this;
     }
 
@@ -164,6 +167,7 @@ class Glimpse
     public function setRef(string $text): self
     {
         $this->ref = $text;
+
         return $this;
     }
 
@@ -174,58 +178,35 @@ class Glimpse
 
     public function setDate(string $dt)
     {
-        //dump($dt);
-        $this->datequalifier = null;
-        if (!$dt)
-        {
-            $this->date =  " no date ";
+        if (!$dt) {
+            $this->date = ' no date ';
+
             return;
         }
-        $dt =  str_replace(' y ', ' ', $dt);
-        $dt =  str_replace(' ye ', ' ', $dt);
-        $dt =  str_replace('th ', ' ', $dt);
-        $dt =  str_replace('(', '', $dt);
-        $dt =  str_replace(')', '', $dt);
-        if( stripos($dt, ':') !== false )
-        {
-            $datestruct = explode( ":",$dt );
-            //dump($datestruct);
-            $this->datequalifier = trim($datestruct[0]);
+        $dt = str_replace(' y ', ' ', $dt);
+        $dt = str_replace(' ye ', ' ', $dt);
+        $dt = str_replace('th ', ' ', $dt);
+        $dt = str_replace('(', '', $dt);
+        $dt = str_replace(')', '', $dt);
+        if (false !== stripos($dt, ':')) {
+            $datestruct = explode(':', $dt);
             $dt = trim($datestruct[01]);
-             //dump($dt);
+            // dump($dt);
         }
-        //dump($dt);
+        // dump($dt);
 
-             if($this->validatedate($dt))
-             {
-                 $this->date = date('Y-m-d', strtotime($dt));
-                 //dump($this->date);
-            }
-            else if ($this->validatedate($dt,"Y-m"))
-            {
-                $this->date = date('Y-m', strtotime($dt));
-
-            }else if ($this->validatedate($dt,"Y"))
-            {
-                $d = \DateTime::createFromFormat('Y', $dt);
-                  $this->date = $d->format('Y');
-            }
-            else
-        {
-            $this->date = "Error".$dt;
-               //dump($this->date);
+        if ($this->validatedate($dt)) {
+            $this->date = date('Y-m-d', strtotime($dt));
+        // dump($this->date);
+        } elseif ($this->validatedate($dt, 'Y-m')) {
+            $this->date = date('Y-m', strtotime($dt));
+        } elseif ($this->validatedate($dt, 'Y')) {
+            $d = \DateTime::createFromFormat('Y', $dt);
+            $this->date = $d->format('Y');
+        } else {
+            $this->date = 'Error'.$dt;
+            // dump($this->date);
         }
-    }
-
-    public function getDateQualifier(): ?string
-    {
-        return $this->datequalifier;
-    }
-
-    public function setDateQualifier(string $type): self
-    {
-        $this->datequalifier = $type;
-        return $this;
     }
 
     public function getContributor(): ?string
@@ -236,6 +217,7 @@ class Glimpse
     public function setContributor(?string $contributor): self
     {
         $this->contributor = $contributor;
+
         return $this;
     }
 
@@ -247,6 +229,7 @@ class Glimpse
     public function setUpdateDt(?\DateTimeInterface $updatedt): self
     {
         $this->updatedt = $updatedt;
+
         return $this;
     }
 
@@ -257,18 +240,21 @@ class Glimpse
 
     public function getRoles()
     {
-        return  $this->roles;
+        return $this->roles;
     }
 
-    function validateDate($date, $format = 'Y-m-d')
+    public function validateDate($date, $format = 'Y-m-d')
     {
-        //dump($date);
-        //dump($format);
+        // dump($date);
+        // dump($format);
         $d = \DateTime::createFromFormat($format, $date);
         // The Y ( 4 digits year ) returns TRUE for any integer with any number of digits so changing the comparison from == to === fixes the issue.
-        //dump($d);
-        if(!$d) return false;
-        //dump($d->format($format));
+        // dump($d);
+        if (!$d) {
+            return false;
+        }
+
+        // dump($d->format($format));
         return $d && $d->format($format) === $date;
     }
 }

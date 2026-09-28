@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Entity;
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -9,10 +10,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Actor
 {
-
-   /**
+    /**
      * @ORM\Id()
+     *
      * @ORM\GeneratedValue()
+     *
      * @ORM\Column(type="integer")
      */
     private $actorid;
@@ -22,7 +24,7 @@ class Actor
      */
     private $text;
 
-     /**
+    /**
      * @ORM\Column(type="text", nullable=true)
      */
     private $forename;
@@ -32,26 +34,30 @@ class Actor
      */
     private $surname;
 
-  /**
+    /**
      * @ORM\Column(type="text", nullable=true)
      */
     private $specifier;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $location;
 
     /**
      * @ORM\Column(type="string", length="20",nullable=true)
      */
     private $birthdate;
 
-
     /**
      * @ORM\Column(type="string", length="20",nullable=true)
      */
     private $deathdate;
 
-     /**
-         * @ORM\Column(type="string", length="10",nullable=true)
-         */
-        private $gender;
+    /**
+     * @ORM\Column(type="string", length="10",nullable=true)
+     */
+    private $gender;
 
     /**
      * @ORM\Column(type="string", length=40, nullable=true)
@@ -68,10 +74,10 @@ class Actor
      */
     private $keywords;
 
-   //private $roles;
+    // private $roles;
 
-     public function __construct()
-     {
+    public function __construct()
+    {
         $this->roles = new ArrayCollection();
     }
 
@@ -82,7 +88,7 @@ class Actor
 
     public function setActorid(int $ref): self
     {
-        $this->actorid= $ref;
+        $this->actorid = $ref;
 
         return $this;
     }
@@ -95,6 +101,7 @@ class Actor
     public function setText($text): self
     {
         $this->text = $text;
+
         return $this;
     }
 
@@ -106,6 +113,7 @@ class Actor
     public function setForename(string $name): self
     {
         $this->forename = $name;
+
         return $this;
     }
 
@@ -116,33 +124,29 @@ class Actor
 
     public function getLabel(): ?string
     {
-     if( substr($this->birthdate,0,1) == "<" or substr($this->birthdate,0,1) == ">" or substr($this->birthdate,0,1) == "~" )
-     {
-       $birthyear = substr($this->birthdate,0,5);
-     }
-     else
-     {
-         $birthyear = substr($this->birthdate,0,4);
-     }
-      if( substr($this->deathdate,0,1) == "<" or substr($this->deathdate,0,1) == ">" or substr($this->deathdate,0,1) == "~" )
-      {
-        $deathyear = substr($this->deathdate,0,5);
-      }
-      else
-      {
-          $deathyear = substr($this->deathdate,0,4);
-      }
-        return $this->surname.", ".$this->forename." (".$birthyear."-".$deathyear.")";
+        if ('<' == substr($this->birthdate, 0, 1) or '>' == substr($this->birthdate, 0, 1) or '~' == substr($this->birthdate, 0, 1)) {
+            $birthyear = substr($this->birthdate, 0, 5);
+        } else {
+            $birthyear = substr($this->birthdate, 0, 4);
+        }
+        if ('<' == substr($this->deathdate, 0, 1) or '>' == substr($this->deathdate, 0, 1) or '~' == substr($this->deathdate, 0, 1)) {
+            $deathyear = substr($this->deathdate, 0, 5);
+        } else {
+            $deathyear = substr($this->deathdate, 0, 4);
+        }
+
+        return $this->surname.', '.$this->forename.' ('.$birthyear.'-'.$deathyear.')';
     }
 
     public function getName(): ?string
     {
-        return $this->surname.", ".$this->forename;
+        return $this->surname.', '.$this->forename;
     }
 
     public function setSurname(string $name): self
     {
         $this->surname = $name;
+
         return $this;
     }
 
@@ -154,6 +158,19 @@ class Actor
     public function setSpecifier($name): self
     {
         $this->specifier = $name;
+
+        return $this;
+    }
+
+  public function getLocation(): ?string
+    {
+        return $this->location;
+    }
+
+    public function setLocation($name): self
+    {
+        $this->location = $name;
+
         return $this;
     }
 
@@ -165,6 +182,7 @@ class Actor
     public function setDeathdate(string $text): self
     {
         $this->deathdate = $text;
+
         return $this;
     }
 
@@ -176,12 +194,14 @@ class Actor
     public function setBirthdate(string $text): self
     {
         $this->birthdate = $text;
+
         return $this;
     }
 
     public function getDates(): ?string
     {
-        $text = "(".$this->birthdate."-".$this->deathdate.")";
+        $text = '('.$this->birthdate.'-'.$this->deathdate.')';
+
         return $text;
     }
 
@@ -192,19 +212,26 @@ class Actor
 
     public function setGender(string $text): self
     {
-        if( substr($text,0,1) == "f" or substr($text,0,1) == "F" )
-           $this->gender = "female";
-        else $this->gender= "male";
+        if ('f' == substr($text, 0, 1) or 'F' == substr($text, 0, 1)) {
+            $this->gender = 'female';
+        } else {
+            $this->gender = 'male';
+        }
+
         return $this;
     }
 
-    public  function getGenderSymbol(): ?string
+    public function getGenderSymbol(): ?string
     {
-     if($this->gender == "female") return "F";
-     if($this->gender == "male") return "M";
-     else return "X";
-    }
+        if ('female' == $this->gender) {
+            return 'F';
+        }
+        if ('male' == $this->gender) {
+            return 'M';
+        }
 
+        return 'X';
+    }
 
     public function getContributor(): ?string
     {
@@ -214,6 +241,7 @@ class Actor
     public function setContributor(?string $contributor): self
     {
         $this->contributor = $contributor;
+
         return $this;
     }
 
@@ -225,6 +253,7 @@ class Actor
     public function setUpdateDt(?\DateTimeInterface $updatedt): self
     {
         $this->updatedt = $updatedt;
+
         return $this;
     }
 
@@ -236,59 +265,41 @@ class Actor
     public function setKeywords(string $name): self
     {
         $this->keywords = $name;
+
         return $this;
     }
 
     public function merge($actor2)
     {
-
-        if (strlen(trim($this->text)) == 0)
-        {
-            $this->text =$actor2->text;
+        if (0 == strlen(trim($this->text))) {
+            $this->text = $actor2->text;
+        } elseif (!strcasecmp($this->text, $actor2->text)) {
+            $this->text .= '+T+'.$actor2->text;
         }
-        else if(!strcasecmp($this->text, $actor2->text))
-        {
-            $this->text .= "+T+". $actor2->text;
+        if (0 == strlen(trim($this->specifier))) {
+            $this->specifier = $actor2->specifier;
+        } elseif (!strcasecmp($this->specifier, $actor2->specifier)) {
+            $this->specifier .= '++'.$actor2->specifier;
         }
-        if (strlen(trim($this->specifier)) == 0)
-        {
-            $this->specifier =$actor2->specifier;
+        if (0 == strlen(trim($this->surname))) {
+            $this->surname = $actor2->surname;
+        } elseif (!strcasecmp($this->surname, $actor2->surname)) {
+            $this->text .= '+S+'.$actor2->surname;
         }
-        else if(!strcasecmp($this->specifier, $actor2->specifier))
-        {
-            $this->specifier.= "++". $actor2->specifier;
+        if (0 == strlen(trim($this->forename))) {
+            $this->forename = $actor2->forename;
+        } elseif (!strcasecmp($this->forename, $actor2->forename)) {
+            $this->text .= '+F+'.$actor2->forename;
         }
-        if (strlen(trim($this->surname)) == 0)
-        {
-            $this->surname =$actor2->surname;
+        if (0 == strlen(trim($this->birthdate))) {
+            $this->birthdate = $actor2->birthdate;
+        } elseif (!strcasecmp($this->birthdate, $actor2->birthdate)) {
+            $this->text .= '+B+'.$actor2->birthdate;
         }
-        else if(!strcasecmp($this->surname, $actor2->surname))
-        {
-            $this->text .= "+S+". $actor2->surname;
-        }
-        if (strlen(trim($this->forename)) == 0)
-        {
-            $this->forename =$actor2->forename;
-        }
-        else if(!strcasecmp($this->forename, $actor2->forename))
-        {
-            $this->text .= "+F+". $actor2->forename;
-        }
-        if (strlen(trim($this->birthdate)) == 0)
-        {
-            $this->birthdate =$actor2->birthdate;
-        }
-        else if(!strcasecmp($this->birthdate, $actor2->birthdate))
-        {
-            $this->text .= "+B+". $actor2->birthdate;
-        }
-        if (strlen(trim($this->deathdate)) == 0)
-        {
-            $this->deathdate =$actor2->deathdate;
-        }
-        else if(!strcasecmp($this->deathdate, $actor2->deathdate))
-        {
-            $this->text .= "+D+". $actor2->deathdate;
+        if (0 == strlen(trim($this->deathdate))) {
+            $this->deathdate = $actor2->deathdate;
+        } elseif (!strcasecmp($this->deathdate, $actor2->deathdate)) {
+            $this->text .= '+D+'.$actor2->deathdate;
         }
     }
 }
