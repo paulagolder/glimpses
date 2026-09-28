@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Service;
 
 /**
@@ -34,8 +35,9 @@ trait LikeQueryHelpers
      *
      * ->makeLikeParam('foo_bar') == "%foo!_bar%"
      *
-     * @param string $search        Text to search for LIKE
-     * @param string $pattern       sprintf-compatible substitution pattern
+     * @param string $search  Text to search for LIKE
+     * @param string $pattern sprintf-compatible substitution pattern
+     *
      * @return string
      */
     protected function makeLikeParam($search, $pattern = '%%%s%%')
@@ -61,19 +63,20 @@ trait LikeQueryHelpers
          *      glo_ves%pink  becomes  glo!_ves!%pink
          *
          * @param string $search
+         *
          * @return string
          */
         $sanitizeLikeValue = function ($search) {
             $escapeChar = '!';
 
             $escape = [
-                '\\' . $escapeChar, // Must escape the escape-character for regex
+                '\\'.$escapeChar, // Must escape the escape-character for regex
                 '\%',
                 '\_',
             ];
             $pattern = sprintf('/([%s])/', implode('', $escape));
 
-            return preg_replace($pattern, $escapeChar . '$0', $search);
+            return preg_replace($pattern, $escapeChar.'$0', $search);
         };
 
         return sprintf($pattern, $sanitizeLikeValue($search));

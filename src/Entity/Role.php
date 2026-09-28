@@ -9,11 +9,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Role
 {
-
-
     /**
      * @ORM\Id()
+     *
      * @ORM\GeneratedValue()
+     *
      * @ORM\Column(type="integer")
      */
     private $roleid;
@@ -23,22 +23,20 @@ class Role
      */
     private $glimpseref;
 
-
- /**
+    /**
      * @ORM\Column(type="text", nullable=true)
      */
     private $role;
 
-
-     /**
+    /**
      * @ORM\Column(type="text", nullable=true)
      */
     private $name;
 
-     /**
+    /**
      * @ORM\Column(type="text", nullable=true)
      */
-    public $predicates ;
+    public $predicates;
 
     /**
      * @ORM\Column(type="string", length=40, nullable=true)
@@ -52,37 +50,34 @@ class Role
 
     public function getPredicates()
     {
-      $preds =explode(";", $this->predicates);
-      foreach($preds as $index => $pred)
-          $preds[$index] = trim($pred);
-       return $preds;
-    }
-
-      public function getPredicatestr()
-    {
-       return $this->predicates;
-    }
-
-     public function setPredicatestr($predstr)
-    {
-       $this->predicates = $predstr;
-    }
-
-     public function setPredicates($predicates)
-    {
-       if (is_array($predicates) )
-       {
-        $this->predicatesr="";
-        foreach($predicates as $index => $predicate)
-        {
-          $this->predicates .= ";".trim($predicates);
-        }
-       }
-        else
-        {
-         $this->predicates =$predicates;
+        $preds = explode(';', $this->predicates);
+        foreach ($preds as $index => $pred) {
+            $preds[$index] = trim($pred);
         }
 
+        return $preds;
+    }
+
+    public function getPredicatestr()
+    {
+        return $this->predicates;
+    }
+
+    public function setPredicatestr($predstr)
+    {
+        $this->predicates = $predstr;
+    }
+
+    public function setPredicates($predicates)
+    {
+        if (is_array($predicates)) {
+            $this->predicatesr = '';
+            foreach ($predicates as $index => $predicate) {
+                $this->predicates .= ';'.trim($predicates);
+            }
+        } else {
+            $this->predicates = $predicates;
+        }
     }
 
     public function getRoleId(): ?int
@@ -92,30 +87,27 @@ class Role
 
     public function setRoleId(int $ref): self
     {
-        $this->roleid= $ref;
+        $this->roleid = $ref;
 
         return $this;
     }
 
-
-   public function getGlimpseRef(): ?int
+    public function getGlimpseRef(): ?int
     {
         return $this->glimpseref;
     }
 
     public function setGlimpseRef(int $ref): self
     {
-        $this->glimpseref= $ref;
+        $this->glimpseref = $ref;
 
         return $this;
     }
-
 
     public function getRole(): ?string
     {
         return $this->role;
     }
-
 
     public function setRole(string $role): self
     {
@@ -124,12 +116,10 @@ class Role
         return $this;
     }
 
-
     public function getName(): ?string
     {
         return $this->name;
     }
-
 
     public function setName(string $name): self
     {
@@ -138,7 +128,7 @@ class Role
         return $this;
     }
 
-      public function getContributor(): ?string
+    public function getContributor(): ?string
     {
         return $this->contributor;
     }
@@ -155,16 +145,10 @@ class Role
         return $this->updatedt;
     }
 
-
-
     public function setUpdateDt(?\DateTimeInterface $updatedt): self
     {
         $this->updatedt = $updatedt;
 
         return $this;
     }
-
-
-
-
 }

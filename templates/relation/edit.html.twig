@@ -24,8 +24,12 @@
           {% if actor1 is not null %}
             <div class="actorbutton"> <a href = "/actor/showone/{{relation.actor1ref}}" >{{actor1.label}}</a> </div>
                  <div class= "titlebi">{{relation.relation}}</div>
+                     {% if actor2 is not null %}
                   <div class="actorbutton"> <a href = "/actor/showone/{{relation.actor2ref}}" >{{actor2.label}}</a> </div>
-                  <div class="cell"> {{relation.date}}</div>
+                   {% else %}
+                             <div class="cell"> somethings wrong</div>
+                             {% endif %}
+                  <div class="cdate"> {{relation.date}}</div>
            {% else %}
            <div class="cell"> somethings wrong</div>
            {% endif %}

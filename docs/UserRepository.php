@@ -10,9 +10,10 @@ class ProductRepository extends EntityRepository
     use LikeQueryHelpers;
 
     /**
-     * Find Product entities containing searched terms
+     * Find Product entities containing searched terms.
      *
      * @param string $term
+     *
      * @return Product[]
      */
     public function findInSearchableFields($term)

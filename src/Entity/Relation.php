@@ -1,64 +1,62 @@
 <?php
 
 namespace App\Entity;
-use App\Entity\Actor;
-use Doctrine\ORM\EntityRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
-use Doctrine\Persistence\ManagerRegistry;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RelationRepository")
  */
-
 class Relation
 {
-
     /**
      * @ORM\Id()
+     *
      * @ORM\GeneratedValue()
+     *
      * @ORM\Column(type="integer")
      */
     private $relationid;
-
 
     /**
      * @ORM\Column(type="integer")
      **/
     private $actor1ref;
 
-
     /**
      * @ORM\Column(type="text")
      **/
     private $relation;
-
 
     /**
      * @ORM\Column(type="integer")
      **/
     private $actor2ref;
 
-       /**
-         * @ORM\Column(type="text", nullable=true)
-         */
-   private $date;
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $date;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $location;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
     private $clues;
 
-
     public function getRelationId(): ?int
     {
         return $this->relationid;
     }
 
-   public function setRelationId(int $ref): self
+    public function setRelationId(int $ref): self
     {
-        $this->relationid= $ref;
+        $this->relationid = $ref;
+
         return $this;
     }
 
@@ -69,7 +67,8 @@ class Relation
 
     public function setActor1Ref(int $ref): self
     {
-        $this->actor1ref= $ref;
+        $this->actor1ref = $ref;
+
         return $this;
     }
 
@@ -80,7 +79,8 @@ class Relation
 
     public function setActor2Ref(int $ref): self
     {
-        $this->actor2ref= $ref;
+        $this->actor2ref = $ref;
+
         return $this;
     }
 
@@ -92,6 +92,7 @@ class Relation
     public function setRelation(string $text): self
     {
         $this->relation = $text;
+
         return $this;
     }
 
@@ -100,72 +101,87 @@ class Relation
         return $this->clues;
     }
 
-
-
     public function setDate(string $text): self
     {
         $this->date = $text;
+
         return $this;
     }
 
-   public function getDate(): ?string
+    public function getDate(): ?string
     {
         return $this->date;
     }
 
+    public function setLocation(string $text): self
+    {
+        $this->location = $text;
 
+        return $this;
+    }
+
+    public function getLocation(): ?string
+    {
+        return $this->location;
+    }
 
     public function setClues(string $text): self
     {
         $this->clues = $text;
+
         return $this;
     }
 
     public function removeClue(string $text): self
     {
-        $cluelist = explode(",",$this->clues);
-        $newcluelist="";
+        $cluelist = explode(',', $this->clues);
+        $newcluelist = '';
         $first = true;
-        foreach($cluelist as $clue)
-        {
-          if($clue != $text)
-          {
-             $newcluelist .= $clue;
-          }
-          if(!$first) $newcluelist .= ", ";
-          $first = false;
+        foreach ($cluelist as $clue) {
+            if ($clue != $text) {
+                $newcluelist .= $clue;
+            }
+            if (!$first) {
+                $newcluelist .= ', ';
+            }
+            $first = false;
         }
         $this->clues = $newcluelist;
+
         return $this;
     }
 
-
     public function addClue(string $text): self
     {
-        $cluelist = explode(",",$this->clues);
-        //dump($cluelist);
-        //dump($text);
-        $newcluelist="";
+        $cluelist = explode(',', $this->clues);
+        // dump($cluelist);
+        // dump($text);
+        $newcluelist = '';
         $first = true;
-        foreach($cluelist as $clue)
-        {
-           //dump($clue);
-          if($clue != $text && $clue != " ")
-          {
-             if(!$first) $newcluelist .= ",";
-             $newcluelist .= $clue;
-            $first = false;
-          }
+        foreach ($cluelist as $clue) {
+            // dump($clue);
+            if ($clue != $text && ' ' != $clue) {
+                if (!$first) {
+                    $newcluelist .= ',';
+                }
+                $newcluelist .= $clue;
+                $first = false;
+            }
         }
-        if(!$first) $newcluelist .= ",".$text;
-        else $newcluelist = $text;
+        if (!$first) {
+            $newcluelist .= ','.$text;
+        } else {
+            $newcluelist = $text;
+        }
         $this->clues = $newcluelist;
+
         return $this;
     }
 
     public function setConfidence(int $num): self
     {
-        $this->confidence= $num;
+        $this->confidence = $num;
+
         return $this;
     }
 
@@ -176,29 +192,30 @@ class Relation
 
     public function makeLabel(): ?string
     {
-       $actor1= $this->doctrine->getRepository(Actor::class)->getOne($Actor1ref);
-       $actor2= $this->doctrine->getRepository(Actor::class)->getOne($Actor2ref);
-       return " relation label";
+        $actor1 = $this->doctrine->getRepository(Actor::class)->getOne($Actor1ref);
+        $actor2 = $this->doctrine->getRepository(Actor::class)->getOne($Actor2ref);
+
+        return ' relation label';
     }
 
     public function getInverse(): self
     {
-      $inv= new Relation();
-      $inv->actor1ref = $this->actor2ref;
-      $inv->actor2ref=$this->actor1ref;
-      $inv->date = $this->date;
-      $inv->clues = $this->clues;
-      $inv->relation= $this->relation;
-      $inv->relationid = $this->relationid;
-       return $inv;
+        $inv = new Relation();
+        $inv->actor1ref = $this->actor2ref;
+        $inv->actor2ref = $this->actor1ref;
+        $inv->date = $this->date;
+          $inv->location = $this->location;
+        $inv->clues = $this->clues;
+        $inv->relation = $this->relation;
+        $inv->relationid = $this->relationid;
+
+        return $inv;
     }
 
-    public function getHashKey():?string
+    public function getHashKey(): ?string
     {
-      $key= $this->actor1ref.$this->actor2ref;
-      return $key;
+        $key = $this->actor1ref.$this->actor2ref;
+
+        return $key;
     }
-
-
-
 }

@@ -40,9 +40,10 @@
   <div class= "list">
     {% for source in sources %}
         <div class="row ">
-             <div class="returnbutton col1">   <a   href = "/source/show/{{source.sourceid}}" >view </a> </div>
+             <div class="button col1">   <a   href = "/source/show/{{source.sourceid}}" >view </a> </div>
             <div class= "cid">{{source.sourceId}}</div>
             <div class= "cltext"> {{source.title}}</div>
+              <div class= "cloc"> {{source.locality}}</div>
             <div class= "cloc"> {{source.region}}</div>
             <div class= "cdate"> {{source.period}} </div>
          </div>

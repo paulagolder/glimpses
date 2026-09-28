@@ -18,6 +18,7 @@
 
     <div class="heading">
       <div class="title">Glimpses</div>
+        <div class="returnbutton">   <a   href = "/glimpse/choosejson" >Load Json</a> </div>
     </div>
 
 <div class="filterform">
@@ -34,7 +35,7 @@
      <div class= "list">
     {% for pid, glimpse in glimpses %}
     <div class= "row">
-            <div class="returnbutton" >  <a  href = "/glimpse/showone/{{glimpse.glimpseid}}" >View </a> </div>
+            <div class="button" >  <a  href = "/glimpse/showone/{{glimpse.glimpseid}}" >View </a> </div>
             <div class= "cloc"> {{glimpse.location}}</div>
             <div class= "ctype"> {{glimpse.type}}</div>
             <div class= "cdate"> {{glimpse.date}}</div>

@@ -2,123 +2,124 @@
 
 namespace App\Repository;
 
-use App\Entity\LifeEvent;
-
 use Doctrine\ORM\EntityRepository;
-use Symfony\Bridge\Doctrine\RegistryInterface;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Mapping as ORM;
-use Doctrine\DBAL\DriverManager;
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\DBAL\Driver\Connection;
 
 class LifeEventRepository extends EntityRepository
 {
-
     public function getOne($leid)
     {
-        $sql = "select l from App:Lifeevent  l";
-        $sql .= ' where  l.lifeeventid ='. $leid  ;
+        $sql = 'select l from App:Lifeevent  l';
+        $sql .= ' where  l.lifeeventid ='.$leid;
         $query = $this->getEntityManager()->createQuery($sql);
         $events = $query->getResult();
-        if(count($events)>0) return $events[0];
-        else return null;
+        if (count($events) > 0) {
+            return $events[0];
+        }
+
+        return null;
     }
 
-    public function findEvent($aid,$type)
+    public function findEvent($aid, $type)
     {
-        $sql = "select l from App:Lifeevent  l";
-        $sql .= ' where  l.actorref ='. $aid  ;
+        $sql = 'select l from App:Lifeevent  l';
+        $sql .= ' where  l.actorref ='.$aid;
         $sql .= " and l.eventtype = '".$type."' ";
         $query = $this->getEntityManager()->createQuery($sql);
         $events = $query->getResult();
-        if(count($events)>0) return $events[0];
-        else return null;
+        if (count($events) > 0) {
+            return $events[0];
+        }
+
+        return null;
+    }
+
+    public function replace($daid, $aid)
+    {
+        $sql = "update App:Lifeevent  l set l.actorref = '".$aid."' ";
+        $sql .= ' where  l.actorref ='.$daid;
+        $query = $this->getEntityManager()->createQuery($sql);
+        $events = $query->getResult();
     }
 
     public function findAllEvents($aid)
     {
-        $sql = "select l from App:Lifeevent  l";
-        $sql .= ' where  l.actorref ='. $aid  ;
-        $sql .= ' order by l.middate '  ;
+        $sql = 'select l from App:Lifeevent  l';
+        $sql .= ' where  l.actorref ='.$aid;
+        $sql .= ' order by l.middate ';
         $query = $this->getEntityManager()->createQuery($sql);
         $events = $query->getResult();
-        $eventarray = array();
-        foreach($events as $event)
-        {
-            $eventarray[$event->getLifeEventId()]=$event;
+        $eventarray = [];
+        foreach ($events as $event) {
+            $eventarray[$event->getLifeEventId()] = $event;
         }
+
         return $eventarray;
     }
 
     public function findbyActor($aid)
     {
-        $sql = "select l from App:Lifeevent  l";
-        $sql .= ' where  l.actorref ='. $aid  ;
+        $sql = 'select l from App:Lifeevent  l';
+        $sql .= ' where  l.actorref ='.$aid;
         $query = $this->getEntityManager()->createQuery($sql);
         $events = $query->getResult();
-        $eventarray = array();
-        foreach($events as $event)
-        {
-            $eventarray[$event->getEventtype()]=$event;
+        $eventarray = [];
+        foreach ($events as $event) {
+            $eventarray[$event->getEventtype()] = $event;
         }
+
         return $eventarray;
     }
 
     public function deleteAll($aid)
     {
-        $sql = "delete from App:Lifeevent  l";
-        $sql .= ' where  l.actorref ='. $aid  ;
+        $sql = 'delete from App:Lifeevent  l';
+        $sql .= ' where  l.actorref ='.$aid;
         $query = $this->getEntityManager()->createQuery($sql);
         $query->getResult();
     }
 
     public function delete($leid)
     {
-        $sql = "delete from App:Lifeevent  l";
-        $sql .= ' where  l.lifeeventid ='. $leid  ;
+        $sql = 'delete from App:Lifeevent  l';
+        $sql .= ' where  l.lifeeventid ='.$leid;
         $query = $this->getEntityManager()->createQuery($sql);
         $query->getResult();
     }
 
     public function findRoles($aid)
     {
-        $sql = "select r from ActorRole::class a JOIN App:Role r ";
-        $sql .= " where r.roleid = a.roleref  ";
-        $sql .= " and a.actorref = ".$aid;
+        $sql = 'select r from ActorRole::class a JOIN App:Role r ';
+        $sql .= ' where r.roleid = a.roleref  ';
+        $sql .= ' and a.actorref = '.$aid;
         $query = $this->getEntityManager()->createQuery($sql);
         $roles = $query->getResult();
-        $aroles = array();
-        foreach( $roles as $key=>$role)
-        {
-            $aroles[$role->getRoleid()]= $role;
+        $aroles = [];
+        foreach ($roles as $key => $role) {
+            $aroles[$role->getRoleid()] = $role;
         }
-        foreach( $aroles as $key=>$role)
-        {
+        foreach ($aroles as $key => $role) {
             $gid = $role->getGlimpseref();
-            $sql2 =  "select g from App:Glimpse g ";
-            $sql2 .= " where g.glimpseid = ".$gid." ";
+            $sql2 = 'select g from App:Glimpse g ';
+            $sql2 .= ' where g.glimpseid = '.$gid.' ';
             $query2 = $this->getEntityManager()->createQuery($sql2);
             $glimpses = $query2->getResult();
-            $aroles[$key]->glimpse =$glimpses[0];
-            $sql3 =  "select r from App:role r ";
-            $sql3 .= " where r.glimpseref = ".$gid." ";
+            $aroles[$key]->glimpse = $glimpses[0];
+            $sql3 = 'select r from App:role r ';
+            $sql3 .= ' where r.glimpseref = '.$gid.' ';
             $query3 = $this->getEntityManager()->createQuery($sql3);
             $roles = $query3->getResult();
             $aroles[$key]->glimpse->setRoles($roles);
         }
+
         return $aroles;
     }
 
-    public function saveLifeEvents( $lifeevents  )
+    public function saveLifeEvents($lifeevents)
     {
-        foreach($lifeevents as $lifeevent)
-        {
+        foreach ($lifeevents as $lifeevent) {
             $entityManager = $doctrine->getManager();
             $entityManager->persist($lifeevent);
             $entityManager->flush();
         }
     }
-
 }
-

@@ -1,12 +1,14 @@
 
 
+/*================================
+source list
+=================================== */
 
 #source   div.list
 {
-    overflow-y:scroll;
-    overflow-x:hidden;
+
     height:70%;
-    width:90%;
+
 }
 
 

@@ -70,6 +70,14 @@ glimpse_clearfilter:
    path:  /glimpse/clearfilter/
    controller:  App\Controller\GlimpseController::clearfilter
 
+glimpse_choosejson:
+     path: /glimpse/choosejson/
+     controller: App\Controller\GlimpseController::choosejson
+
+glimpse_loadjson:
+  path: /glimpse/loadjson/
+  controller: App\Controller\GlimpseController::loadjson
+
 actor_newactor:
    path:  /actor/newactor/{gid}/{rref}
    controller:  App\Controller\ActorController::newactor

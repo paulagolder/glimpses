@@ -1,0 +1,35 @@
+{# templates/glimpse/json.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link href="{{ asset('css/glimpse.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block js %}
+{{ parent() }}
+<script>
+    function showname () {
+          var name = document.getElementById('fileInput');
+          alert('Selected file: ' + name.files.item(0).name);
+          alert('Selected file: ' + name.files.item(0).size);
+          alert('Selected file: ' + name.files.item(0).type);
+        };
+</script>
+{% endblock %}
+
+{% block body %}
+<div id="glimpse" >
+    <div class ="heading" >
+        <div class="title" > Reading json data </div>
+    </div>
+    <div>
+
+        some json output
+       {{}}
+    </div>
+
+</div>
+
+{% endblock %}
