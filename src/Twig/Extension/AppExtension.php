@@ -38,6 +38,8 @@ class AppExtension extends AbstractExtension
             new TwigFunction('FormatRelation', [$this, 'FormatRelation']),
             new TwigFunction('FormatEventfromEvent', [$this, 'FormatEventfromEvent']),
             new TwigFunction('ideLink', [$this, 'idelink']),
+            new TwigFunction('json_to_list', [$this, 'json_to_list']),
+
         ];
     }
 
@@ -247,4 +249,29 @@ class AppExtension extends AbstractExtension
     {
         return $this->fileLinkFormatter->format($this->kernel_project_dir.DIRECTORY_SEPARATOR.$filepath, $line);
     }
+
+// Source - https://stackoverflow.com/a/47560097
+// Posted by Ryan Griggs
+// Retrieved 2026-09-29, License - CC BY-SA 3.0
+
+// Return a string of separated values from a JSON string
+// Can optionally specify a separator.  If none provided, ", " is used.
+//$function = new Twig_SimpleFunction('json_to_list', function($json, $separator = ", ")
+//$function = new Twig_SimpleFunction('json_to_list',
+
+ public function json_to_list($json, $separator = ", ")
+{
+    $result = "";
+    $array = json_decode($json, true);
+    foreach ($array as $item)
+    {
+        if ($result != "") { $result .= $separator; }
+        $result .= $item;
+    }
+    return $result;
+}
+
+
+
+
 }

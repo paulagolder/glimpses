@@ -75,8 +75,12 @@ glimpse_choosejson:
      controller: App\Controller\GlimpseController::choosejson
 
 glimpse_loadjson:
-  path: /glimpse/loadjson/
+  path: /glimpse/loadjson/{jfile}
   controller: App\Controller\GlimpseController::loadjson
+
+glimpse_viewjson:
+  path: /glimpse/viewjson/{jfile}/{jid}
+  controller: App\Controller\GlimpseController::viewjson
 
 actor_newactor:
    path:  /actor/newactor/{gid}/{rref}

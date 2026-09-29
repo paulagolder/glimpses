@@ -1,4 +1,4 @@
-{# templates/glimpse/json.html.twig #}
+{# templates/glimpse/loadjson.html.twig #}
 
 {% extends 'base.html.twig' %}
 
@@ -9,25 +9,56 @@
 
 {% block js %}
 {{ parent() }}
-<script>
-    function showname () {
-          var name = document.getElementById('fileInput');
-          alert('Selected file: ' + name.files.item(0).name);
-          alert('Selected file: ' + name.files.item(0).size);
-          alert('Selected file: ' + name.files.item(0).type);
-        };
-</script>
+
 {% endblock %}
 
 {% block body %}
 <div id="glimpse" >
     <div class ="heading" >
         <div class="title" > Reading json data </div>
+         <div class="title" > {{ filename}} </div>
     </div>
     <div>
 
-        some json output
-       {{}}
+
+
+{% for jid, ajson in jsondata  %}
+<div class="row">
+   <div>{{jid}}
+               {% if ajson.image  is defined  %}
+                             image : {{ajson.image}}
+              {% endif %}
+        {{ ajson.event}}
+        {% if ajson.date  is defined  %}
+                      date : {{ajson.date}}
+       {% endif %}
+       {% if  ajson.person is defined  %}
+              name: {{ajson.person}}
+       {% endif %}
+       {% if ajson.father  is defined  %}
+             father : {{ajson.father}}
+       {% endif %}
+       {% if ajson.groom  is defined  %}
+              groom : {{ajson.groom}}
+       {% endif %}
+       {% if ajson.bride  is defined  %}
+              bride : {{ajson.bride}}
+        {% endif %}
+        {% if ajson.place  is defined  %}
+              place : {{ajson.place}}
+        {% endif %}
+        {% if ajson.note  is defined  %}
+              note : {{ajson.note}}
+        {% endif %}
+        </div>
+        <div class="returnbutton button1"> <a  href = "/glimpse/viewjson/{{filename}}/{{jid}}" >View </a> </div>
+
+
+  </div>
+
+
+ {% endfor %}
+
     </div>
 
 </div>

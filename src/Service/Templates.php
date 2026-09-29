@@ -56,12 +56,6 @@ class Templates
 
     public function getRoleFormat($glimpse, $role, $roles)
     {
-        // dump($roles);
-        // dump($glimpse);
-        // dump($role);
-        // dump($this->templatelist);
-        // dump($glimpse->getType());
-        // dump($role->getRole());
         $fmt = $this->templatelist[$glimpse->getType()][$role->getRole()]['format'];
         // dump($fmt);
         $fmt = str_replace('#location', $glimpse->getLocation(), $fmt);
@@ -69,15 +63,11 @@ class Templates
         foreach ($roles as $key => $arole) {
             $fmt = str_replace('#'.$arole->role->getRole(), $arole->role->getName(), $fmt);
         }
-
-        // dump($fmt);
         return $fmt;
     }
 
     public function getEventformat($glimpse, $roles)
     {
-        // dump($roles);
-        // dump($glimpse);
         if (array_key_exists('format', $this->templatelist[$glimpse->getType()])) {
             $fmt = $this->templatelist[$glimpse->getType()]['format'];
             if ($fmt) {
@@ -86,8 +76,6 @@ class Templates
                 foreach ($roles as $key => $arole) {
                     $fmt = str_replace('#'.$arole->getRole(), $arole->getName(), $fmt);
                 }
-
-                // dump($fmt);
                 return $fmt;
             }
         } else {

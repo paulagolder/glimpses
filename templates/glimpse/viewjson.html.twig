@@ -1,0 +1,35 @@
+{# templates/glimpse/viewjson.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link href="{{ asset('css/glimpse.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block js %}
+{{ parent() }}
+
+{% endblock %}
+
+{% block body %}
+<div id="glimpse" >
+    <div class ="heading" >
+        <div class="title" > Reading json data </div>
+         <div class="title" > {{ filename}} </div>
+    </div>
+
+
+
+
+{% set ajson = jsondata  %}
+
+
+{% for fid, ajsonfield in ajson  %}
+    <div> {{fid}} , {{ajsonfield}} </div>
+    {% endfor %}
+    </div>
+
+</div>
+
+{% endblock %}

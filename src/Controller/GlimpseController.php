@@ -21,11 +21,12 @@ class GlimpseController extends AbstractController
     private $templatesrc;
     private $lib;
 
-    public function __construct(Templates $templates, MyLibrary $lib, RequestStack $request_stack, string $templatedir)
+    public function __construct(Templates $templates, MyLibrary $lib, RequestStack $request_stack, string $templatedir, string $jsonroot)
     {
         $this->templatesrc = $templates;
         $this->requestStack = $request_stack;
         $this->lib = $lib;
+        $this->jsonroot =$jsonroot;
     }
 
     public function showone(ManagerRegistry $doctrine, $gid)
@@ -438,30 +439,59 @@ class GlimpseController extends AbstractController
 function choosejson()
 {
      return $this->render('glimpse/choosejson.html.twig', [
-
                 'returnlink' => '/glimpse/showall/',
             ]);
-
-
     }
 
-
-    function readjason($file)
-    {
-    $json = file_get_contents($file);
+function loadjson($jfile)
+{
+    $json = file_get_contents( $this->jsonroot.$jfile);
 
     if ($json === false) {
         die('Error reading the JSON file');
     }
-
     $json_data = json_decode($json, true);
-
+    dump($json_data);
     if ($json_data === null) {
-        die('Error decoding the JSON file');
+        die('Error decoding the JSON file:'.$jfile);
+    }
+    foreach( $json_data as $jglimpse )
+    {
+    dump($jglimpse);
+   // aglimpse= new Glimpse()
+
     }
 
-    echo "<pre>";
-    print_r($json_data);
-    echo "</pre>";
+
+
+ return $this->render('glimpse/loadjson.html.twig', [
+                'returnlink' => '/glimpse/showall/',
+                'filename' => $jfile,
+                'jsondata'  => $json_data,
+            ]);
+}
+
+
+function viewjson($jfile,$jid)
+{
+    $json = file_get_contents( $this->jsonroot.$jfile);
+    if ($json === false) {
+        die('Error reading the JSON file');
     }
+    $json_data = json_decode($json, true);
+    if ($json_data === null) {
+        die('Error decoding the JSON file:'.$jfile);
+    }
+
+    dump($json_data[$jid]);
+   // aglimpse= new Glimpse()
+
+
+ return $this->render('glimpse/viewjson.html.twig', [
+                'returnlink' => '/glimpse/showall/',
+                'filename' => $jfile,
+                'jsondata'  => $json_data[$jid],
+            ]);
+}
+
 }
