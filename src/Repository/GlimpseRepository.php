@@ -65,6 +65,29 @@ class GlimpseRepository extends EntityRepository
         return $sources;
     }
 
+  public function findMatch($type,$date,$name)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = 'select g from App:Glimpse g , App:Role r where  g.glimpseid = r.glimpseref ';
+        $sql .= " and g.type= '$type' and g.date = '$date' and r.name = '$name'  " ;
+
+
+        $query = $this->getEntityManager()->createQuery($sql);
+        $glimpses = $query->getResult();
+        $n = 0;
+
+        foreach ($glimpses as &$glimpse) {
+            $roles = $this->getEntityManager()->getRepository(Role::class)->findChildren($glimpse->getGlimpseid());
+            $glimpse->{'role'} = $roles;
+        }
+
+        return $glimpses;
+    }
+
+
+
+
 
     public function filterf($filterlist)
     {

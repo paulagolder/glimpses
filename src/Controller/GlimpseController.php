@@ -472,7 +472,7 @@ function loadjson($jfile)
 }
 
 
-function viewjson($jfile,$jid)
+function viewjson(ManagerRegistry $doctrine,$jfile,$jid)
 {
     $json = file_get_contents( $this->jsonroot.$jfile);
     if ($json === false) {
@@ -484,13 +484,33 @@ function viewjson($jfile,$jid)
     }
 
     dump($json_data[$jid]);
-   // aglimpse= new Glimpse()
+    $jglimpse =$json_data[$jid];
+     $aglimpses=null;
+    $type= $jglimpse["type"];
+    if($type = "census")
+    {
+      if(array_key_exists("year",$jglimpse)) $date=$jglimpse["year"];
+      if(array_key_exists("people",$jglimpse))
+      {
+       $head= $jglimpse["people"][0];
+        $name = $head["name"]["forenames"]." ".$head["name"]["surname"];
+        $aglimpses =   $doctrine->getRepository(Glimpse::class)->findMatch($type,$date,$name);
+      }
+    }
+    else
+    {
 
+    if(array_key_exists("date",$jglimpse)) $date=$jglimpse["date"];
+    if(array_key_exists("person",$jglimpse)) $name=$jglimpse["person"];
+   // aglimpse= new Glimpse()
+    $aglimpses =   $doctrine->getRepository(Glimpse::class)->findMatch($type,$date,$name);
+    }
 
  return $this->render('glimpse/viewjson.html.twig', [
                 'returnlink' => '/glimpse/showall/',
                 'filename' => $jfile,
                 'jsondata'  => $json_data[$jid],
+                'matches' => $aglimpses,
             ]);
 }
 

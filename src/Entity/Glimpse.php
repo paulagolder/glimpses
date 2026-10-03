@@ -21,11 +21,6 @@ class Glimpse
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $title;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
     private $text;
 
     /**
@@ -57,6 +52,16 @@ class Glimpse
      * @ORM\Column(type="string", length=12, nullable=true)
      */
     private $ref;
+
+      /**
+         * @ORM\Column(type="string", length=20, nullable=true)
+         */
+        private $tag;
+
+         /**
+                 * @ORM\Column(type="text",  nullable=true)
+                 */
+                private $note;
 
     /**
      * @ORM\Column(type="string", length=40, nullable=true)
@@ -209,6 +214,28 @@ class Glimpse
         }
     }
 
+
+ public function getTag(): ?string
+  {
+        return $this->tag;
+  }
+
+  public function setTag(string $txt): self
+  {
+     $this->tag = $txt;
+     return $this;
+  }
+
+ public function getNote(): ?string
+  {
+        return $this->note;
+  }
+
+  public function setNote(string $txt): self
+  {
+     $this->note = $txt;
+     return $this;
+  }
     public function getContributor(): ?string
     {
         return $this->contributor;

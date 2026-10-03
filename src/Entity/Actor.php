@@ -74,7 +74,15 @@ class Actor
      */
     private $keywords;
 
-    // private $roles;
+     /**
+       * @ORM\Column(type="string", length=20, nullable=true)
+    */
+     private $tag;
+
+     /**
+        * @ORM\Column(type="text",  nullable=true)
+     */
+     private $note;
 
     public function __construct()
     {
@@ -204,6 +212,28 @@ class Actor
 
         return $text;
     }
+
+ public function getTag(): ?string
+  {
+        return $this->tag;
+  }
+
+  public function setTag(string $txt): self
+  {
+     $this->tag = $txt;
+     return $this;
+  }
+
+ public function getNote(): ?string
+  {
+        return $this->note;
+  }
+
+  public function setNote(string $txt): self
+  {
+     $this->note = $txt;
+     return $this;
+  }
 
     public function getGender(): ?string
     {

@@ -26,10 +26,38 @@
 
 
 {% for fid, ajsonfield in ajson  %}
+{% dump fid , ajsonfield %}
+{% if fid = "people" %}
+
+
+{% else %}
     <div> {{fid}} , {{ajsonfield}} </div>
+    {% endif %}
     {% endfor %}
     </div>
 
 </div>
 
+
+{% if matches is not empty %}
+{% for gid,aglimpse in matches %}
+
+<div class="row">
+    <div>{{aglimpse.glimpseid}}</div>
+    <div>{{aglimpse.type}}</div>
+    <div>{{aglimpse.date}}</div>
+    <div>{{aglimpse.location}}</div>
+    </div>
+    {% for rid,arole in aglimpse.roles %}
+   <div class="row">
+    <div>{{arole.role}}</div>
+    <div>{{arole.name}}</div>
+    </div>
+    {% endfor %}
+    {% endfor %}
+{% else %}
+ <div class="title"> No matching Glimpse found </div>
+
+   <div class="returnbutton button1"> <a  href = "/glimpse/new/{{ajson.type}}" >Make new {{ajson.type}}</a> </div>
+ {% endif %}
 {% endblock %}

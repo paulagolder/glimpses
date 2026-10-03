@@ -22,21 +22,14 @@
 
 
 
-
-{% dump ( jsondata) %}
-<div>
-
-      {% for jid, ajson in jsondata %}
-
-
-
+{% for jid, ajson in jsondata  %}
 <div class="row">
 
    <div>{{jid}}
                {% if ajson.image  is defined  %}
                              image : {{ajson.image}}
               {% endif %}
-        {{ ajson.type}}
+        {{ ajson.event}}
         {% if ajson.date  is defined  %}
                       date : {{ajson.date}}
        {% endif %}
@@ -63,12 +56,12 @@
         {% endif %}
         </div>
         <div class="returnbutton button1"> <a  href = "/glimpse/viewjson/{{filename}}/{{jid}}" >View </a> </div>
-       </div>
-  {% endfor %}
+
+
   </div>
-</div>
 
 
+ {% endfor %}
 
     </div>
 

@@ -38,6 +38,16 @@ class Role
      */
     public $predicates;
 
+     /**
+       * @ORM\Column(type="string", length=20, nullable=true)
+     */
+     private $tag;
+
+    /**
+      * @ORM\Column(type="text",  nullable=true)
+    */
+     private $note;
+
     /**
      * @ORM\Column(type="string", length=40, nullable=true)
      */
@@ -127,6 +137,29 @@ class Role
 
         return $this;
     }
+
+  public function getTag(): ?string
+  {
+        return $this->tag;
+  }
+
+  public function setTag(string $txt): self
+  {
+     $this->tag = $txt;
+     return $this;
+  }
+
+ public function getNote(): ?string
+  {
+        return $this->note;
+  }
+
+  public function setNote(string $txt): self
+  {
+     $this->note = $txt;
+     return $this;
+  }
+
 
     public function getContributor(): ?string
     {
