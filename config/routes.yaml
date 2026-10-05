@@ -18,6 +18,10 @@ glimpse_new:
     path: /glimpse/new/{type}
     controller:  App\Controller\GlimpseController::new
 
+glimpse_newfromjson:
+  path: /glimpse/newfromjson/{ejson}
+  controller:  App\Controller\GlimpseController::newfromjson
+
 glimpse_show:
     path: /glimpse/showone/{gid}
     controller:  App\Controller\GlimpseController::showone

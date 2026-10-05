@@ -145,7 +145,7 @@ class Glimpse
         return $this->location;
     }
 
-    public function setLocation(string $location): self
+    public function setLocation(?string $location): self
     {
         $this->location = $location;
 
@@ -169,7 +169,7 @@ class Glimpse
         return $this->ref;
     }
 
-    public function setRef(string $text): self
+    public function setRef(?string $text): self
     {
         $this->ref = $text;
 

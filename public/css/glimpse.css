@@ -316,3 +316,41 @@ duplicate table
 {
     width:2em;
 }
+
+/*======================================
+json divs
+========================================= */
+
+#glimpse div.json div.list
+{
+    table-layout: auto;
+    border-collapse: collapse;
+    background-color: #eee;
+    border-spacing: 5px;
+}
+
+#glimpse div.json div.list div.row
+{
+    border-bottom: 2px solid #dddddd;
+    text-align: left;
+    display:flex;
+}
+
+#glimpse div.json div.list div.row div
+{
+    min-width:3em;
+    border-right: 1px solid  #dddddd;
+}
+
+#glimpse div.json div.list div.row div.col1a
+{
+    width:9em;
+    display:flex;
+}
+
+#glimpse div.json div.list div.row div.col1b
+{
+    padding-left:5em;
+    width:9em;
+    display:flex;
+}

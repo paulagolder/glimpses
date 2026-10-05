@@ -240,6 +240,56 @@ class GlimpseController extends AbstractController
         ]);
     }
 
+
+  public function newfromjson(ManagerRegistry $doctrine, $ejson)
+    {
+        $json = json_decode($ejson);
+        dump($json);
+        $type= $json->type;
+        $sourceid = "";
+        $source = $json->source;
+        $glimpse = new Glimpse();
+        $glimpse->source = $source;
+        $glimpse->setLocation( $json->location);
+        $glimpse->setSourceId("");
+        $glimpse->setLanguage("");
+        $glimpse->setType($type);
+        $glimpse->setImage($json->image);
+        $glimpse->setDate($json->date);
+        $glimpse->setContributor($json->contributor);
+        $now = new \DateTime();
+        $glimpse->setUpdateDt($now);
+        $glimpse->setGlimpseId(0);
+        $roles = $json->roles;
+        $ir=0;
+          foreach($roles as $key => $arole)
+          {
+                    $role = new Role();
+                    $role->setRole($arole->role);
+                    $role->setName($arole->name);
+                    if(isset($arole->extrainformation ))
+                    {
+                                           $role->setPredicateStr($arole->extrainformation);
+                    }
+                    $roles[$ir] = $role;
+                    ++$ir;
+
+
+            }
+
+            return $this->render('glimpse/editjson.html.twig', [
+                'glimpse' => $glimpse,
+                'source' => null,
+                'roles' => $roles,
+                'returnlink' => '/glimpses',
+                'typelist' => "",
+            ]);
+        }
+
+
+
+
+
     public function startinput(ManagerRegistry $doctrine, $sourceid)
     {
         $source = $doctrine->getRepository(Source::class)->getOne($sourceid);
@@ -266,7 +316,7 @@ class GlimpseController extends AbstractController
         $nrole = new Role();
         $nrole->setGlimpseref($gid);
         $roles[] = $nrole;
-        $glimpse->{'source'} = $source->getTitle();
+       // $glimpse->{'source'} = $source->getTitle();
 
         return $this->render('glimpse/edit.html.twig', [
             'glimpse' => $glimpse,
@@ -319,12 +369,12 @@ class GlimpseController extends AbstractController
     {
         if ($gid < 1) {
             $glimpse = new Glimpse();
-            $sourceid = $this->lib->getCookieSource();
+      /*      $sourceid = $this->lib->getCookieSource();
             $source = $doctrine->getRepository(Source::class)->getOne($sourceid);
             $glimpse->setLocation($source->getRegion());
             $glimpse->setSourceId($sourceid);
             $glimpse->setLanguage($source->getlanguage());
-            $glimpse->{'source'} = $source->getTitle();
+            $glimpse->{'source'} = $source->getTitle();*/
             $roles = [];
         } else {
             $glimpse = $doctrine->getRepository(Glimpse::class)->getOne($gid);
@@ -455,14 +505,6 @@ function loadjson($jfile)
     if ($json_data === null) {
         die('Error decoding the JSON file:'.$jfile);
     }
-    foreach( $json_data as $jglimpse )
-    {
-    dump($jglimpse);
-   // aglimpse= new Glimpse()
-
-    }
-
-
 
  return $this->render('glimpse/loadjson.html.twig', [
                 'returnlink' => '/glimpse/showall/',
@@ -487,31 +529,72 @@ function viewjson(ManagerRegistry $doctrine,$jfile,$jid)
     $jglimpse =$json_data[$jid];
      $aglimpses=null;
     $type= $jglimpse["type"];
-    if($type = "census")
+    dump($type);
+     $allactors = $doctrine->getRepository(Actor::class)->findAll();
+    if($type == "census")
     {
-      if(array_key_exists("year",$jglimpse)) $date=$jglimpse["year"];
-      if(array_key_exists("people",$jglimpse))
+      if(array_key_exists("date",$jglimpse)) $date=$jglimpse["date"];
+      if(array_key_exists("roles",$jglimpse))
       {
-       $head= $jglimpse["people"][0];
-        $name = $head["name"]["forenames"]." ".$head["name"]["surname"];
+       $head= $jglimpse["roles"][0];
+        $name = $head["name"];
+        dump( $type."-".$date."-".$name);
         $aglimpses =   $doctrine->getRepository(Glimpse::class)->findMatch($type,$date,$name);
+          $aglimpse= $aglimpses[0];
+            $roles = $doctrine->getRepository(Role::class)->findChildren($aglimpse->getGlimpseId());
       }
     }
     else
     {
-
     if(array_key_exists("date",$jglimpse)) $date=$jglimpse["date"];
-    if(array_key_exists("person",$jglimpse)) $name=$jglimpse["person"];
-   // aglimpse= new Glimpse()
+    $name = $this->jsongetfirstrole($jglimpse);
+    dump($name);
+      dump( $type."-".$date."-".$name);
     $aglimpses =   $doctrine->getRepository(Glimpse::class)->findMatch($type,$date,$name);
+    $aglimpse=null;
+    $roles= null;
+    if( count($aglimpses)>0)
+    {
+    $aglimpse= $aglimpses[0];
+    $roles = $doctrine->getRepository(Role::class)->findChildren($aglimpse->getGlimpseId());
+     foreach ($roles as &$role) {
+                $actors = $doctrine->getRepository(ActorRole::class)->getActors($role->getRoleId());
+                // dump($actors);
+                $role->{'actors'} = $actors;
+            }
+        }
     }
-
+if($aglimpses != null)
+{
+    return $this->render('glimpse/edit.html.twig', [
+                      'glimpse' => $aglimpse,
+                      'source' => "",
+                      'roles' => $roles,
+                      'actors' => $allactors,
+                      'returnlink' => '/glimpse/showone/'.$aglimpse->getGlimpseId(),
+                      'typelist' => ['baptism', 'marriage', 'burial'],
+                      'jglimpse' => $jglimpse,
+                        ]);
+}
+else
+{
  return $this->render('glimpse/viewjson.html.twig', [
                 'returnlink' => '/glimpse/showall/',
                 'filename' => $jfile,
                 'jsondata'  => $json_data[$jid],
                 'matches' => $aglimpses,
             ]);
+            }
 }
+
+function jsongetfirstrole($glimpsejson)
+{
+    $roles = $glimpsejson["roles"];
+    foreach($roles as $rid=>$rolepair)
+    {
+        return $rolepair["name"];
+    }
+    return null;
+  }
 
 }

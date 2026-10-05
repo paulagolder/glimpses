@@ -14,7 +14,7 @@
 
 {% block body %}
 <div id="glimpse" >
-    {% dump(glimpse) %}
+
     <div class ="heading" >
          <div class="title">Glimpse {{glimpse.glimpseid}}</div>
         <div class="returnbutton button1"> <a  href = "{{returnlink}}" >return </a> </div>
@@ -31,15 +31,13 @@
                     <div class= "field">{{glimpse.language}} </div>
             </div>
             <div class="row">
-                {% if glimpse.source is defined %}
                     <div class="label"> sourceid </div>
                     <div class= "cid"> {{glimpse.sourceid}} </div>
                     <div class="label"> page </div>
                     <div class= "cid"> <input class="id" type="text" name="_ref" value="{{glimpse.ref}}" /> </div>
                     <div class="label"> source </div>
                     <div class= "ltext"> {{glimpse.source}}</div>
-                    <div class="linkbutton"><a href="{{source.url}}" target="new" > View Source </a> </div>
-                    {% endif %}
+                    {#<div class="linkbutton"><a href="{{source.url}}" target="new" > View Source </a> </div>#}
             </div>
             <div class="row">
                     <div class="label"> type </div>
@@ -57,6 +55,7 @@
                    <div class="label">image</div>
                    <div class= "field"> <input class="image" type="text" name="_image" value="{{glimpse.image}}" /> </div>
             </div>
+        </div>
             <div class="subheading" >
                 <div class="title"> roles </div>
             </div>
@@ -100,37 +99,7 @@
                     {% endfor %}
 
             <button type="submit" id="submitbutton"   > enregistrer</button>
-
         </form>
-
-    <div> some json here? </div>
-    <div class ="json">
-{%  if jglimpse is defined %}
-{% dump jglimpse %}
-  <div class="list">
-  {% for fid, ajsonfield in jglimpse  %}
-    <div class="row">
-    {% if fid != "roles" %}
-      <div class='col1a'>{{fid}}</div>
-      <div class='col2a'>{{ ajsonfield}} </div>
-    {% endif %}
-    </div>
-  {% endfor %}
-
-
-  {% for fid, ajsonfield in jglimpse  %}
-      {% if fid == "roles" %}
-        {% for rid, rolefield in ajsonfield  %}
-        <div class="row">
-          <div class='col1b'>{{rolefield.role}}</div>
-          <div class='col2b'>{{rolefield.name}}</div>
-        </div>
-        {% endfor %}
-      {% endif %}
-   {% endfor %}
- </div>
-{% endif %}
-</div>
     </div>
 </div>
 </div>

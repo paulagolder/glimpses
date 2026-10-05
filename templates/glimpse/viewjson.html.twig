@@ -18,17 +18,18 @@
         <div class="title" > Reading json data </div>
          <div class="title" > {{ filename}} </div>
     </div>
-
-
-
-
 {% set ajson = jsondata  %}
+<div>{{ajson.image}}</div>
+<div>{{ajson.type}}</div>
+<div>{{ajson.date}}</div>
+<div>{{ajson.roles[0].name}}</div>
+
+
+
 
 
 {% for fid, ajsonfield in ajson  %}
-{% dump fid , ajsonfield %}
 {% if fid = "people" %}
-
 
 {% else %}
     <div> {{fid}} , {{ajsonfield}} </div>
@@ -58,6 +59,6 @@
 {% else %}
  <div class="title"> No matching Glimpse found </div>
 
-   <div class="returnbutton button1"> <a  href = "/glimpse/new/{{ajson.type}}" >Make new {{ajson.type}}</a> </div>
+   <div class="returnbutton button1"> <a  href = "/glimpse/newfromjson/{{ajson | json_encode(constant('JSON_UNESCAPED_SLASHES'))}}" >Make new {{ajson.type}}</a> </div>
  {% endif %}
 {% endblock %}

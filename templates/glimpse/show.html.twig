@@ -28,11 +28,13 @@
                 <div class= "cid"> {{glimpse.glimpseid}}</div>
                     <div class="label"> language </div>
                     <div class= "cid"> {{glimpse.language}}</div>
+                    {% if glimpse.sourceid is defined and glimpse.sourceid is not null %}
                     <div class="label"> sourceid </div>
                     <div class= "cid"> {{glimpse.sourceid}}</div>
                     <div class="label"> source </div>
                     <div class= "cltext"> {{source.title}}</div>
                     <div class= "cluebutton"><a target="_blank" rel="noopener noreferrer" href={{source.url}}>View</a></div>
+                    {%endif %}
             </div>
             <div class="row">
                     <div class="label"> date </div>
@@ -47,9 +49,10 @@
                     <div class="label"> text </div>
                     <div class= "cltext"> {{glimpse.text}} </div>
                     <div class="label"> image </div>
-                   <div class= "field">
-                                 {#   <div class="returnbutton">{{ ideLink('glimpse.image')}} >View Image </a> </div>#}
-                    </div>
+                    <div class= "cltext"> {{glimpse.image}} </div>
+                  {# <div class= "field">
+                                   <div class="returnbutton">{{ ideLink('glimpse.image')}} >View Image </a> </div>
+                    </div>#}
             </div>
          </div>
 
